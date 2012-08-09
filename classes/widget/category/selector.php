@@ -8,7 +8,7 @@
  * @link http://www.novius-os.org
  */
 
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 class Widget_Category_Selector extends \Nos\Widget_Selector {
 

@@ -2,7 +2,7 @@
 use Nos\I18n;
 return array(
     'query' => array(
-        'model' => 'NoviusDev\BlogNews\Model_Post',
+        'model' => 'Nos\BlogNews\Model_Post',
         'order_by' => array('post_created_at' => 'DESC'),
         'limit' => 20,
     ),
@@ -75,7 +75,7 @@ return array(
             return $query;
         },
 		'tag_id' => function($value, $query) {
-            
+
 			if ( is_array($value) && count($value) && $value[0]) {
 				$query->related('tags', array(
 					'where' => array(

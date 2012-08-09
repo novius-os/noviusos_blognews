@@ -7,5 +7,5 @@ return array(
     'provider' => array(
         'name' => 'Novius Dev',
     ),
-    'namespace' => 'NoviusDev\BlogNews',
+    'namespace' => 'Nos\BlogNews',
 );

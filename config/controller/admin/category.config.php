@@ -1,7 +1,7 @@
 <?php
 return array (
-    'controller_url'  => 'overload_me',
-    'model' => 'overload_me',
+    'controller_url'  => 'admin/noviusos_blognews/cateogry',
+    'model' => 'Nos\\BlogNews\\Model_Category',
     'messages' => array(
         'successfully added' => __('Categorie successfully added.'),
         'successfully saved' => __('Categorie successfully saved.'),
@@ -72,7 +72,7 @@ return array (
         ),
         'cat_parent_id' => array(
             'label' => __('Dans la catégorie: '),
-            'widget' => 'NoviusDev\BlogNews\Widget_Category_Selector',
+            'widget' => 'Nos\BlogNews\Widget_Category_Selector',
             'widget_options' => array(
                 'width'                 => '100%',
                 'height'                => '350px',

@@ -1,6 +1,6 @@
 <?php
 
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 class Model_Post extends \Nos\Orm\Model
 {
@@ -97,7 +97,7 @@ class Model_Post extends \Nos\Orm\Model
         {
             static::$_has_many['comments'] = array(
                 'key_from' => 'post_id',
-                'model_to' => '\NoviusDev\Comments\Model_Comment',
+                'model_to' => '\Nos\Comments\Model_Comment',
                 'key_to' => 'comm_foreign_id',
                 'cascade_save' => false,
                 'cascade_delete' => true,
@@ -254,7 +254,7 @@ class Model_Post extends \Nos\Orm\Model
         }
 
         $comments_count = \Db::select(\Db::expr('COUNT(comm_id) AS count_result'), 'comm_foreign_id')
-            ->from(\NoviusDev\Comments\Model_Comment::table())
+            ->from(\Nos\Comments\Model_Comment::table())
             ->where('comm_foreign_id', 'in', $ids)
             ->and_where('comm_from_table', '=', static::$_table_name)
             ->group_by('comm_foreign_id')
@@ -274,7 +274,7 @@ class Model_Post extends \Nos\Orm\Model
     protected $nb_comments = null;
     public function count_comments() {
         if ($this->nb_comments === null) {
-            $this->nb_comments = \NoviusDev\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_table' => static::$_table_name))));
+            $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_table' => static::$_table_name))));
         }
         return $this->nb_comments;
     }

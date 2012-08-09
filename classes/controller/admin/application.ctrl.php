@@ -1,5 +1,5 @@
 <?php
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 // gère popup de config des enhancers et previews
 // ATTENTION : du fait du namespace, ce controlleur doit être étendu dans news et blog pour pouvoir fonctioner

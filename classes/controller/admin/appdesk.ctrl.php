@@ -1,6 +1,6 @@
 <?php
 
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 use Fuel\Core\Config;
 use Asset, Format, Input, Session, View, Uri;

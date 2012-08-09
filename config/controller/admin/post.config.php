@@ -14,7 +14,7 @@
 
 $datas = array(
     'controller_url'  => 'admin/noviusos_blognews/post',
-    'model' => 'NoviusDev\\BlogNews\\Model_Post',
+    'model' => 'Nos\\BlogNews\\Model_Post',
     'messages' => array(
         'successfully added' => __('Post successfully added.'),
         'successfully saved' => __('Post successfully saved.'),
@@ -193,7 +193,7 @@ $datas = array(
                 ),
             ),
             'categories' => array(
-                'widget' => 'NoviusDev\BlogNews\Widget_Category_Selector',
+                'widget' => 'Nos\BlogNews\Widget_Category_Selector',
                 'widget_options' => array(
                     'width' => '250px',
                     'height' => '250px',

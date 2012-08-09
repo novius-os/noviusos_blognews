@@ -8,11 +8,11 @@
  * @link http://www.novius-os.org
  */
 
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 use Nos\Controller_Front_Application;
 use Nos\Model_Page;
-use \NoviusDev\Comments\Model_Comment;
+use \Nos\Comments\Model_Comment;
 
 use Fuel\Core\Inflector;
 use Fuel\Core\Str;

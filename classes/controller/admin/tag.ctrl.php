@@ -1,5 +1,5 @@
 <?php
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 use Nos\Controller;
 use View;
@@ -11,14 +11,14 @@ class Controller_Admin_Tag extends Controller {
         $tag_model = namespacize($this, 'Model_Tag');
         $tag = $tag_model::find(\Input::post('id', 0));
 
-        if ( empty($tag) ) 
+        if ( empty($tag) )
         {
             $this->response(array(
                 'notify' => __('The tag has successfully been deleted !'),
             ));
             return false;
         }
-        
+
         // Recover infos before delete, if not id is null
         $dispatchEvent = array(
             'name'      => get_class($tag),
@@ -26,7 +26,7 @@ class Controller_Admin_Tag extends Controller {
             'id'        => $tag->tag_id,
         );
 
-        if ( !empty($tag) && $tag instanceof Model_tag ) 
+        if ( !empty($tag) && $tag instanceof Model_tag )
         {
             $tag->delete();
         }

@@ -1,5 +1,5 @@
 <?php
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 class Controller_Admin_Category extends \Nos\Controller_Admin_Crud {
 
@@ -7,7 +7,7 @@ class Controller_Admin_Category extends \Nos\Controller_Admin_Crud {
     /**
      * nom de la classe avec ns pour le modèle Model_Post
      * (on le déduit du ns qui instancie le modèle)
-     *     ex, dans l'app News, renvoie NoviusDev\BlogNews\News\Model_Post
+     *     ex, dans l'app News, renvoie Nos\BlogNews\News\Model_Post
      * @var string
      */
     protected static $class_category;
@@ -30,6 +30,7 @@ class Controller_Admin_Category extends \Nos\Controller_Admin_Crud {
         list($provider,$generic,$app) = explode('\\', $class_category);
         static::$ns_folder = strtolower($provider).'_'.strtolower($app);
 
+        parent::before();
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
         list($application_name) = static::getLocation();
@@ -47,8 +48,7 @@ class Controller_Admin_Category extends \Nos\Controller_Admin_Crud {
         $this->config['fields']['cat_parent_id']['widget_options']['namespace'] =  __NAMESPACE__;
         $this->config['fields']['cat_parent_id']['widget_options']['application_name'] = $application_name;
 
-
-        parent::before();
+        $this->config_build();
     }
 
 

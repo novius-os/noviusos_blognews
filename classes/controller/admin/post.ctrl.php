@@ -1,6 +1,6 @@
 <?php
 
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
 {
@@ -8,7 +8,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
     /**
      * nom de la classe avec ns pour le modèle Model_Post
      * (on le déduit du ns qui instancie le modèle)
-     *     ex, dans l'app News, renvoie NoviusDev\BlogNews\News\Model_Post
+     *     ex, dans l'app News, renvoie Nos\BlogNews\News\Model_Post
      * @var string
      */
     protected static $class_post;
@@ -33,7 +33,6 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         static::$ns_folder = strtolower($provider).'_'.strtolower($app);
 
         parent::before();
-
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
         list($application_name) = static::getLocation();

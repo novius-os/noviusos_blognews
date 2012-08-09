@@ -1,6 +1,6 @@
 <?php
 
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 class Model_Category extends \Nos\Orm\Model
 {

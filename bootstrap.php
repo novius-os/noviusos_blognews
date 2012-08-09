@@ -1,6 +1,6 @@
 <?php
 
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 /**
  * retourne le nom complet (avec ns) de la class $classname dans le ns $self

@@ -1,5 +1,5 @@
 <?php
-namespace NoviusDev\BlogNews;
+namespace Nos\BlogNews;
 
 class Model_Tag extends \Nos\Orm\Model {
     protected static $_table_name = 'nos_tag';
