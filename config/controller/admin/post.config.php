@@ -13,7 +13,7 @@
 
 
 $datas = array(
-    'controller_url'  => 'admin/noviusdev_blognews/post',
+    'controller_url'  => 'admin/noviusos_blognews/post',
     'model' => 'NoviusDev\\BlogNews\\Model_Post',
     'messages' => array(
         'successfully added' => __('Post successfully added.'),
@@ -28,21 +28,10 @@ $datas = array(
         'blank_state_item_text' => __('post'),
     ),
     'tab' => array(
-        'iconUrl' => 'static/apps/noviusdev_blognews/img/16/post.png',
+        'iconUrl' => 'static/apps/noviusos_blognews/img/16/post.png',
         'labels' => array(
             'insert' => __('Add a post'),
             'blankSlate' => __('Translate a post'),
-        ),
-        'actions' => array(
-            'visualise' => function($item) {
-                return array(
-                    'label' => __('Visualise'),
-                    'action' => array(
-                        'openWindow' => $item->first_url() . '?_preview=1',
-                    ),
-                    'iconClasses' => 'nos-icon16 nos-icon16-eye',
-                );
-            }
         ),
     ),
     'layout' => array(

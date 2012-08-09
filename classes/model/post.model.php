@@ -91,8 +91,8 @@ class Model_Post extends \Nos\Orm\Model
 
         list(,,$app,) = explode('\\', $class);
         $app = strtolower($app);
-        \Config::load('noviusdev_'.$app.'::config', true);
-        $withCom = \Config::get('noviusdev_'.$app.'::config.comments.enabled');
+        \Config::load('noviusos_'.$app.'::config', true);
+        $withCom = \Config::get('noviusos_'.$app.'::config.comments.enabled');
         if ($withCom)
         {
             static::$_has_many['comments'] = array(
@@ -242,8 +242,8 @@ class Model_Post extends \Nos\Orm\Model
         $class = get_called_class();
         list(,,$app,) = explode('\\', $class);
         $app = strtolower($app);
-        \Config::load('noviusdev_'.$app.'::config', true);
-        $withCom = \Config::get('noviusdev_'.$app.'::config.comments.enabled');
+        \Config::load('noviusos_'.$app.'::config', true);
+        $withCom = \Config::get('noviusos_'.$app.'::config.comments.enabled');
         if (!$withCom || count($items) == 0) {
             return $items;
         }

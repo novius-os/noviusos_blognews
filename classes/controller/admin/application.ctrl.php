@@ -38,7 +38,7 @@ class Controller_Admin_Application extends \Nos\Controller
             );
         }
 
-        return \View::forge('noviusdev_blognews::admin/application/popup', $params, false);
+        return \View::forge('noviusos_blognews::admin/application/popup', $params, false);
     }
 
     function action_popup_save() {
@@ -61,7 +61,7 @@ class Controller_Admin_Application extends \Nos\Controller
             $params['categorie']        = '';
         $body = array(
             'config'        => \Format::forge()->to_json($_POST),
-            'preview'       => \View::forge('noviusdev_blognews::admin/application/preview',$params)->render(),
+            'preview'       => \View::forge('noviusos_blognews::admin/application/preview',$params)->render(),
         );
         \Response::json($body);
     }

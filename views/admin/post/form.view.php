@@ -13,13 +13,13 @@ foreach ($fieldset->field() as $field) {
 echo $fieldset->open(Uri::current());
 //<?= $fieldset->open('admin/noviusos_blog/blog/form'.($blog->is_new() ? '' : '/'.$blog->blog_id));
 
-Event::register_function('config|noviusdev_blognews::views/admin/post/form', 1, function(&$config) use ($fieldset, $post) {
+Event::register_function('config|noviusos_blognews::views/admin/post/form', 1, function(&$config) use ($fieldset, $post) {
     $config['fieldset'] = $fieldset;
     $config['object']   = $post;
     $config['content'][0]->set('content', $fieldset->field('wysiwygs->content->wysiwyg_text'));
 });
 
-$config = Config::load('noviusdev_blognews::views/admin/post/form', true);
+$config = Config::load('noviusos_blognews::views/admin/post/form', true);
 
 
 echo View::forge('nos::form/layout_standard', $config, false);

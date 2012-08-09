@@ -44,7 +44,7 @@ class Controller_Front extends Controller_Front_Application {
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
         list($application_name) = static::getLocation();
-        \Config::load('noviusdev_blognews::controller/front', true);
+        \Config::load('noviusos_blognews::controller/front', true);
 
 
         // We are manually merging configuration since we are not using the extend functionnality as intended.
@@ -52,7 +52,7 @@ class Controller_Front extends Controller_Front_Application {
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge(\Config::get('noviusdev_blognews::controller/front'), \Config::extendable_load($application_name, 'controller/front'));
+        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::extendable_load($application_name, 'controller/front'));
         $this->config['classes'] = array(
             'post' => static::$post_class,
             'tag' => static::$tag_class,
@@ -98,7 +98,7 @@ class Controller_Front extends Controller_Front_Application {
                         \Session::set('noviusos_'.$application_name.'_stats', $stats);
                     }
                 }
-                \Nos\Tools_File::send(DOCROOT.'static/apps/noviusdev_blognews/img/transparent.gif');
+                \Nos\Tools_File::send(DOCROOT.'static/apps/noviusos_blognews/img/transparent.gif');
 
 	        } else if ($segments[0] === 'page') {
 		        $this->init_pagination(empty($segments[1]) ? 1 : $segments[1]);
@@ -148,7 +148,7 @@ class Controller_Front extends Controller_Front_Application {
 
         $posts = $this->_get_post_list(array('tag' => $tag));
 
-        return View::forge('noviusdev_blognews::front/post/list', array(
+        return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
             'type'        => 'tag',
             'object'      => $tag,
@@ -165,7 +165,7 @@ class Controller_Front extends Controller_Front_Application {
         ))));
         $posts = $this->_get_post_list(array('category' => $category));
 
-        return View::forge('noviusdev_blognews::front/post/list', array(
+        return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
             'type'        => 'category',
             'object'      => $category,

@@ -5,8 +5,8 @@ return array(
     'item_per_page' => 10,
     'order_by'    => array('post_created_at' => 'DESC', 'post_id' => 'DESC'),
     'views' => array(
-        'list' => 'noviusdev_blognews::front/post/list',
-        'item' => 'noviusdev_blognews::front/post/show'
+        'list' => 'noviusos_blognews::front/post/list',
+        'item' => 'noviusos_blognews::front/post/show'
     ),
 
 );

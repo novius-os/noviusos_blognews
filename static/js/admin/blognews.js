@@ -25,7 +25,7 @@ define([
                     label : appDesk.i18n('Edit'),
                     action : function(item, ui) {
                         $nos(ui).nosTabs({
-                            url: 'admin/'+appDesk.blognews.dir+'/post/form/' + item.id,
+                            url: 'admin/'+appDesk.blognews.dir+'/post/insert_update/' + item.id,
                             label: appDesk.i18n('Edit this post')._(),
                             iconUrl : 'static/apps/'+appDesk.blognews.dir+'/img/'+appDesk.blognews.icon_name+'-16.png'
                         });
@@ -37,19 +37,18 @@ define([
                     icon : 'trash',
                     label : appDesk.i18n('Delete'),
                     action : function(item, ui) {
-                        $nos(ui).nosConfirmationDialog({
-                            content     : appDesk.i18n('Confirmer la suppression ?')._(),
-                            title       : appDesk.i18n('Delete this post')._(),
-                            confirmed   : function() {
-                                $nos(ui).nosAjax({
+                        $.appDesk = appDesk;
+                        $(ui).nosConfirmationDialog({
+                            contentUrl: 'admin/'+appDesk.blognews.dir+'/post/delete/' + item.id,
+                            title: appDesk.i18n('Delete this post')._(),
+                            confirmed: function($dialog) {
+                                $dialog.nosAjax({
                                     url : 'admin/'+appDesk.blognews.dir+'/post/delete_confirm',
                                     method : 'POST',
-                                    data: {id: item.id},
-                                    success : function(json) {
-                                        $nos(ui).nosDialog('close');
-                                    }
+                                    data : $dialog.find('form').serialize()
                                 });
-                            }
+                            },
+                            appDesk: appDesk
                         });
                     }
                 },
@@ -70,8 +69,8 @@ define([
             {
                 texts :
                 {
-                    items: appDesk.i18n("actualités"),
-                    item: appDesk.i18n("actualité")
+                    items: appDesk.i18n("posts"),
+                    item: appDesk.i18n("post")
                 },
                 adds:
                 {
@@ -81,7 +80,7 @@ define([
                         action : function(ui, appdesk)
                         {
                             $nos(ui).nosTabs('add', {
-                                url: 'admin/'+appDesk.blognews.dir+'/post/form?lang=' + appdesk.lang,
+                                url: 'admin/'+appDesk.blognews.dir+'/post/insert_update?lang=' + appdesk.lang,
                                 label: appDesk.i18n('Add a post')._(),
                                 iconUrl : 'static/apps/'+appDesk.blognews.dir+'/img/'+appDesk.blognews.icon_name+'-16.png'
                             });
@@ -93,7 +92,7 @@ define([
                         action : function(ui, appdesk)
                         {
                             $nos(ui).nosTabs('add', {
-                                url: 'admin/'+appDesk.blognews.dir+'/category/form?lang=' + appdesk.lang,
+                                url: 'admin/'+appDesk.blognews.dir+'/category/insert_update?lang=' + appdesk.lang,
                                 label: appDesk.i18n('Add a post')._()
                             });
                         }
@@ -148,8 +147,8 @@ define([
                 {
                     startdate : {
                         vertical:   true,
-                        label:      appDesk.i18n('Date de création'),
-                        url:        'admin/noviusdev_blognews/inspector/date/list',
+                        label:      appDesk.i18n('Created date'),
+                        url:        'admin/noviusos_blognews/inspector/date/list',
                         inputName:  'startdate'
                     },
                     categories :
@@ -180,25 +179,31 @@ define([
                                             icon : 'pencil',
                                             action : function(item, ui) {
                                                 $(ui).nosTabs({
-                                                    url: 'admin/' + appDesk.blognews.dir + '/category/form/' + item.id,
+                                                    url: 'admin/' + appDesk.blognews.dir + '/category/insert_update/' + item.id,
                                                     label: 'Edit the "' + item.title + '" folder'
                                                 });
                                             }
                                         },
                                         {
                                             name : 'delete',
-                                            label : appDesk.i18n('Supprimer cette catégorie'),
+                                            label : appDesk.i18n('Delete this category'),
                                             icon : 'trash',
                                             action : function(item, ui) {
-                                                $(ui).nosDialog({
+                                                $.appDesk = appDesk;
+                                                $(ui).nosConfirmationDialog({
                                                     contentUrl: 'admin/'+appDesk.blognews.dir+'/category/delete/' + item.id,
-                                                    ajax : true,
-                                                    title: 'Delete the "' + item.title + '" folder',
-                                                    width: 400,
-                                                    height: 200
+                                                    title: appDesk.i18n('Delete this category')._(),
+                                                    confirmed: function($dialog) {
+                                                        $dialog.nosAjax({
+                                                            url : 'admin/'+appDesk.blognews.dir+'/category/delete_confirm',
+                                                            method : 'POST',
+                                                            data : $dialog.find('form').serialize()
+                                                        });
+                                                    },
+                                                    appDesk: appDesk
                                                 });
                                             }
-                                        },
+                                        }
                                     ]
                                 }
                             }
@@ -220,14 +225,15 @@ define([
                                         {
                                             name : 'delete',
                                             action : function(item, ui) {
+                                                $.appDesk = appDesk;
                                                 $(ui).nosConfirmationDialog({
-                                                    content: 'Confirm the deletion ?',
+                                                    contentUrl: 'admin/'+appDesk.blognews.dir+'/tag/delete/' + item.id,
                                                     title: appDesk.i18n('Delete a tag')._(),
                                                     confirmed: function($dialog) {
                                                         $dialog.nosAjax({
-                                                            url : 'admin/'+appDesk.blognews.dir+'/tag/delete_confirm/',
+                                                            url : 'admin/'+appDesk.blognews.dir+'/tag/delete_confirm',
                                                             method : 'POST',
-                                                            data : {id: item.id}
+                                                            data : $dialog.find('form').serialize()
                                                         });
                                                     },
                                                     appDesk: appDesk

@@ -15,7 +15,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
 
     /**
      * répertoire/path admin pour le controlleur appelant
-     *     ex, dans l'app News, noviusdev_news
+     *     ex, dans l'app News, noviusos_news
      * @var string
      */
     protected static $ns_folder;
@@ -37,14 +37,14 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
         list($application_name) = static::getLocation();
-        \Config::load('noviusdev_blognews::controller/admin/post', true);
+        \Config::load('noviusos_blognews::controller/admin/post', true);
 
         // We are manually merging configuration since we are not using the extend functionnality as intended.
         // In novius-os, if many application are extending one application, all configuration file on equivalent
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge($this->config, \Config::get('noviusdev_blognews::controller/admin/post'), static::loadConfiguration($application_name, 'controller/admin/post'));
+        $this->config = \Arr::merge($this->config, \Config::get('noviusos_blognews::controller/admin/post'), static::loadConfiguration($application_name, 'controller/admin/post'));
         $this->config['controller_url'] = 'admin/'.$application_name.'/post';
         $this->config['model'] = $class_post;
         $this->config['fields'] = $this->config['fields'](\Inflector::get_namespace(get_class($this)), $application_name);
@@ -62,7 +62,27 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         if (!$this->app_config['authors']['enabled']){
             $this->config['layout']['menu'][__('Meta')] = array('field_template' => '{field}', 'fields' => array('created_at_date', 'created_at_time', 'read'));
         }
+
+        $this->config_build();
     }
 
+    protected function form_item()
+    {
+        parent::form_item();
+        if ($this->item->is_new())
+        {
+            $this->item->author = \Session::user();
+            if ($this->item_from)
+            {
+                $this->item->tags = $this->item_from->tags;
+            }
+        }
+    }
 
+    protected function fields($fields)
+    {
+        $fields = parent::fields($fields);
+        \Arr::set($fields, 'author->user_fullname.form.value', $this->item->author->fullname());
+        return $fields;
+    }
 }
