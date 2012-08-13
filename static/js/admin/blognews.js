@@ -23,12 +23,13 @@ define([
                     primary : true,
                     icon : 'pencil',
                     label : appDesk.i18n('Edit'),
-                    action : function(item, ui) {
-                        $nos(ui).nosTabs({
-                            url: 'admin/'+appDesk.blognews.dir+'/post/insert_update/' + item.id,
+                    action : {
+                        action : 'nosTabs',
+                        tab : {
+                            url: 'admin/'+appDesk.blognews.dir+'/post/insert_update/{{id}}',
                             label: appDesk.i18n('Edit this post')._(),
                             iconUrl : 'static/apps/'+appDesk.blognews.dir+'/img/'+appDesk.blognews.icon_name+'-16.png'
-                        });
+                        }
                     }
                 },
                 'delete' : {
@@ -36,20 +37,14 @@ define([
                     primary : true,
                     icon : 'trash',
                     label : appDesk.i18n('Delete'),
-                    action : function(item, ui) {
-                        $.appDesk = appDesk;
-                        $(ui).nosConfirmationDialog({
-                            contentUrl: 'admin/'+appDesk.blognews.dir+'/post/delete/' + item.id,
+                    action : {
+                        action : 'nosConfirmationDialog',
+                        dialog : {
+                            contentUrl: 'admin/'+appDesk.blognews.dir+'/post/delete/{{id}}',
                             title: appDesk.i18n('Delete this post')._(),
-                            confirmed: function($dialog) {
-                                $dialog.nosAjax({
-                                    url : 'admin/'+appDesk.blognews.dir+'/post/delete_confirm',
-                                    method : 'POST',
-                                    data : $dialog.find('form').serialize()
-                                });
-                            },
+                            confirmedUrl: 'admin/'+appDesk.blognews.dir+'/post/delete_confirm',
                             appDesk: appDesk
-                        });
+                        }
                     }
                 },
                 'visualise' : {
@@ -57,8 +52,9 @@ define([
                     name : 'visualise',
                     primary : true,
                     iconClasses : 'nos-icon16 nos-icon16-eye',
-                    action : function(item) {
-                        window.open(item.url + '?_preview=1');
+                    action : {
+                        action : 'window.open',
+                        url : '{{url}}?_preview=1'
                     }
                 }
             },
@@ -77,24 +73,27 @@ define([
                     post :
                     {
                         label : appDesk.i18n('Add a post'),
-                        action : function(ui, appdesk)
-                        {
-                            $nos(ui).nosTabs('add', {
-                                url: 'admin/'+appDesk.blognews.dir+'/post/insert_update?lang=' + appdesk.lang,
+                        action : {
+                            action : 'nosTabs',
+                            method : 'add',
+                            tab : {
+                                url: 'admin/'+appDesk.blognews.dir+'/post/insert_update?lang={{lang}}',
                                 label: appDesk.i18n('Add a post')._(),
                                 iconUrl : 'static/apps/'+appDesk.blognews.dir+'/img/'+appDesk.blognews.icon_name+'-16.png'
-                            });
+                            }
                         }
                     },
                     category :
                     {
                         label : appDesk.i18n('Add a category'),
-                        action : function(ui, appdesk)
-                        {
-                            $nos(ui).nosTabs('add', {
-                                url: 'admin/'+appDesk.blognews.dir+'/category/insert_update?lang=' + appdesk.lang,
-                                label: appDesk.i18n('Add a post')._()
-                            });
+                        action : {
+                            action : 'nosTabs',
+                            method : 'add',
+                            tab : {
+                                url: 'admin/'+appDesk.blognews.dir+'/category/insert_update?lang={{lang}}',
+                                label: appDesk.i18n('Add a post')._(),
+                                iconUrl : 'static/apps/'+appDesk.blognews.dir+'/img/'+appDesk.blognews.icon_name+'-16.png'
+                            }
                         }
                     }
                 },
@@ -177,31 +176,26 @@ define([
                                             primary : true,
                                             label : appDesk.i18n('Edit this category'),
                                             icon : 'pencil',
-                                            action : function(item, ui) {
-                                                $(ui).nosTabs({
-                                                    url: 'admin/' + appDesk.blognews.dir + '/category/insert_update/' + item.id,
-                                                    label: 'Edit the "' + item.title + '" folder'
-                                                });
+                                            action : {
+                                                action : 'nosTabs',
+                                                tab : {
+                                                    url: 'admin/' + appDesk.blognews.dir + '/category/insert_update/{{id}}',
+                                                    label: 'Edit the "{{title}}" folder'
+                                                }
                                             }
                                         },
                                         {
                                             name : 'delete',
                                             label : appDesk.i18n('Delete this category'),
                                             icon : 'trash',
-                                            action : function(item, ui) {
-                                                $.appDesk = appDesk;
-                                                $(ui).nosConfirmationDialog({
-                                                    contentUrl: 'admin/'+appDesk.blognews.dir+'/category/delete/' + item.id,
+                                            action : {
+                                                action : 'nosConfirmationDialog',
+                                                dialog : {
+                                                    contentUrl: 'admin/'+appDesk.blognews.dir+'/category/delete/{{id}}',
                                                     title: appDesk.i18n('Delete this category')._(),
-                                                    confirmed: function($dialog) {
-                                                        $dialog.nosAjax({
-                                                            url : 'admin/'+appDesk.blognews.dir+'/category/delete_confirm',
-                                                            method : 'POST',
-                                                            data : $dialog.find('form').serialize()
-                                                        });
-                                                    },
+                                                    confirmedUrl: 'admin/'+appDesk.blognews.dir+'/category/delete_confirm',
                                                     appDesk: appDesk
-                                                });
+                                                }
                                             }
                                         }
                                     ]
@@ -224,20 +218,14 @@ define([
                                     actions : [
                                         {
                                             name : 'delete',
-                                            action : function(item, ui) {
-                                                $.appDesk = appDesk;
-                                                $(ui).nosConfirmationDialog({
-                                                    contentUrl: 'admin/'+appDesk.blognews.dir+'/tag/delete/' + item.id,
+                                            action : {
+                                                action : 'nosConfirmationDialog',
+                                                dialog : {
+                                                    contentUrl: 'admin/'+appDesk.blognews.dir+'/tag/delete/{{id}}',
                                                     title: appDesk.i18n('Delete a tag')._(),
-                                                    confirmed: function($dialog) {
-                                                        $dialog.nosAjax({
-                                                            url : 'admin/'+appDesk.blognews.dir+'/tag/delete_confirm',
-                                                            method : 'POST',
-                                                            data : $dialog.find('form').serialize()
-                                                        });
-                                                    },
+                                                    confirmedUrl: 'admin/'+appDesk.blognews.dir+'/tag/delete_confirm',
                                                     appDesk: appDesk
-                                                });
+                                                }
                                             },
                                             label : appDesk.i18n('Delete'),
                                             primary : true,
