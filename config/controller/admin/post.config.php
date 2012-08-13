@@ -111,7 +111,6 @@ $datas = array(
             'virtual_name' => array(
                 'label' => __('URL: '),
                 'widget' => 'Nos\Widget_Virtualname',
-                'template' => '{label}{required} <div class="table-field">{field} <span>&nbsp;.html</span></div>',
                 'validation' => array(
                     'required',
                     'min_length' => array(2),
