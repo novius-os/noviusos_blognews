@@ -17,7 +17,9 @@ class Model_Category extends \Nos\Orm\Model
             'events' => array('after_sort'),
             'sort_property' => 'sort',
         ),
-        'Nos\Orm_Behaviour_Url' => array(),
+        'Nos\Orm_Behaviour_Url' => array(
+            'urls' => array(),
+        ),
     );
 
     protected static $_has_many  = array();

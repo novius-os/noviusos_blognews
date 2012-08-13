@@ -25,7 +25,9 @@ class Model_Post extends \Nos\Orm\Model
         'Nos\Orm_Behaviour_Publishable' => array(
             'publication_bool_property' => 'published',
         ),
-        'Nos\Orm_Behaviour_Url' => array(),
+        'Nos\Orm_Behaviour_Url' => array(
+            'urls' => array(),
+        ),
     );
 
     protected static $_belongs_to  = array();
@@ -220,7 +222,7 @@ class Model_Post extends \Nos\Orm\Model
     // @todo: these function need to be moved
     public function get_url($params = array()) {
 
-        return $this->first_url();
+        return $this->url_canonical();
 //        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
 //        $page = isset($params['page']) ? $params['page'] : 1;
 

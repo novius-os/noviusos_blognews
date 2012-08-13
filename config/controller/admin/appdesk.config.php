@@ -36,12 +36,12 @@ return array(
         ),
         'url' => array(
             'value' => function($object) {
-                return $object->first_url();
+                return $object->url_canonical();
             },
         ),
         'actions' => array(
             'visualise' => function($object) {
-                $url = $object->first_url();
+                $url = $object->url_canonical();
                 return !empty($url);
             }
         ),

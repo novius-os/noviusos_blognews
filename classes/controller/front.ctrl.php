@@ -267,6 +267,14 @@ class Controller_Front extends Controller_Front_Application {
         return false;
     }
 
+
+    static function url_model($item, $first = false) {
+        $model = \Inflector::denamespace(get_class($item));
+        if (in_array($model, array('Model_Tag', 'Model_Post', 'Model_Category'))) {
+            return \Nos\Tools_Enhancer::url_item('noviusos_blog', array(get_called_class(), 'get_url_model'), $item, $first);
+        }
+    }
+
     protected function _add_comment($post) {
         if (\Input::post('todo') == 'add_comment') {
             if (!$this->app_config['comments']['use_recaptcha'] || \ReCaptcha\ReCaptcha::instance()->check_answer(\Input::real_ip(), \Input::post('recaptcha_challenge_field'), \Input::post('recaptcha_response_field')))
