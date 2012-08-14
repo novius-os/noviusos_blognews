@@ -38,12 +38,10 @@ define([
                     icon : 'trash',
                     label : appDesk.i18n('Delete'),
                     action : {
-                        action : 'nosConfirmationDialog',
+                        action : 'confirmationDialog',
                         dialog : {
                             contentUrl: 'admin/'+appDesk.blognews.dir+'/post/delete/{{id}}',
-                            title: appDesk.i18n('Delete this post')._(),
-                            confirmedUrl: 'admin/'+appDesk.blognews.dir+'/post/delete_confirm',
-                            appDesk: appDesk
+                            title: appDesk.i18n('Delete this post')._()
                         }
                     }
                 },
@@ -189,12 +187,10 @@ define([
                                             label : appDesk.i18n('Delete this category'),
                                             icon : 'trash',
                                             action : {
-                                                action : 'nosConfirmationDialog',
+                                                action : 'confirmationDialog',
                                                 dialog : {
                                                     contentUrl: 'admin/'+appDesk.blognews.dir+'/category/delete/{{id}}',
-                                                    title: appDesk.i18n('Delete this category')._(),
-                                                    confirmedUrl: 'admin/'+appDesk.blognews.dir+'/category/delete_confirm',
-                                                    appDesk: appDesk
+                                                    title: appDesk.i18n('Delete this category')._()
                                                 }
                                             }
                                         }
@@ -219,12 +215,10 @@ define([
                                         {
                                             name : 'delete',
                                             action : {
-                                                action : 'nosConfirmationDialog',
+                                                action : 'confirmationDialog',
                                                 dialog : {
                                                     contentUrl: 'admin/'+appDesk.blognews.dir+'/tag/delete/{{id}}',
-                                                    title: appDesk.i18n('Delete a tag')._(),
-                                                    confirmedUrl: 'admin/'+appDesk.blognews.dir+'/tag/delete_confirm',
-                                                    appDesk: appDesk
+                                                    title: appDesk.i18n('Delete a tag')._()
                                                 }
                                             },
                                             label : appDesk.i18n('Delete'),
