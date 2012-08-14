@@ -15,7 +15,6 @@ return array(
         ),
     ),
     'i18n' => array(
-        'Title'     => __('Title'),
     ),
     'dataset' => array(
         'id'            => 'post_id',
@@ -116,5 +115,228 @@ return array(
 			return $query;
 		},
     ),
+    'appdesk' => array(
+        'tab' => array(
+            'label' => __('Posts'),
+            'iconUrl' => 'static/apps/{{blognews.dir}}/img/{{blognews.icon_name}}-32.png'
+        ),
+        'actions' => array(
+            'edit' => array(
+                'name' => 'edit',
+                'primary' => true,
+                'icon' => 'pencil',
+                'label' => __('Edit'),
+                'action' => array(
+                    'action' => 'nosTabs',
+                    'tab' => array(
+                        'url' => 'admin{{blognews.dir}}/post/insert_update/{{id}}',
+                        'label' => __('Edit this post'),
+                        'iconUrl' => 'static/apps/{{blognews.dir}}/img/{{blognews.icon_name}}-16.png'
+                    ),
+                ),
+            ),
+            'delete' => array(
+                'name' => 'delete',
+                'primary' => true,
+                'icon' => 'trash',
+                'label' => __('Delete'),
+                'action' => array(
+                    'action' => 'confirmationDialog',
+                    'dialog' => array(
+                        'contentUrl' => 'admin/{{blognews.dir}}/post/delete/{{id}}',
+                        'title' => __('Delete this post')
+                    ),
+                ),
+            ),
+            'visualise' => array(
+                'label' => 'Visualise',
+                'name' => 'visualise',
+                'primary' => true,
+                'iconClasses' => 'nos-icon16 nos-icon16-eye',
+                'action' => array(
+                    'action' => 'window.open',
+                    'url' => '{{url}}?_preview=1'
+                ),
+            ),
+        ),
 
+        // Nom de l'évènement pour recharger les données de la grid
+        'reloadEvent' => '{{blognews.namespace}}\\Model_Post',
+        'appdesk' => array(
+            'texts' => array(
+                'items' => __("posts"),
+                'item' => __("post")
+            ),
+            'adds' => array(
+                'post' => array(
+                    'label' => __('Add a post'),
+                    'action' => array(
+                        'action' => 'nosTabs',
+                        'method' => 'add',
+                        'tab' => array(
+                            'url' => 'admin/{{blognews.dir}}/post/insert_update?lang={{lang}}',
+                            'label' => __('Add a post'),
+                            'iconUrl' => 'static/apps/{{blognews.dir}}/img/{{blognews.icon_name}}-16.png'
+                        ),
+                    ),
+                ),
+                'category' => array(
+                    'label' => __('Add a category'),
+                    'action' => array(
+                        'action' => 'nosTabs',
+                        'method' => 'add',
+                        'tab' => array(
+                            'url' => 'admin/{{blognews.dir}}/category/insert_update?lang={{lang}}',
+                            'label' => __('Add a category'),
+                            'iconUrl' => 'static/apps/{{blognews.dir}}/img/{{blognews.icon_name}}-16.png'
+                        ),
+                    ),
+                ),
+            ),
+
+            // Largeur de la colonne des inspecteurs de gauche en px
+            'splittersVertical' => 250,
+            'grid' => array(
+                'proxyUrl' => 'admin/{{blognews.dir}}/appdesk/json',
+
+                /**
+                 * Liste des colonnes du affichées dans la grid. Les clés sont celles du dataset définies dans le fichier de config PHP
+                 */
+                'columns' => array(
+                    'title' => array(
+                        'headerText' => __('Title'),
+                        'dataKey' => 'title'
+                    ),
+                    'lang' => array(
+                        'lang' => true
+                    ),
+                    'author' => array(
+                        'headerText' => __('Author'),
+                        'dataKey' => 'author'
+                    ),
+                    'published' => array(
+                        'headerText' => __('Status'),
+                        'dataKey' => 'publication_status'
+                    ),
+                    'post_created_at' => array(
+                        'headerText' => __('Date'),
+                        'dataKey' => 'post_created_at',
+                        'dataFormatString' => 'MM/dd/yyyy HH:mm:ss',
+                        'showFilter' => false,
+                        'sortDirection' => 'descending'
+                    ),
+                    'actions' => array(
+                        'actions' => array('edit', 'delete', 'visualise'),
+                    ),
+                ),
+            ),
+
+            /**
+             * Liste des inspecteurs autour de la grid
+             */
+            'inspectors' => array(
+                'startdate' => array(
+                    'vertical' => true,
+                    'label' => __('Created date'),
+                    'url' => 'admin/noviusos_blognews/inspector/date/list',
+                    'inputName' => 'startdate'
+                ),
+                'categories' => array(
+                    'vertical' => true,
+                    'reloadEvent' => '{{blognews.namespace}}\\Model_Category',
+                    'url' => 'admin/{{blognews.dir}}/inspector/category/list',
+                    'inputName' => 'cat_id[]',
+                    'label' => __('Categories'),
+                    'treeGrid' => array(
+                        'treeUrl' => 'admin/{{blognews.dir}}/inspector/category/json',
+                        'sortable' => true,
+                        'columns' => array(
+                            'title' => array(
+                                'headerText' => __('Categories'),
+                                'dataKey' => 'title'
+                            ),
+                            'actions' => array(
+                                'actions' => array(
+                                    array(
+                                        'name' => 'edit',
+                                        'primary' => true,
+                                        'label' => __('Edit this category'),
+                                        'icon' => 'pencil',
+                                        'action' => array(
+                                            'action' => 'nosTabs',
+                                            'tab' => array(
+                                                'url' => 'admin/{{blognews.dir}}/category/insert_update/{{id}}',
+                                                'label' => 'Edit the "{{title}}" folder'
+                                            ),
+                                        ),
+                                    ),
+                                    array(
+                                        'name' => 'delete',
+                                        'label' => __('Delete this category'),
+                                        'icon' => 'trash',
+                                        'action' => array(
+                                            'action' => 'confirmationDialog',
+                                            'dialog' => array(
+                                                'contentUrl' => 'admin/{{blognews.dir}}/category/delete/{{id}}',
+                                                'title' => __('Delete this category'),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ), // ~treeGrid
+                ),
+                'tags' => array(
+                    'reloadEvent' => '{{blognews.namespace}}\\Model_Tag',
+                    'label' => __('Tags'),
+                    'url' => 'admin/{{blognews.dir}}/inspector/tag/list',
+                    'grid' => array(
+                        'urlJson' => 'admin/{{blognews.dir}}/inspector/tag/json',
+                        'columns' => array(
+                            'title' => array(
+                                'headerText' => __('Tag'),
+                                'dataKey' => 'title'
+                            ),
+                            'actions' => array(
+                                'actions' => array(
+                                    array(
+                                        'name' => 'delete',
+                                        'action' => array(
+                                            'action' => 'confirmationDialog',
+                                            'dialog' => array(
+                                                'contentUrl' => 'admin/{{blognews.dir}}/tag/delete/{{id}}',
+                                                'title' => __('Delete a tag')
+                                            ),
+                                        ),
+                                        'label' => __('Delete'),
+                                        'primary' => true,
+                                        'icon' => 'trash'
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'inputName' => 'tag_id[]',
+                    'vertical' => true
+                ),
+                'authors' => array(
+                    'reloadEvent' => '{{blognews.namespace}}\\Model_User',
+                    'label' => __('Authors'),
+                    'url' => 'admin/{{blognews.dir}}/inspector/author/list',
+                    'grid' => array(
+                        'columns' => array(
+                            'title' => array(
+                                'headerText' => __('Author'),
+                                'dataKey' => 'title'
+                            ),
+                        ),
+                        'urlJson' => 'admin/{{blognews.dir}}/inspector/author/json'
+                    ),
+                    'inputName' => 'author_id[]',
+                    'vertical' => true
+                ),
+            ), // ~inspectors
+        ),
+    ),
 );
