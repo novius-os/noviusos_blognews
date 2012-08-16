@@ -8,7 +8,7 @@ echo $fieldset->open(Uri::current());
 
 Event::register_function('config|noviusos_blognews::views/admin/category/form', 1, function(&$config) use ($fieldset, $category) {
     $config['fieldset'] = $fieldset;
-    $config['object']   = $category;
+    $config['item'] = $category;
     $config['content'][0]->set('content', $fieldset->field('parent_id'));
 });
 

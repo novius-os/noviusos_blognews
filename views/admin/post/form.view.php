@@ -15,7 +15,7 @@ echo $fieldset->open(Uri::current());
 
 Event::register_function('config|noviusos_blognews::views/admin/post/form', 1, function(&$config) use ($fieldset, $post) {
     $config['fieldset'] = $fieldset;
-    $config['object']   = $post;
+    $config['item'] = $post;
     $config['content'][0]->set('content', $fieldset->field('wysiwygs->content->wysiwyg_text'));
 });
 

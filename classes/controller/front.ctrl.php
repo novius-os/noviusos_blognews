@@ -133,7 +133,7 @@ class Controller_Front extends Controller_Front_Application {
         return View::forge($this->config['views']['list'], array(
             'posts'       => $posts,
             'type'        => 'main',
-            'object'      => 'main',
+            'item'        => 'main',
             'pagination' => $this->pagination
         ), false);
     }
@@ -151,7 +151,7 @@ class Controller_Front extends Controller_Front_Application {
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
             'type'        => 'tag',
-            'object'      => $tag,
+            'item'        => $tag,
             'pagination' => $this->pagination,
         ), false);
     }
@@ -168,7 +168,7 @@ class Controller_Front extends Controller_Front_Application {
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
             'type'        => 'category',
-            'object'      => $category,
+            'item'        => $category,
             'pagination' => $this->pagination,
         ), false);
     }

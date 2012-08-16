@@ -22,41 +22,28 @@ return array(
         'author' => array(
             'search_relation' => 'author',
             'search_column'   => 'author.user_name',
-            'value' =>  function($object) {
-                return $object->author->fullname();
+            'value' =>  function($item) {
+                return $item->author->fullname();
             },
         ),
         'post_created_at' => array(
             'search_column'    =>  'post_created_at',
             'dataType'         => 'datetime',
-            'value'            => function($object) {
-                return \Date::create_from_string($object->created_at, 'mysql')->format('%m/%d/%Y %H:%M:%S'); //%m/%d/%Y %H:%i:%s
+            'value'            => function($item) {
+                return \Date::create_from_string($item->created_at, 'mysql')->format('%m/%d/%Y %H:%M:%S'); //%m/%d/%Y %H:%i:%s
             },
         ),
         'url' => array(
-            'value' => function($object) {
-                return $object->first_url();
+            'value' => function($item) {
+                return $item->first_url();
             },
         ),
         'actions' => array(
-            'visualise' => function($object) {
-                $url = $object->first_url();
+            'visualise' => function($item) {
+                $url = $item->first_url();
                 return !empty($url);
             }
         ),
-
-//        'date' => array(
-//            'search_column'    => 'evt_date_begin',
-//            'dataType'         => 'datetime',
-//            'value'            => function($object) {
-//                return \Date::create_from_string($object->evt_date_begin, 'mysql')->format('%m/%d/%Y %H:%M');
-//            },
-//        ),
-//        'actions' => array(
-//            'delete' => function($voiture) {
-//                return $voiture->voit_modele != '306';
-//            }
-//        ),
     ),
     'inputs' => array(
         'startdate' => function($value, $query) {
