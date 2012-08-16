@@ -9,7 +9,7 @@
  */
 ?>
 <div id="<?= $id = uniqid('temp_') ?>">
-	<form method="POST" action="admin/<?=$application_name?>/application/popup_save">
+	<form method="POST" action="admin/<?= $application_name ?>/application/popup_save">
 		<div class="line myBody">
 			<div class="unit col c1"></div>
 			<div class="unit col c10 ui-widget">
