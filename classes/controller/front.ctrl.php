@@ -37,7 +37,7 @@ class Controller_Front extends Controller_Front_Application {
 
     public function before()
     {
-        parent::before();
+    	$this->app_config = \Arr:merge($this->app_config, static::getGlobalConfiguration());
         static::$tag_class = namespacize($this, 'Model_Tag');
         static::$post_class = namespacize($this, 'Model_Post');
         static::$category_class = namespacize($this, 'Model_Category');
@@ -59,6 +59,7 @@ class Controller_Front extends Controller_Front_Application {
             'category' => static::$category_class,
         );
 
+        parent::before();
     }
 
     public function action_home($args = array())
