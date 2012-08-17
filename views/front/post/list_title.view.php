@@ -1,11 +1,11 @@
 <?php
     $title = null;
     if ($type == 'tag') {
-        $title = Str::tr(__('Tag: :tag'), array('tag' => $item->label));
+        $title = Str::tr(__('Tag: :tag'), array('tag' => $item->tag_label));
         $link  = $item->get_url();
     }
     if ($type == 'category') {
-        $title = Str::tr(__('Category: :category'), array('category' => $item->title));
+        $title = Str::tr(__('Category: :category'), array('category' => $item->cat_title));
         $link  = $item->get_url();
     }
     if ($title !== null) {

@@ -8,7 +8,7 @@ define([
                 return obj.replace(/{{blognews.([\w]+)}}/g, function(str, p1, offset, s) {
                         return appDesk.blognews[p1];
                     });
-            } else if ($.isPlainObject(obj)) {
+            } else if ($.isPlainObject(obj) || $.isArray(obj)) {
                 $.each(obj, function(key, value) {
                     obj[key] = placeholderReplace(value);
                 });

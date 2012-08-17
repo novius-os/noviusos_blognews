@@ -92,10 +92,10 @@ class Controller_Front extends Controller_Front_Application {
                 $post = $this->_get_post(array(array('post_id', $segments[1])));
                 if (!empty($post)) {
                     $stats = \Session::get('noviusos_'.$application_name.'_stats', array());
-                    if (!in_array($post->id, $stats)) {
-                        $post->read++;
+                    if (!in_array($post->post_id, $stats)) {
+                        $post->post_read++;
                         $post->save();
-                        $stats[] = $post->id;
+                        $stats[] = $post->post_id;
                         \Session::set('noviusos_'.$application_name.'_stats', $stats);
                     }
                 }
@@ -189,8 +189,8 @@ class Controller_Front extends Controller_Front_Application {
             throw new \Nos\NotFoundException();
         }
         $page = \Nos\Nos::main_controller()->getPage();
-        \Nos\Nos::main_controller()->setTitle($page->page_title . ' - ' . $post->title);
-        $page->page_title = $post->title;
+        \Nos\Nos::main_controller()->setTitle($page->page_title . ' - ' . $post->post_title);
+        $page->page_title = $post->post_title;
         $add_comment_success = 'none';
         if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
             if ($this->app_config['comments']['use_recaptcha']) {
@@ -254,11 +254,11 @@ class Controller_Front extends Controller_Front_Application {
 
         switch ($model) {
             case static::$post_class :
-                return $url.urlencode($item->virtual_name).'.html';
+                return $url.urlencode($item->post_virtual_name).'.html';
                 break;
 
             case static::$tag_class :
-                return $url.'tag/'.urlencode($item->label).($page > 1 ? '/'.$page : '').'.html';
+                return $url.'tag/'.urlencode($item->tag_label).($page > 1 ? '/'.$page : '').'.html';
                 break;
 
             case static::$category_class :
@@ -280,7 +280,7 @@ class Controller_Front extends Controller_Front_Application {
                 $comm->comm_content = \Input::post('comm_content');
                 $date = new \Fuel\Core\Date();
                 $comm->comm_created_at = \Date::forge()->format('mysql');
-                $comm->comm_foreign_id = $post->id;
+                $comm->comm_foreign_id = $post->post_id;
                 $comm->comm_state = $this->config['comment_default_state'];
                 $comm->comm_ip = \Input::ip();
                 $comm->save();

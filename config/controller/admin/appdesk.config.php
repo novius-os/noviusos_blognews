@@ -30,7 +30,7 @@ return array(
             'search_column'    =>  'post_created_at',
             'dataType'         => 'datetime',
             'value'            => function($item) {
-                return \Date::create_from_string($item->created_at, 'mysql')->format('%m/%d/%Y %H:%M:%S'); //%m/%d/%Y %H:%i:%s
+                return \Date::create_from_string($item->post_created_at, 'mysql')->format('%m/%d/%Y %H:%M:%S'); //%m/%d/%Y %H:%i:%s
             },
         ),
         'url' => array(
@@ -87,16 +87,16 @@ return array(
 			}
 			return $query;
 		},
-		'blog_created_at' => function($value, $query) {
+		'post_created_at' => function($value, $query) {
 			list($begin, $end) = explode('|', $value.'|');
 			if ($begin) {
 				if ($begin = Date::create_from_string($begin, '%Y-%m-%d')) {
-					$query->where(array('blog_created_at', '>=', $begin->format('mysql')));
+					$query->where(array('post_created_at', '>=', $begin->format('mysql')));
 				}
 			}
 			if ($end) {
 				if ($end = Date::create_from_string($end, '%Y-%m-%d')) {
-					$query->where(array('blog_created_at', '<=', $end->format('mysql')));
+					$query->where(array('post_created_at', '<=', $end->format('mysql')));
 				}
 			}
 			return $query;
