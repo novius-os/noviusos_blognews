@@ -18,6 +18,10 @@ class Model_Category extends \Nos\Orm\Model
             'sort_property' => 'sort',
         ),
         'Nos\Orm_Behaviour_Url' => array(),
+        'Nos\Orm_Behaviour_Virtualname' => array(
+            'events' => array('before_save', 'after_save'),
+            'virtual_name_property' => 'cat_virtual_name',
+        ),
     );
 
     protected static $_has_many  = array();

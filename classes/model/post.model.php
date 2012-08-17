@@ -26,6 +26,10 @@ class Model_Post extends \Nos\Orm\Model
             'publication_bool_property' => 'published',
         ),
         'Nos\Orm_Behaviour_Url' => array(),
+        'Nos\Orm_Behaviour_Virtualname' => array(
+            'events' => array('before_save', 'after_save'),
+            'virtual_name_property' => 'post_virtual_name',
+        ),
     );
 
     protected static $_belongs_to  = array();
