@@ -43,6 +43,45 @@ class Model_Post extends \Nos\Orm\Model
             'single_id_property' => static::get_prefix().'lang_single_id',
             'invariant_fields'   => array(),
         );
+
+        static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
+            'data' => array(
+                \Nos\DataCatcher::TYPE_TITLE => array(
+                    'value' => 'post_title',
+                    'useTitle' => __('Title'),
+                ),
+                \Nos\DataCatcher::TYPE_URL => array(
+                    'value' => function($post) {
+                        return $post->url_canonical();
+                    },
+                    'options' => function($post) {
+                        $urls = array();
+                        foreach ($post->urls() as $possible)
+                        {
+                            $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
+                        }
+                        return $urls;
+                    },
+                    'useTitle' => __('Url'),
+                ),
+                \Nos\DataCatcher::TYPE_TEXT => array(
+                    'value' => function($post) {
+                        return $post->post_summary;
+                    },
+                    'useTitle' => __('Description'),
+                ),
+            ),
+            'data_catchers' => array(
+                array(
+                    'data_catcher' => 'rss_item',
+                    'title' => __('RSS Post item'),
+                ),
+                array(
+                    'data_catcher' => 'rss_channel',
+                    'title' => __('RSS Post channel comments'),
+                ),
+            ),
+        );
     }
 
     public static function relations($specific = false) {
@@ -103,7 +142,7 @@ class Model_Post extends \Nos\Orm\Model
                 'key_to' => 'comm_foreign_id',
                 'cascade_save' => false,
                 'cascade_delete' => true,
-                'conditions' => array('where' => array(array('comm_from_table', '=', static::$_table_name)), 'order_by' => array('comm_created_at' => 'ASC'))
+                'conditions' => array('where' => array(array('comm_from_model', '=', get_called_class())), 'order_by' => array('comm_created_at' => 'ASC'))
             );
         }
 
@@ -221,12 +260,7 @@ class Model_Post extends \Nos\Orm\Model
 
     // @todo: these function need to be moved
     public function get_url($params = array()) {
-
         return $this->url_canonical();
-//        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
-//        $page = isset($params['page']) ? $params['page'] : 1;
-
-//        return $url.urlencode($this->post_virtual_name).'.html';
     }
 
     public static function get_list_url($params = array()) {
@@ -258,7 +292,7 @@ class Model_Post extends \Nos\Orm\Model
         $comments_count = \Db::select(\Db::expr('COUNT(comm_id) AS count_result'), 'comm_foreign_id')
             ->from(\Nos\Comments\Model_Comment::table())
             ->where('comm_foreign_id', 'in', $ids)
-            ->and_where('comm_from_table', '=', static::$_table_name)
+            ->and_where('comm_from_model', '=', get_called_class())
             ->group_by('comm_foreign_id')
             ->execute()->as_array();
 
@@ -276,7 +310,7 @@ class Model_Post extends \Nos\Orm\Model
     protected $nb_comments = null;
     public function count_comments() {
         if ($this->nb_comments === null) {
-            $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_table' => static::$_table_name))));
+            $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_model' => get_class($this)))));
         }
         return $this->nb_comments;
     }

@@ -37,13 +37,14 @@ class Controller_Front extends Controller_Front_Application {
 
     public function before()
     {
+
         parent::before();
         static::$tag_class = namespacize($this, 'Model_Tag');
         static::$post_class = namespacize($this, 'Model_Post');
         static::$category_class = namespacize($this, 'Model_Category');
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
-        list($application_name) = static::getLocation();
+        list($application_name) = \Config::configFile(get_called_class());
         \Config::load('noviusos_blognews::controller/front', true);
 
 
@@ -61,17 +62,16 @@ class Controller_Front extends Controller_Front_Application {
 
     }
 
-    public function action_home($args = array())
-    {
-        $this->page_from = $this->main_controller->getPage();
-        $this->config['item_per_page'] = (int)$args['item_per_page'];
-        return $this->display_list_main($args);
+    public function after($response) {
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Posts').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/posts.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Comments').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/comments.html">');
+        return parent::after($response);
     }
 
 
     public function action_main($args = array()) {
 
-        list($application_name) = static::getLocation();
+        list($application_name) = \Config::configFile(get_called_class());
 
         $this->page_from = $this->main_controller->getPage();
 
@@ -80,9 +80,14 @@ class Controller_Front extends Controller_Front_Application {
         \View::set_global('config', $this->config);
 
         $enhancer_url = $this->main_controller->getEnhancerUrl();
+
+
+
         if (!empty($enhancer_url)) {
 	        $this->enhancerUrl_segments = explode('/', $enhancer_url);
-                $segments = $this->enhancerUrl_segments;
+            $segments = $this->enhancerUrl_segments;
+
+
 
 	        if (empty($segments[1])) {
                 return $this->display_item($args);
@@ -112,13 +117,51 @@ class Controller_Front extends Controller_Front_Application {
 	        } else if ($segments[0] === 'category') {
 		        $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
 		        return $this->display_list_category($args);
-	        }
+	        } else if ($segments[0] == 'rss') {
+                $post_class = static::$post_class;
+                $rss_generator = new \Nos\RssGenerator('');
+                $rss_generator->link = $this->page_from->get_href(array('absolute' => true)).'/'.$enhancer_url;
+                $rss_generator->language = $this->page_from->page_lang;
+                $content = false;
+                if ($segments[1] === 'posts') {
+                    $posts = $post_class::find('all');
+                    $rss_generator->title = _('Posts list');
+                    $rss_generator->description = _('Posts list');
+                    $content = $rss_generator->getFromNuggets($posts);
+
+                } else if ($segments[1] === 'comments') {
+                    $post_id = \Input::get('id', false);
+                    if ($post_id) {
+                        $comments = $post_class::find($post_id)->comments;
+                    } else {
+                        $comments = \Nos\Comments\Model_Comment::find('all');
+                    }
+                    $rss_generator->title = _('Comments list');
+                    $rss_generator->description = _('Comments list');
+                    $content = $rss_generator->getFromNuggets($comments);
+                }
+                \Response::forge($content, 200, array(
+                    'Content-Type' => 'application/xml',
+                ))->send(true);
+                \Event::shutdown();
+                exit();
+
+            }
+
+
 
 	        throw new \Nos\NotFoundException();
         }
 
 
         $this->init_pagination(1);
+        return $this->display_list_main($args);
+    }
+
+    public function action_home($args = array())
+    {
+        $this->page_from = $this->main_controller->getPage();
+        $this->config['item_per_page'] = (int)$args['item_per_page'];
         return $this->display_list_main($args);
     }
 
@@ -187,6 +230,7 @@ class Controller_Front extends Controller_Front_Application {
         if (empty($post)) {
             throw new \Nos\NotFoundException();
         }
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Comments').'" href="'.$this->page_from->get_href(array('absolute' => true)).'rss/comments.html?id='.$post->id.'">');
         $page = \Nos\Nos::main_controller()->getPage();
         \Nos\Nos::main_controller()->setTitle($page->page_title . ' - ' . $post->title);
         $page->page_title = $post->title;
@@ -211,10 +255,7 @@ class Controller_Front extends Controller_Front_Application {
     }
 
     protected function _get_post_list($params = array()) {
-
         $post_class = static::$post_class;
-        $params['cat_id'] = 15;
-        // Apply language
 
         if (isset($this->page_from->page_lang))
             $params['lang'] = $this->page_from->page_lang;
@@ -281,7 +322,7 @@ class Controller_Front extends Controller_Front_Application {
             {
                 $post_class = static::$post_class;
                 $comm = new Model_Comment();
-                $comm->comm_from_table = $post_class::get_table_name();
+                $comm->comm_from_model = $post_class;
                 $comm->comm_email = \Input::post('comm_email');
                 $comm->comm_author = \Input::post('comm_author');
                 $comm->comm_content = \Input::post('comm_content');

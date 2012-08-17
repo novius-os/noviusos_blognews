@@ -20,7 +20,7 @@ return array(
         'enabled'       => true,
         'show'          => true,
         'show_nb'       => true,
-        'use_recaptcha' => true,
+        'use_recaptcha' => false,
         'can_post'      => true
     ),
     'publication_date' => array(
