@@ -111,7 +111,6 @@ $datas = array(
             'virtual_name' => array(
                 'label' => __('URL: '),
                 'widget' => 'Nos\Widget_Virtualname',
-                'template' => '{label}{required} <div class="table-field">{field} <span>&nbsp;.html</span></div>',
                 'validation' => array(
                     'required',
                     'min_length' => array(2),
@@ -205,9 +204,9 @@ $datas = array(
                 'form' => array(
                 ),
                 //'dont_populate' => true,
-                'before_save' => function($object, $data) use ($namespace) {
-                    $object->categories;//fetch et 'cree' la relation
-                    unset($object->categories);
+                'before_save' => function($item, $data) use ($namespace) {
+                    $item->categories;//fetch et 'cree' la relation
+                    unset($item->categories);
 
                     $category_class = $namespace.'Model_Category';
                     if(!empty($data['categories']))
@@ -215,7 +214,7 @@ $datas = array(
                         foreach($data['categories'] as $cat_id)
                         {
                             if (ctype_digit($cat_id) ) {
-                                $object->categories[$cat_id] = $category_class::find($cat_id); // @todo: come back after...
+                                $item->categories[$cat_id] = $category_class::find($cat_id); // @todo: come back after...
                             }
                         }
                     }

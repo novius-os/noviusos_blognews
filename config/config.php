@@ -1,5 +1,11 @@
 <?php
 return array(
+    'icons' => array(
+        '64' => 'TO BE DEFINED',
+        '32' => 'TO BE DEFINED',
+        '16' => 'TO BE DEFINED'
+    ),
+    'application_name' => 'TO BE DEFINED',
     'categories' => array(
         'enabled' => true,
         'show'    => true,

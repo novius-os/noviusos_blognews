@@ -12,12 +12,15 @@ class Controller_Admin_Application extends \Nos\Controller
     {
         $this->class_cat = namespacize($this, 'Model_Category');
         $this->class_post = namespacize($this, 'Model_Post');
+
         parent::before();
     }
 
     function action_popup() {
 
         $params = array();
+        list($application_name) = \Config::configFile(get_called_class());
+        $params['application_name'] = $application_name;
 
         if ($this->app_config['categories']['enabled'])
         {
