@@ -116,7 +116,7 @@ return array(
                 'action' => array(
                     'action' => 'nosTabs',
                     'tab' => array(
-                        'url' => 'admin{{blognews.dir}}/post/insert_update/{{id}}',
+                        'url' => 'admin/{{blognews.dir}}/post/insert_update/{{id}}',
                         'label' => __('Edit this post'),
                         'iconUrl' => 'static/apps/{{blognews.dir}}/img/{{blognews.icon_name}}-16.png'
                     ),
