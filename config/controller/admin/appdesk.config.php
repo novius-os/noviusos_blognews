@@ -34,7 +34,6 @@ return array(
             },
         ),
         'url' => array(
-<<<<<<< HEAD
             'value' => function($object) {
                 return $object->url_canonical();
             },
@@ -42,15 +41,6 @@ return array(
         'actions' => array(
             'visualise' => function($object) {
                 $url = $object->url_canonical();
-=======
-            'value' => function($item) {
-                return $item->first_url();
-            },
-        ),
-        'actions' => array(
-            'visualise' => function($item) {
-                $url = $item->first_url();
->>>>>>> dev
                 return !empty($url);
             }
         ),
