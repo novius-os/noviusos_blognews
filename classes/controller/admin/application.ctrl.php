@@ -21,7 +21,7 @@ class Controller_Admin_Application extends \Nos\Controller
 
         if ($this->app_config['categories']['enabled'])
         {
-            list($application_name) = static::getLocation();
+            list($application_name) = \Config::configFile(get_called_class());
             $params['application_name'] = $application_name;
             $params['widget'] = Widget_Category_Selector::widget(
                 array(
