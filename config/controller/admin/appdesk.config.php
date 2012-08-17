@@ -116,7 +116,7 @@ return array(
                 'action' => array(
                     'action' => 'nosTabs',
                     'tab' => array(
-                        'url' => 'admin{{blognews.dir}}/post/insert_update/{{id}}',
+                        'url' => 'admin/{{blognews.dir}}/post/insert_update/{{id}}',
                         'label' => __('Edit this post'),
                         'iconUrl' => 'static/apps/{{blognews.dir}}/img/{{blognews.icon_name}}-16.png'
                     ),
@@ -147,7 +147,7 @@ return array(
             ),
         ),
 
-        // Nom de l'évènement pour recharger les données de la grid
+        // Event name for reloading the grid
         'reloadEvent' => '{{blognews.namespace}}\\Model_Post',
         'appdesk' => array(
             'texts' => array(
@@ -187,7 +187,7 @@ return array(
                 'proxyUrl' => 'admin/{{blognews.dir}}/appdesk/json',
 
                 /**
-                 * Liste des colonnes du affichées dans la grid. Les clés sont celles du dataset définies dans le fichier de config PHP
+                 * Liste des colonnes du affichï¿½es dans la grid. Les clï¿½s sont celles du dataset dï¿½finies dans le fichier de config PHP
                  */
                 'columns' => array(
                     'title' => array(
