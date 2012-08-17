@@ -70,6 +70,7 @@ class Controller_Front extends Controller_Front_Application {
 
 
     public function action_main($args = array()) {
+        $tag_class = static::$tag_class;
 
         list($application_name) = \Config::configFile(get_called_class());
 
@@ -124,7 +125,22 @@ class Controller_Front extends Controller_Front_Application {
                 $rss_generator->language = $this->page_from->page_lang;
                 $content = false;
                 if ($segments[1] === 'posts') {
-                    $posts = $post_class::find('all');
+                    $params = array();
+                    $category_id = \Input::get('category_id', false);
+                    if ($category_id) {
+                        $params['cat_id'] = $category_id;
+                    }
+
+                    $tag = \Input::get('tag', false);
+                    if ($tag) {
+                        $tag = $tag_class::find('first', array('where' => array(array(
+                            'tag_label', 'LIKE', strtolower($tag),
+                        ))));
+                        $params['tag'] = $tag;
+                    }
+
+
+                    $posts = $this->_get_post_list($params);
                     $rss_generator->title = _('Posts list');
                     $rss_generator->description = _('Posts list');
                     $content = $rss_generator->getFromNuggets($posts);
@@ -189,6 +205,8 @@ class Controller_Front extends Controller_Front_Application {
             'tag_label', 'LIKE', strtolower($tag),
         ))));
 
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Tag posts').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/posts.html?tag='.$tag->tag_label.'">');
+
         $posts = $this->_get_post_list(array('tag' => $tag));
 
         return View::forge('noviusos_blognews::front/post/list', array(
@@ -207,6 +225,8 @@ class Controller_Front extends Controller_Front_Application {
             'cat_virtual_name', 'LIKE', strtolower($category),
         ))));
         $posts = $this->_get_post_list(array('category' => $category));
+
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Category posts').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/posts.html?category_id='.$category->id.'">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
