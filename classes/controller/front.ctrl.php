@@ -332,7 +332,7 @@ class Controller_Front extends Controller_Front_Application {
                 break;
 
             case static::$category_class:
-                return 'category/'.urlencode($item->virtual_name).($page > 1 ? '/'.$page : '').'.html';
+                return 'category/'.urlencode($item->cat_virtual_name).($page > 1 ? '/'.$page : '').'.html';
                 break;
         }
         return false;
@@ -344,7 +344,7 @@ class Controller_Front extends Controller_Front_Application {
             {
                 $post_class = static::$post_class;
                 $comm = new Model_Comment();
-                $comm->comm_from_model = $post_class;
+                $comm->comm_from_table = $post_class::get_table_name();
                 $comm->comm_email = \Input::post('comm_email');
                 $comm->comm_author = \Input::post('comm_author');
                 $comm->comm_content = \Input::post('comm_content');

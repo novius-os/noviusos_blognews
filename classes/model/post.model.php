@@ -144,7 +144,7 @@ class Model_Post extends \Nos\Orm\Model
                 'key_to' => 'comm_foreign_id',
                 'cascade_save' => false,
                 'cascade_delete' => true,
-                'conditions' => array('where' => array(array('comm_from_model', '=', get_called_class())), 'order_by' => array('comm_created_at' => 'ASC'))
+                'conditions' => array('where' => array(array('comm_from_table', '=', static::$_table_name)), 'order_by' => array('comm_created_at' => 'ASC'))
             );
         }
 
@@ -254,7 +254,7 @@ class Model_Post extends \Nos\Orm\Model
         $comments_count = \Db::select(\Db::expr('COUNT(comm_id) AS count_result'), 'comm_foreign_id')
             ->from(\Nos\Comments\Model_Comment::table())
             ->where('comm_foreign_id', 'in', $ids)
-            ->and_where('comm_from_model', '=', get_called_class())
+            ->and_where('comm_from_table', '=', static::$_table_name)
             ->group_by('comm_foreign_id')
             ->execute()->as_array();
 
@@ -272,7 +272,7 @@ class Model_Post extends \Nos\Orm\Model
     protected $nb_comments = null;
     public function count_comments() {
         if ($this->nb_comments === null) {
-            $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_model' => get_class($this)))));
+            $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_table' => static::$_table_name))));
         }
         return $this->nb_comments;
     }

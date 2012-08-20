@@ -34,13 +34,13 @@ return array(
             },
         ),
         'url' => array(
-            'value' => function($object) {
-                return $object->url_canonical(array('preview' => true));
+            'value' => function($item) {
+                return $item->url_canonical(array('preview' => true));
             },
         ),
         'actions' => array(
-            'visualise' => function($object) {
-                $url = $object->url_canonical(array('preview' => true));
+            'visualise' => function($item) {
+                $url = $item->url_canonical(array('preview' => true));
                 return !empty($url);
             }
         ),
