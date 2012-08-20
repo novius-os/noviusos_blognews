@@ -54,15 +54,15 @@ class Model_Post extends \Nos\Orm\Model
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
                     'value' => function($post) {
-                        return $post->url_canonical();
+                        $urls = $post->urls();
+                        if (empty($urls)) {
+                            return null;
+                        }
+                        reset($urls);
+                        return key($urls);
                     },
                     'options' => function($post) {
-                        $urls = array();
-                        foreach ($post->urls() as $possible)
-                        {
-                            $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
-                        }
-                        return $urls;
+                        return $post->urls();
                     },
                     'useTitle' => __('Url'),
                 ),
