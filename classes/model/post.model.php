@@ -12,21 +12,32 @@ class Model_Post extends \Nos\Orm\Model
         'Orm\Observer_CreatedAt' => array(
             'events' => array('before_insert'),
             'mysql_timestamp' => true,
-            'property'=>'created_at'
+            'property'=>'post_created_at'
         ),
         'Orm\Observer_UpdatedAt' => array(
             'events' => array('before_save'),
             'mysql_timestamp' => true,
-            'property'=>'updated_at'
+            'property'=>'post_updated_at'
         )
     );
 
     protected static $_behaviours = array(
         'Nos\Orm_Behaviour_Publishable' => array(
-            'publication_bool_property' => 'published',
+            'publication_bool_property' => 'post_published',
         ),
         'Nos\Orm_Behaviour_Url' => array(
             'urls' => array(),
+        ),
+        'Nos\Orm_Behaviour_Virtualname' => array(
+            'events' => array('before_save', 'after_save'),
+            'virtual_name_property' => 'post_virtual_name',
+        ),
+        'Nos\Orm_Behaviour_Translatable' => array(
+            'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
+            'lang_property'      => 'post_lang',
+            'common_id_property' => 'post_lang_common_id',
+            'single_id_property' => 'post_lang_single_id',
+            'invariant_fields'   => array(),
         ),
     );
 
@@ -34,16 +45,7 @@ class Model_Post extends \Nos\Orm\Model
     protected static $_has_many  = array();
     protected static $_many_many = array();
 
-
     public static function _init() {
-        static::$_behaviours['Nos\Orm_Behaviour_Translatable'] = array(
-            'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'before_change_parent', 'after_change_parent'),
-            'lang_property'      => static::get_prefix().'lang',
-            'common_id_property' => static::get_prefix().'lang_common_id',
-            'single_id_property' => static::get_prefix().'lang_single_id',
-            'invariant_fields'   => array(),
-        );
-
         static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
             'data' => array(
                 \Nos\DataCatcher::TYPE_TITLE => array(
@@ -147,29 +149,6 @@ class Model_Post extends \Nos\Orm\Model
         }
 
         return parent::relations($specific);
-    }
-
-
-
-
-    public function & get($property)
-    {
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-           $property = static::get_prefix().$property;
-        }
-        return parent::get($property);
-    }
-
-    public function set($property, $value)
-    {
-
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-           $property = static::get_prefix().$property;
-        }
-
-        return parent::set($property,$value);
     }
 
     public static function get_primary_key() {

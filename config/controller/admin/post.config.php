@@ -35,14 +35,14 @@ $datas = array(
         ),
     ),
     'layout' => array(
-        'title' => 'title',
+        'title' => 'post_title',
         //'id' => 'blog_id',
         'large' => true,
         'medias' => array('medias->thumbnail->medil_media_id'),//'medias->thumbnail->medil_media_id'),
 
         'save' => 'save',
 
-        'subtitle' => array('summary'),
+        'subtitle' => array('post_summary'),
 
         'content' => array(
             'expander' => array(
@@ -67,15 +67,15 @@ $datas = array(
 
         'menu' => array(
             // user_fullname is not a real field in the database
-            __('Meta') => array('field_template' => '{field}', 'fields' => array('author->user_fullname', 'author_alias', 'created_at_date', 'created_at_time', 'read')),
-            __('URL (post address)') => array('virtual_name'),
+            __('Meta') => array('field_template' => '{field}', 'fields' => array('author->user_fullname', 'post_author_alias', 'post_created_at_date', 'post_created_at_time', 'post_read')),
+            __('URL (post address)') => array('post_virtual_name'),
             __('Tags') => array('tags'),
             __('Categories') => array('categories'),
         ),
     ),
     'fields' => function($namespace, $application_name) {
         return array(
-            'id' => array (
+            'post_id' => array (
                 'label' => 'ID: ',
                 'form' => array(
                     'type' => 'hidden',
@@ -84,7 +84,7 @@ $datas = array(
                 // requis car la clé primaire ne correspond pas (le getter fait le taf mais
                 // les mécanismes internes lèvent une exception)
             ),
-            'title' => array(
+            'post_title' => array(
                 'label' => 'Titre',
                 'form' => array(
                     'type' => 'text',
@@ -94,7 +94,7 @@ $datas = array(
                     'min_length' => array(2),
                 ),
             ),
-            'summary' => array (
+            'post_summary' => array (
                 'label' => __('Summary'),
                 'template' => '<td class="row-field">{field}</td>',
                 'form' => array(
@@ -102,13 +102,13 @@ $datas = array(
                     'rows' => '6',
                 ),
             ),
-            'author_alias' => array(
+            'post_author_alias' => array(
                 'label' => __('Alias: '),
                 'form' => array(
                     'type' => 'text',
                 ),
             ),
-            'virtual_name' => array(
+            'post_virtual_name' => array(
                 'label' => __('URL: '),
                 'widget' => 'Nos\Widget_Virtualname',
                 'validation' => array(
@@ -137,44 +137,44 @@ $datas = array(
                     'title' => 'Thumbnail',
                 ),
             ),
-            'created_at' => array(
+            'post_created_at' => array(
                 'form' => array(
                     'type' => 'text',
                 ),
                 'populate' => function($item) {
                     if (\Input::method() == 'POST') {
-                        return \Input::post('created_at_date').' '.\Input::post('created_at_time').':00';
+                        return \Input::post('post_created_at_date').' '.\Input::post('post_created_at_time').':00';
                     }
-                    return $item->created_at;
+                    return $item->post_created_at;
                 }
             ),
-            'created_at_date' => array(
+            'post_created_at_date' => array(
                 'label' => __('Created on:'),
                 'widget' => 'Nos\Widget_Date_Picker',
                 'template' => '<p>{label}<br/>{field}',
                 'dont_save' => true,
                 'populate' => function($item) {
 
-                    if ($item->created_at && $item->created_at!='0000-00-00 00:00:00')
-                        return \Date::create_from_string($item->created_at, 'mysql')->format('%Y-%m-%d');
+                    if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00')
+                        return \Date::create_from_string($item->post_created_at, 'mysql')->format('%Y-%m-%d');
                     else
                         return \Date::forge()->format('%Y-%m-%d');
                 }
             ),
-            'created_at_time' => array(
+            'post_created_at_time' => array(
                 'label' => __('Created time:'),
                 'widget' => 'Nos\Widget_Time_Picker',
                 'dont_save' => true,
                 'template' => ' {field}</p>',
                 'populate' => function($item) {
 
-                    if ($item->created_at && $item->created_at!='0000-00-00 00:00:00')
-                        return \Date::create_from_string($item->created_at, 'mysql')->format('%H:%M');
+                    if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00')
+                        return \Date::create_from_string($item->post_created_at, 'mysql')->format('%H:%M');
                     else
                         return \Date::forge()->format('%H:%M');
                 }
             ),
-            'read' => array(
+            'post_read' => array(
                 'label' => __('Read'),
                 'template' => '<p>{label} {field} times</p>',
                 'form' => array(
