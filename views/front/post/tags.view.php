@@ -4,7 +4,7 @@
         if (count($item->tags) > 0) {
             $tags = array();
             foreach ($item->tags as $tag) {
-                $tags[$tag->get_url()] = $tag->label;
+                $tags[$tag->get_url()] = $tag->tag_label;
             }
             $tags_str = implode(', ', array_map(function($href, $title) {
                 return '<a href="'.$href.'">'.$title.'</a>';

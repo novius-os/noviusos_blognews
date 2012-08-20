@@ -57,7 +57,7 @@ class Controller_Admin_Application extends \Nos\Controller
         $params['limit']            = \Input::post('item_per_page',null);
         $params['datas']            = $post::get_all($params);
         if (isset($params['cat_id']))
-            $params['categorie']        = ' de la catégorie ' . $cat::find($params['cat_id'])->title;
+            $params['categorie']        = ' de la catégorie ' . $cat::find($params['cat_id'])->cat_title;
         else
             $params['categorie']        = '';
         $body = array(

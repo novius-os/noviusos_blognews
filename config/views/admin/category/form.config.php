@@ -1,6 +1,6 @@
 <?php
 return array(
-    'title' => 'title',
+    'title' => 'cat_title',
     //'id' => 'blog_id',
     'large' => false,
 
@@ -18,7 +18,7 @@ return array(
     ),
     'menu' => array(
         // user_fullname is not a real field in the database
-        __('URL (category address)') => array('virtual_name'),
+        __('URL (category address)') => array('cat_virtual_name'),
 
     ),
 );

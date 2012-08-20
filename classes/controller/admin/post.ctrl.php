@@ -59,7 +59,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
             unset($this->config['layout']['menu'][__('Categories')]);
         }
         if (!$this->app_config['authors']['enabled']){
-            $this->config['layout']['menu'][__('Meta')] = array('field_template' => '{field}', 'fields' => array('created_at_date', 'created_at_time', 'read'));
+            $this->config['layout']['menu'][__('Meta')] = array('field_template' => '{field}', 'fields' => array('post_created_at_date', 'post_created_at_time', 'post_read'));
         }
 
         $this->config_build();

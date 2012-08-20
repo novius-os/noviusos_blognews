@@ -34,24 +34,6 @@ class Model_Tag extends \Nos\Orm\Model {
     function get_url($params = array()) {
         $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
         $page = isset($params['page']) ? $params['page'] : 1;
-        return $url.'tag/'.urlencode($this->label).($page > 1 ? '/'.$page : '').'.html';
-    }
-
-    public function & get($property)
-    {
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-            $property = static::get_prefix().$property;
-        }
-        return parent::get($property);
-    }
-
-    public function set($property, $value)
-    {
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-            $property = static::get_prefix().$property;
-        }
-        return parent::set($property,$value);
+        return $url.'tag/'.urlencode($this->tag_label).($page > 1 ? '/'.$page : '').'.html';
     }
 }

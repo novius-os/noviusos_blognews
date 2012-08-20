@@ -7,6 +7,19 @@ class Model_Category extends \Nos\Orm\Model
     protected static $_primary_key = array('category_id');
     protected static $_table_name = 'blognews_category';
 
+    protected static $_observers = array(
+        'Orm\Observer_CreatedAt' => array(
+            'events' => array('before_insert'),
+            'mysql_timestamp' => true,
+            'property'=>'cat_created_at'
+        ),
+        'Orm\Observer_UpdatedAt' => array(
+            'events' => array('before_save'),
+            'mysql_timestamp' => true,
+            'property'=>'cat_updated_at'
+        )
+    );
+
     protected static $_behaviours = array(
         'Nos\Orm_Behaviour_Tree' => array(
             'events' => array('before_query', 'after_delete'),
@@ -15,24 +28,25 @@ class Model_Category extends \Nos\Orm\Model
         ),
         'Nos\Orm_Behaviour_Sortable' => array(
             'events' => array('after_sort'),
-            'sort_property' => 'sort',
+            'sort_property' => 'cat_sort',
         ),
         'Nos\Orm_Behaviour_Url' => array(),
+        'Nos\Orm_Behaviour_Virtualname' => array(
+            'events' => array('before_save', 'after_save'),
+            'virtual_name_property' => 'cat_virtual_name',
+        ),
+        'Nos\Orm_Behaviour_Translatable' => array(
+            'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
+            'lang_property'      => 'cat_lang',
+            'common_id_property' => 'cat_lang_common_id',
+            'single_id_property' => 'cat_lang_single_id',
+            'invariant_fields'   => array('cat_parent_id', 'cat_sort'),
+        ),
     );
 
     protected static $_has_many  = array();
     protected static $_belongs_to = array();
     protected static $_many_many = array();
-
-    public static function _init() {
-        static::$_behaviours['Nos\Orm_Behaviour_Translatable'] = array(
-            'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'before_change_parent', 'after_change_parent'),
-            'lang_property'      => static::get_prefix().'lang',
-            'common_id_property' => static::get_prefix().'lang_common_id',
-            'single_id_property' => static::get_prefix().'lang_single_id',
-            'invariant_fields'   => array(static::get_prefix().'parent_id',static::get_prefix().'sort'),
-        );
-    }
 
     public static function relations($specific = false)
     {
@@ -74,25 +88,6 @@ class Model_Category extends \Nos\Orm\Model
         return parent::relations($specific);
     }
 
-
-    public function & get($property)
-    {
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-           $property = static::get_prefix().$property;
-        }
-        return parent::get($property);
-    }
-
-    public function set($property, $value)
-    {
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-           $property = static::get_prefix().$property;
-        }
-        return parent::set($property,$value);
-    }
-
     public static function get_primary_key() {
         return static::$_primary_key;
     }
@@ -105,7 +100,7 @@ class Model_Category extends \Nos\Orm\Model
         $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
         $page = isset($params['page']) ? $params['page'] : 1;
 
-        $titre = $this->virtual_name;
+        $titre = $this->cat_virtual_name;
 
         return $url.'category/'.$titre.($page > 1 ? '/'.$page : '').'.html';
     }
