@@ -236,23 +236,6 @@ class Model_Post extends \Nos\Orm\Model
         return $query->count();
     }
 
-
-    // @todo: these function need to be moved
-    public function get_url($params = array()) {
-        return $this->url_canonical();
-    }
-
-    public static function get_list_url($params = array()) {
-        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
-        $page = isset($params['page']) ? $params['page'] : 1;
-
-        if ($page == 1) {
-            return mb_substr($url, 0, -1).'.html';
-        }
-        return $url.'page/'.$page.'.html';
-
-    }
-
     public static function count_multiple_comments($items) {
         $class = get_called_class();
         list(,,$app,) = explode('\\', $class);

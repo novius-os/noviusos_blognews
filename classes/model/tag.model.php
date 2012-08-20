@@ -7,7 +7,13 @@ class Model_Tag extends \Nos\Orm\Model {
 
     protected static $_many_many = array();
 
-    protected static $_behaviours = array();
+    protected static $_behaviours = array(
+        'Nos\Orm_Behaviour_Url' => array(
+            'urls' => array(),
+        ),
+    );
+
+    public static function _init() {}
 
     public static function relations($specific = false)
     {
@@ -31,11 +37,5 @@ class Model_Tag extends \Nos\Orm\Model {
         );
 
         return parent::relations($specific);
-    }
-
-    function get_url($params = array()) {
-        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
-        $page = isset($params['page']) ? $params['page'] : 1;
-        return $url.'tag/'.urlencode($this->tag_label).($page > 1 ? '/'.$page : '').'.html';
     }
 }
