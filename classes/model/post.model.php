@@ -12,21 +12,32 @@ class Model_Post extends \Nos\Orm\Model
         'Orm\Observer_CreatedAt' => array(
             'events' => array('before_insert'),
             'mysql_timestamp' => true,
-            'property'=>'created_at'
+            'property'=>'post_created_at'
         ),
         'Orm\Observer_UpdatedAt' => array(
             'events' => array('before_save'),
             'mysql_timestamp' => true,
-            'property'=>'updated_at'
+            'property'=>'post_updated_at'
         )
     );
 
     protected static $_behaviours = array(
         'Nos\Orm_Behaviour_Publishable' => array(
-            'publication_bool_property' => 'published',
+            'publication_bool_property' => 'post_published',
         ),
         'Nos\Orm_Behaviour_Url' => array(
             'urls' => array(),
+        ),
+        'Nos\Orm_Behaviour_Virtualname' => array(
+            'events' => array('before_save', 'after_save'),
+            'virtual_name_property' => 'post_virtual_name',
+        ),
+        'Nos\Orm_Behaviour_Translatable' => array(
+            'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
+            'lang_property'      => 'post_lang',
+            'common_id_property' => 'post_lang_common_id',
+            'single_id_property' => 'post_lang_single_id',
+            'invariant_fields'   => array(),
         ),
     );
 
@@ -34,14 +45,44 @@ class Model_Post extends \Nos\Orm\Model
     protected static $_has_many  = array();
     protected static $_many_many = array();
 
-
     public static function _init() {
-        static::$_behaviours['Nos\Orm_Behaviour_Translatable'] = array(
-            'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'before_change_parent', 'after_change_parent'),
-            'lang_property'      => static::get_prefix().'lang',
-            'common_id_property' => static::get_prefix().'lang_common_id',
-            'single_id_property' => static::get_prefix().'lang_single_id',
-            'invariant_fields'   => array(),
+        static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
+            'data' => array(
+                \Nos\DataCatcher::TYPE_TITLE => array(
+                    'value' => 'post_title',
+                    'useTitle' => __('Title'),
+                ),
+                \Nos\DataCatcher::TYPE_URL => array(
+                    'value' => function($post) {
+                        return $post->url_canonical();
+                    },
+                    'options' => function($post) {
+                        $urls = array();
+                        foreach ($post->urls() as $possible)
+                        {
+                            $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
+                        }
+                        return $urls;
+                    },
+                    'useTitle' => __('Url'),
+                ),
+                \Nos\DataCatcher::TYPE_TEXT => array(
+                    'value' => function($post) {
+                        return $post->post_summary;
+                    },
+                    'useTitle' => __('Description'),
+                ),
+            ),
+            'data_catchers' => array(
+                array(
+                    'data_catcher' => 'rss_item',
+                    'title' => __('RSS Post item'),
+                ),
+                array(
+                    'data_catcher' => 'rss_channel',
+                    'title' => __('RSS Post channel comments'),
+                ),
+            ),
         );
     }
 
@@ -103,34 +144,11 @@ class Model_Post extends \Nos\Orm\Model
                 'key_to' => 'comm_foreign_id',
                 'cascade_save' => false,
                 'cascade_delete' => true,
-                'conditions' => array('where' => array(array('comm_from_table', '=', static::$_table_name)), 'order_by' => array('comm_created_at' => 'ASC'))
+                'conditions' => array('where' => array(array('comm_from_model', '=', get_called_class())), 'order_by' => array('comm_created_at' => 'ASC'))
             );
         }
 
         return parent::relations($specific);
-    }
-
-
-
-
-    public function & get($property)
-    {
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-           $property = static::get_prefix().$property;
-        }
-        return parent::get($property);
-    }
-
-    public function set($property, $value)
-    {
-
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-           $property = static::get_prefix().$property;
-        }
-
-        return parent::set($property,$value);
     }
 
     public static function get_primary_key() {
@@ -236,7 +254,7 @@ class Model_Post extends \Nos\Orm\Model
         $comments_count = \Db::select(\Db::expr('COUNT(comm_id) AS count_result'), 'comm_foreign_id')
             ->from(\Nos\Comments\Model_Comment::table())
             ->where('comm_foreign_id', 'in', $ids)
-            ->and_where('comm_from_table', '=', static::$_table_name)
+            ->and_where('comm_from_model', '=', get_called_class())
             ->group_by('comm_foreign_id')
             ->execute()->as_array();
 
@@ -254,7 +272,7 @@ class Model_Post extends \Nos\Orm\Model
     protected $nb_comments = null;
     public function count_comments() {
         if ($this->nb_comments === null) {
-            $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_table' => static::$_table_name))));
+            $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_model' => get_class($this)))));
         }
         return $this->nb_comments;
     }

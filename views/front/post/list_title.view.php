@@ -3,11 +3,11 @@
     $title = null;
 
     if ($type == 'tag') {
-        $title = Str::tr(__('Tag: :tag'), array('tag' => $object->label));
+        $title = Str::tr(__('Tag: :tag'), array('tag' => $object->tag_label));
         $link  = $object->url();
     }
     if ($type == 'category') {
-        $title = Str::tr(__('Category: :category'), array('category' => $object->title));
+        $title = Str::tr(__('Category: :category'), array('category' => $object->cat_title));
         $link  = $object->url();
     }
     if ($title !== null) {

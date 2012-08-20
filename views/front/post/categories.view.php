@@ -4,7 +4,7 @@
         if (count($item->categories) > 0) {
             $categories = array();
             foreach ($item->categories as $category) {
-                $categories[$category->url()] = $category->title;
+                $categories[$category->url()] = $category->cat_title;
             }
             $categories_str = implode(', ', array_map(function($href, $title) {
                 return '<a href="'.$href.'">'.$title.'</a>';

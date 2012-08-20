@@ -45,6 +45,7 @@ class Controller_Front extends Controller_Front_Application {
     public function before()
     {
         parent::before();
+    	$this->app_config = \Arr::merge($this->app_config, static::getGlobalConfiguration());
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
         list($application_name) = \Config::configFile(get_called_class());
@@ -63,17 +64,18 @@ class Controller_Front extends Controller_Front_Application {
             'category' => static::$category_class,
         );
 
+        parent::before();
     }
 
-    public function action_home($args = array())
-    {
-        $this->page_from = $this->main_controller->getPage();
-        $this->config['item_per_page'] = (int)$args['item_per_page'];
-        return $this->display_list_main($args);
+    public function after($response) {
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Posts').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/posts.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Comments').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/comments.html">');
+        return parent::after($response);
     }
 
 
     public function action_main($args = array()) {
+        $tag_class = static::$tag_class;
 
         list($application_name) = \Config::configFile(get_called_class());
 
@@ -84,9 +86,14 @@ class Controller_Front extends Controller_Front_Application {
         \View::set_global('config', $this->config);
 
         $enhancer_url = $this->main_controller->getEnhancerUrl();
+
+
+
         if (!empty($enhancer_url)) {
 	        $this->enhancerUrl_segments = explode('/', $enhancer_url);
-                $segments = $this->enhancerUrl_segments;
+            $segments = $this->enhancerUrl_segments;
+
+
 
 	        if (empty($segments[1])) {
                 return $this->display_item($args);
@@ -95,10 +102,10 @@ class Controller_Front extends Controller_Front_Application {
                 $post = $this->_get_post(array(array('post_id', $segments[1])));
                 if (!empty($post)) {
                     $stats = \Session::get('noviusos_'.$application_name.'_stats', array());
-                    if (!in_array($post->id, $stats)) {
-                        $post->read++;
+                    if (!in_array($post->post_id, $stats)) {
+                        $post->post_read++;
                         $post->save();
-                        $stats[] = $post->id;
+                        $stats[] = $post->post_id;
                         \Session::set('noviusos_'.$application_name.'_stats', $stats);
                     }
                 }
@@ -116,13 +123,66 @@ class Controller_Front extends Controller_Front_Application {
 	        } else if ($segments[0] === 'category') {
 		        $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
 		        return $this->display_list_category($args);
-	        }
+	        } else if ($segments[0] == 'rss') {
+                $post_class = static::$post_class;
+                $rss_generator = new \Nos\RssGenerator('');
+                $rss_generator->link = $this->page_from->get_href(array('absolute' => true)).'/'.$enhancer_url;
+                $rss_generator->language = $this->page_from->page_lang;
+                $content = false;
+                if ($segments[1] === 'posts') {
+                    $params = array();
+                    $category_id = \Input::get('category_id', false);
+                    if ($category_id) {
+                        $params['cat_id'] = $category_id;
+                    }
+
+                    $tag = \Input::get('tag', false);
+                    if ($tag) {
+                        $tag = $tag_class::find('first', array('where' => array(array(
+                            'tag_label', 'LIKE', strtolower($tag),
+                        ))));
+                        $params['tag'] = $tag;
+                    }
+
+
+                    $posts = $this->_get_post_list($params);
+                    $rss_generator->title = _('Posts list');
+                    $rss_generator->description = _('Posts list');
+                    $content = $rss_generator->getFromNuggets($posts);
+
+                } else if ($segments[1] === 'comments') {
+                    $post_id = \Input::get('id', false);
+                    if ($post_id) {
+                        $comments = $post_class::find($post_id)->comments;
+                    } else {
+                        $comments = \Nos\Comments\Model_Comment::find('all');
+                    }
+                    $rss_generator->title = _('Comments list');
+                    $rss_generator->description = _('Comments list');
+                    $content = $rss_generator->getFromNuggets($comments);
+                }
+                \Response::forge($content, 200, array(
+                    'Content-Type' => 'application/xml',
+                ))->send(true);
+                \Event::shutdown();
+                exit();
+
+            }
+
+
 
 	        throw new \Nos\NotFoundException();
         }
 
 
         $this->init_pagination(1);
+        return $this->display_list_main($args);
+    }
+
+    public function action_home($args = array())
+    {
+        $this->page_from = $this->main_controller->getPage();
+        $this->config['item_per_page'] = (int)$args['item_per_page'];
         return $this->display_list_main($args);
     }
 
@@ -137,7 +197,7 @@ class Controller_Front extends Controller_Front_Application {
         return View::forge($this->config['views']['list'], array(
             'posts'       => $posts,
             'type'        => 'main',
-            'object'      => 'main',
+            'item'        => 'main',
             'pagination' => $this->pagination
         ), false);
     }
@@ -150,12 +210,14 @@ class Controller_Front extends Controller_Front_Application {
             'tag_label', 'LIKE', strtolower($tag),
         ))));
 
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Tag posts').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/posts.html?tag='.$tag->tag_label.'">');
+
         $posts = $this->_get_post_list(array('tag' => $tag));
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
             'type'        => 'tag',
-            'object'      => $tag,
+            'item'        => $tag,
             'pagination' => $this->pagination,
         ), false);
     }
@@ -169,10 +231,12 @@ class Controller_Front extends Controller_Front_Application {
         ))));
         $posts = $this->_get_post_list(array('category' => $category));
 
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Category posts').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/posts.html?category_id='.$category->id.'">');
+
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
             'type'        => 'category',
-            'object'      => $category,
+            'item'        => $category,
             'pagination' => $this->pagination,
         ), false);
     }
@@ -191,9 +255,10 @@ class Controller_Front extends Controller_Front_Application {
         if (empty($post)) {
             throw new \Nos\NotFoundException();
         }
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Comments').'" href="'.$this->page_from->get_href(array('absolute' => true)).'rss/comments.html?id='.$post->id.'">');
         $page = \Nos\Nos::main_controller()->getPage();
-        \Nos\Nos::main_controller()->setTitle($page->page_title . ' - ' . $post->title);
-        $page->page_title = $post->title;
+        \Nos\Nos::main_controller()->setTitle($page->page_title . ' - ' . $post->post_title);
+        $page->page_title = $post->post_title;
         $add_comment_success = 'none';
         if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
             if ($this->app_config['comments']['use_recaptcha']) {
@@ -215,10 +280,7 @@ class Controller_Front extends Controller_Front_Application {
     }
 
     protected function _get_post_list($params = array()) {
-
         $post_class = static::$post_class;
-        //$params['cat_id'] = 15;
-        // Apply language
 
         if (isset($this->page_from->page_lang))
             $params['lang'] = $this->page_from->page_lang;
@@ -256,15 +318,15 @@ class Controller_Front extends Controller_Front_Application {
 
         switch ($model) {
             case static::$post_class:
-                return urlencode($item->virtual_name).'.html';
+                return urlencode($item->post_virtual_name).'.html';
                 break;
 
             case static::$tag_class:
-                return 'tag/'.urlencode($item->label).($page > 1 ? '/'.$page : '').'.html';
+                return 'tag/'.urlencode($item->tag_label).($page > 1 ? '/'.$page : '').'.html';
                 break;
 
             case static::$category_class:
-                return 'category/'.$item->virtual_name.($page > 1 ? '/'.$page : '').'.html';
+                return 'category/'.urlencode($item->virtual_name).($page > 1 ? '/'.$page : '').'.html';
                 break;
         }
         return false;
@@ -276,13 +338,13 @@ class Controller_Front extends Controller_Front_Application {
             {
                 $post_class = static::$post_class;
                 $comm = new Model_Comment();
-                $comm->comm_from_table = $post_class::get_table_name();
+                $comm->comm_from_model = $post_class;
                 $comm->comm_email = \Input::post('comm_email');
                 $comm->comm_author = \Input::post('comm_author');
                 $comm->comm_content = \Input::post('comm_content');
                 $date = new \Fuel\Core\Date();
                 $comm->comm_created_at = \Date::forge()->format('mysql');
-                $comm->comm_foreign_id = $post->id;
+                $comm->comm_foreign_id = $post->post_id;
                 $comm->comm_state = $this->config['comment_default_state'];
                 $comm->comm_ip = \Input::ip();
                 $comm->save();

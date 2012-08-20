@@ -16,8 +16,8 @@ return array(
 	),
 	'dataset' => array(
 		'id' => 'user_id',
-		'title' => function($object) {
-			return $object->fullname();
+		'title' => function($item) {
+			return $item->fullname();
 		},
 	),
 );

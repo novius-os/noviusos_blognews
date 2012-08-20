@@ -12,17 +12,18 @@ class Controller_Admin_Application extends \Nos\Controller
     {
         $this->class_cat = namespacize($this, 'Model_Category');
         $this->class_post = namespacize($this, 'Model_Post');
+
         parent::before();
     }
 
     function action_popup() {
 
         $params = array();
+        list($application_name) = \Config::configFile(get_called_class());
+        $params['application_name'] = $application_name;
 
         if ($this->app_config['categories']['enabled'])
         {
-            list($application_name) = \Config::configFile(get_called_class());
-            $params['application_name'] = $application_name;
             $params['widget'] = Widget_Category_Selector::widget(
                 array(
                     'width'                     => '260px',
@@ -31,7 +32,7 @@ class Controller_Admin_Application extends \Nos\Controller
                     'treeOptions'               => array(
                         'lang'                  => 'fr_FR'
                     ),
-                    'namespace'                 => \Inflector::get_namespace(get_class($this)),
+                    'namespace'                 => \Inflector::get_namespace(get_called_class()),
                     'application_name'          => $application_name,
                     'multiple'                  => '0',
                 )
@@ -56,7 +57,7 @@ class Controller_Admin_Application extends \Nos\Controller
         $params['limit']            = \Input::post('item_per_page',null);
         $params['datas']            = $post::get_all($params);
         if (isset($params['cat_id']))
-            $params['categorie']        = ' de la catégorie ' . $cat::find($params['cat_id'])->title;
+            $params['categorie']        = ' de la catégorie ' . $cat::find($params['cat_id'])->cat_title;
         else
             $params['categorie']        = '';
         $body = array(

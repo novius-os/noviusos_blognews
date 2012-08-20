@@ -38,22 +38,4 @@ class Model_Tag extends \Nos\Orm\Model {
 
         return parent::relations($specific);
     }
-
-    public function & get($property)
-    {
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-            $property = static::get_prefix().$property;
-        }
-        return parent::get($property);
-    }
-
-    public function set($property, $value)
-    {
-        if (array_key_exists(static::get_prefix().$property, static::properties()))
-        {
-            $property = static::get_prefix().$property;
-        }
-        return parent::set($property,$value);
-    }
 }

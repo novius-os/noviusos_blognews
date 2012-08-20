@@ -8,4 +8,3 @@ echo $pagination->create_links(function($page) use ($type, $object, $config) {
         return $object->url(array('page' => $page));
     }
 });
-

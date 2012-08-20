@@ -43,7 +43,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge($this->config, \Config::get('noviusos_blognews::controller/admin/post'), $this->getConfiguration());
+        $this->config = \Arr::merge($this->config, \Config::get('noviusos_blognews::controller/admin/post'), \Config::loadConfiguration($application_name, 'controller/admin/post'));
         $this->config['controller_url'] = 'admin/'.$application_name.'/post';
         $this->config['model'] = $class_post;
         $this->config['fields'] = $this->config['fields'](\Inflector::get_namespace(get_class($this)), $application_name);
@@ -59,7 +59,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
             unset($this->config['layout']['menu'][__('Categories')]);
         }
         if (!$this->app_config['authors']['enabled']){
-            $this->config['layout']['menu'][__('Meta')] = array('field_template' => '{field}', 'fields' => array('created_at_date', 'created_at_time', 'read'));
+            $this->config['layout']['menu'][__('Meta')] = array('field_template' => '{field}', 'fields' => array('post_created_at_date', 'post_created_at_time', 'post_read'));
         }
 
         $this->config_build();
