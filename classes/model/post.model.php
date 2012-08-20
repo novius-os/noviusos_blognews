@@ -26,7 +26,7 @@ class Model_Post extends \Nos\Orm\Model
             'publication_bool_property' => 'post_published',
         ),
         'Nos\Orm_Behaviour_Url' => array(
-            'urls' => array(),
+            'enhancers' => array(),
         ),
         'Nos\Orm_Behaviour_Virtualname' => array(
             'events' => array('before_save', 'after_save'),
@@ -78,7 +78,7 @@ class Model_Post extends \Nos\Orm\Model
                     'data_catcher' => 'rss_item',
                     'title' => __('RSS Post item'),
                 ),
-                array(
+                'comments_rss_channel' => array(
                     'data_catcher' => 'rss_channel',
                     'title' => __('RSS Post channel comments'),
                 ),

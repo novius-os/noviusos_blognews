@@ -9,11 +9,40 @@ class Model_Tag extends \Nos\Orm\Model {
 
     protected static $_behaviours = array(
         'Nos\Orm_Behaviour_Url' => array(
-            'urls' => array(),
+            'enhancers' => array(),
         ),
     );
 
-    public static function _init() {}
+    public static function _init() {
+        static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
+            'data' => array(
+                \Nos\DataCatcher::TYPE_TITLE => array(
+                    'value' => 'tag_label',
+                    'useTitle' => __('Title'),
+                ),
+                \Nos\DataCatcher::TYPE_URL => array(
+                    'value' => function($tag) {
+                        return $tag->url_canonical();
+                    },
+                    'options' => function($tag) {
+                        $urls = array();
+                        foreach ($tag->urls() as $possible)
+                        {
+                            $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
+                        }
+                        return $urls;
+                    },
+                    'useTitle' => __('Url'),
+                ),
+            ),
+            'data_catchers' => array(
+                'blog_posts_rss_channel' => array(
+                    'data_catcher' => 'rss_channel',
+                    'title' => __('RSS Post channel'),
+                ),
+            ),
+        );
+    }
 
     public static function relations($specific = false)
     {

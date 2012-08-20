@@ -31,7 +31,7 @@ class Model_Category extends \Nos\Orm\Model
             'sort_property' => 'cat_sort',
         ),
         'Nos\Orm_Behaviour_Url' => array(
-            'urls' => array(),
+            'enhancers' => array(),
         ),
         'Nos\Orm_Behaviour_Virtualname' => array(
             'events' => array('before_save', 'after_save'),
@@ -49,6 +49,37 @@ class Model_Category extends \Nos\Orm\Model
     protected static $_has_many  = array();
     protected static $_belongs_to = array();
     protected static $_many_many = array();
+
+    public static function _init() {
+        static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
+            'data' => array(
+                \Nos\DataCatcher::TYPE_TITLE => array(
+                    'value' => 'cat_title',
+                    'useTitle' => __('Title'),
+                ),
+                \Nos\DataCatcher::TYPE_URL => array(
+                    'value' => function($category) {
+                        return $category->url_canonical();
+                    },
+                    'options' => function($category) {
+                        $urls = array();
+                        foreach ($category->urls() as $possible)
+                        {
+                            $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
+                        }
+                        return $urls;
+                    },
+                    'useTitle' => __('Url'),
+                ),
+            ),
+            'data_catchers' => array(
+                'blog_posts_rss_channel' => array(
+                    'data_catcher' => 'rss_channel',
+                    'title' => __('RSS Post channel'),
+                ),
+            ),
+        );
+    }
 
     public static function relations($specific = false)
     {
