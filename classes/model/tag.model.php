@@ -7,6 +7,8 @@ class Model_Tag extends \Nos\Orm\Model {
 
     protected static $_many_many = array();
 
+    protected static $_behaviours = array();
+
     public static function relations($specific = false)
     {
         $class = get_called_class();

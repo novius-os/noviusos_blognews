@@ -63,8 +63,13 @@ class Controller_Front extends Controller_Front_Application {
     }
 
     public function after($response) {
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Posts').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/posts.html">');
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.__('Comments').'" href="'.$this->page_from->get_href(array('absolute' => true)).'/rss/comments.html">');
+        $nuggets = $this->page_from->get_catcher_nuggets('blog_posts_rss_channel');
+        $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Posts list');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.\Nos\Nos::main_controller()->getEnhancedUrlPath().'rss/posts.html">');
+
+        $nuggets = $this->page_from->get_catcher_nuggets('blog_posts_rss_channel');
+        $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Comments list');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.\Nos\Nos::main_controller()->getEnhancedUrlPath().'rss/comments.html">');
         return parent::after($response);
     }
 
@@ -121,7 +126,7 @@ class Controller_Front extends Controller_Front_Application {
 	        } else if ($segments[0] == 'rss') {
                 $post_class = static::$post_class;
                 $rss_generator = new \Nos\RssGenerator('');
-                $rss_generator->link = $this->page_from->get_href(array('absolute' => true)).'/'.$enhancer_url;
+                $rss_generator->link = \Uri::base(false).\Nos\Nos::main_controller()->getEnhancedUrlPath().$enhancer_url;
                 $rss_generator->language = $this->page_from->page_lang;
                 $content = false;
                 if ($segments[1] === 'posts') {
@@ -141,8 +146,9 @@ class Controller_Front extends Controller_Front_Application {
 
 
                     $posts = $this->_get_post_list($params);
-                    $rss_generator->title = _('Posts list');
-                    $rss_generator->description = _('Posts list');
+                    $nuggets = $this->page_from->get_catcher_nuggets('blog_posts_rss_channel');
+                    $rss_generator->title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Posts list');
+                    $rss_generator->description = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TEXT]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Posts list');
                     $content = $rss_generator->getFromNuggets($posts);
 
                 } else if ($segments[1] === 'comments') {
