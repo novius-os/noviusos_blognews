@@ -1,5 +1,5 @@
 <h2 class="title">
-    <a href="<?= $item->get_url() ?>">
+    <a href="<?= $item->url() ?>">
         <?= $item->post_title ?>
     </a>
 </h2>

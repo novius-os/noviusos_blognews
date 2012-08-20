@@ -102,13 +102,4 @@ class Model_Category extends \Nos\Orm\Model
     public static function get_table_name() {
         return static::$_table_name;
     }
-
-    public function get_url($params = array()) {
-        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
-        $page = isset($params['page']) ? $params['page'] : 1;
-
-        $titre = $this->virtual_name;
-
-        return $url.'category/'.$titre.($page > 1 ? '/'.$page : '').'.html';
-    }
 }

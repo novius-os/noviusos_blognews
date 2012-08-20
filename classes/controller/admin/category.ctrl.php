@@ -33,7 +33,7 @@ class Controller_Admin_Category extends \Nos\Controller_Admin_Crud {
         parent::before();
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
-        list($application_name) = static::getLocation();
+        list($application_name) = \Config::configFile(get_called_class());
         \Config::load('noviusos_blognews::controller/admin/category', true);
 
         // We are manually merging configuration since we are not using the extend functionnality as intended.
@@ -41,7 +41,7 @@ class Controller_Admin_Category extends \Nos\Controller_Admin_Crud {
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config                       = \Arr::merge($this->config,\Config::get('noviusos_blognews::controller/admin/category'), static::loadConfiguration($application_name, 'controller/admin/category'));
+        $this->config                       = \Arr::merge($this->config,\Config::get('noviusos_blognews::controller/admin/category'), $this->getConfiguration());
 
         $this->config['controller_url']     = 'admin/'.$application_name.'/category';
         $this->config['model']              = $class_category;

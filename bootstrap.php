@@ -8,7 +8,7 @@ namespace Nos\BlogNews;
  * @param  string $className la classe que l'on recherche
  * @return string            le nom de la classe complète
  */
-function namespacize($self,$className)
+function namespacize($self, $className)
 {
     return \Inflector::get_namespace(get_class($self)).$className;
 }

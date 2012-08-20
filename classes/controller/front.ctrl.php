@@ -35,15 +35,19 @@ class Controller_Front extends Controller_Front_Application {
     public static $post_class;
     public static $category_class;
 
+    public static function _init() {
+        $namespace = \Inflector::get_namespace(get_called_class());
+        static::$tag_class = $namespace.'Model_Tag';
+        static::$post_class = $namespace.'Model_Post';
+        static::$category_class = $namespace.'Model_Category';
+    }
+
     public function before()
     {
         parent::before();
-        static::$tag_class = namespacize($this, 'Model_Tag');
-        static::$post_class = namespacize($this, 'Model_Post');
-        static::$category_class = namespacize($this, 'Model_Category');
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
-        list($application_name) = static::getLocation();
+        list($application_name) = \Config::configFile(get_called_class());
         \Config::load('noviusos_blognews::controller/front', true);
 
 
@@ -71,7 +75,7 @@ class Controller_Front extends Controller_Front_Application {
 
     public function action_main($args = array()) {
 
-        list($application_name) = static::getLocation();
+        list($application_name) = \Config::configFile(get_called_class());
 
         $this->page_from = $this->main_controller->getPage();
 
@@ -200,7 +204,7 @@ class Controller_Front extends Controller_Front_Application {
 
         return View::forge($this->config['views']['item'], array(
             'add_comment_success'   => $add_comment_success,
-            'item'                  => $post
+            'item'                  => $post,
         ), false);
     }
 
@@ -213,7 +217,7 @@ class Controller_Front extends Controller_Front_Application {
     protected function _get_post_list($params = array()) {
 
         $post_class = static::$post_class;
-        $params['cat_id'] = 15;
+        //$params['cat_id'] = 15;
         // Apply language
 
         if (isset($this->page_from->page_lang))
@@ -248,31 +252,22 @@ class Controller_Front extends Controller_Front_Application {
 
     static function get_url_model($item, $params = array()) {
         $model = get_class($item);
-        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
         $page = isset($params['page']) ? $params['page'] : 1;
 
         switch ($model) {
-            case static::$post_class :
-                return $url.urlencode($item->virtual_name).'.html';
+            case static::$post_class:
+                return urlencode($item->virtual_name).'.html';
                 break;
 
-            case static::$tag_class :
-                return $url.'tag/'.urlencode($item->label).($page > 1 ? '/'.$page : '').'.html';
+            case static::$tag_class:
+                return 'tag/'.urlencode($item->label).($page > 1 ? '/'.$page : '').'.html';
                 break;
 
-            case static::$category_class :
-                return $item->get_url();
+            case static::$category_class:
+                return 'category/'.$item->virtual_name.($page > 1 ? '/'.$page : '').'.html';
                 break;
         }
         return false;
-    }
-
-
-    static function url_model($item, $first = false) {
-        $model = \Inflector::denamespace(get_class($item));
-        if (in_array($model, array('Model_Tag', 'Model_Post', 'Model_Category'))) {
-            return \Nos\Tools_Enhancer::url_item('noviusos_blog', array(get_called_class(), 'get_url_model'), $item, $first);
-        }
     }
 
     protected function _add_comment($post) {
