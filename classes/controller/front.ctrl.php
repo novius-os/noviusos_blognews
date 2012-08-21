@@ -131,7 +131,7 @@ class Controller_Front extends Controller_Front_Application {
 	        } else if ($segments[0] == 'rss') {
                 $post_class = static::$post_class;
                 $rss_generator = new \Nos\RssGenerator('');
-                $rss_generator->link = \Uri::base(false).\Nos\Nos::main_controller()->getEnhancedUrlPath().$enhancer_url;
+                $rss_generator->link = \Uri::base(false).\Nos\Nos::main_controller()->getUrl();
                 $rss_generator->language = $this->page_from->page_lang;
                 $content = false;
                 if ($segments[1] === 'posts') {
