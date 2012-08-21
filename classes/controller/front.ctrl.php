@@ -118,7 +118,6 @@ class Controller_Front extends Controller_Front_Application {
 	        throw new \Nos\NotFoundException();
         }
 
-
         $this->init_pagination(1);
         return $this->display_list_main($args);
     }
@@ -214,9 +213,8 @@ class Controller_Front extends Controller_Front_Application {
     protected function _get_post_list($params = array()) {
 
         $post_class = static::$post_class;
-        $params['cat_id'] = 15;
-        // Apply language
 
+        // Apply language
         if (isset($this->page_from->page_lang))
             $params['lang'] = $this->page_from->page_lang;
         else

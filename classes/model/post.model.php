@@ -117,11 +117,6 @@ class Model_Post extends \Nos\Orm\Model
     }
 
 
-
-
-
-
-
     public static function get_first($where, $preview = false) {
         // First argument is a string => it's the virtual name
         if (!is_array($where)) {
@@ -149,11 +144,10 @@ class Model_Post extends \Nos\Orm\Model
             $query->related(array('tags'));
             $query->where(array('tags.tag_label', $params['tag']->tag_label));
         }
-        if (!empty($params['cat_id'])) {
+        if (!empty($params['category'])) {
             $query->related(array('categories'));
-            $query->where(array('categories.cat_id', $params['cat_id']));
+            $query->where(array('categories.cat_id', $params['category']->cat_id));
         }
-
         if (!empty($params['order_by'])) {
             $query->order_by($params['order_by']);
         }
