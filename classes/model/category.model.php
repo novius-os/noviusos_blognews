@@ -30,7 +30,7 @@ class Model_Category extends \Nos\Orm\Model
             'events' => array('after_sort'),
             'sort_property' => 'cat_sort',
         ),
-        'Nos\Orm_Behaviour_Url' => array(
+        'Nos\Orm_Behaviour_Urlenhancer' => array(
             'enhancers' => array(),
         ),
         'Nos\Orm_Behaviour_Virtualname' => array(

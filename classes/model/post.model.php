@@ -25,7 +25,7 @@ class Model_Post extends \Nos\Orm\Model
         'Nos\Orm_Behaviour_Publishable' => array(
             'publication_bool_property' => 'post_published',
         ),
-        'Nos\Orm_Behaviour_Url' => array(
+        'Nos\Orm_Behaviour_Urlenhancer' => array(
             'enhancers' => array(),
         ),
         'Nos\Orm_Behaviour_Virtualname' => array(
