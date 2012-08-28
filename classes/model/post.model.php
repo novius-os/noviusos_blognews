@@ -207,12 +207,11 @@ class Model_Post extends \Nos\Orm\Model
     public static function get_all($params) {
         $query = static::get_query($params);
         $posts = $query->get();
-
+        $keys = array_keys((array) $posts);
 
         // Re-fetch with a 2nd request to get all the relations (not only the filtered ones)
         // @todo : to take a look later, see if the orm can't be fixed
-        if (!empty($params['tag']) || !empty($params['category'])) {
-            $keys = array_keys((array) $posts);
+        if (!empty($post) && (!empty($params['tag']) || !empty($params['category']))) {
             $posts = static::query(array(
                 'where' => array(
                     array('post_id', 'IN', $keys),
