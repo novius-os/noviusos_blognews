@@ -27,7 +27,7 @@ class Model_Category extends \Nos\Orm\Model
             'children_relation' => 'children',
         ),
         'Nos\Orm_Behaviour_Sortable' => array(
-            'events' => array('after_sort'),
+            'events' => array('after_sort', 'before_insert'),
             'sort_property' => 'cat_sort',
         ),
         'Nos\Orm_Behaviour_Urlenhancer' => array(
