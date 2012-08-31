@@ -16,14 +16,13 @@ class Controller_Admin_Application extends \Nos\Controller
         parent::before();
     }
 
-    function action_popup() {
-
+    public function action_popup()
+    {
         $params = array();
         list($application_name) = \Config::configFile(get_called_class());
         $params['application_name'] = $application_name;
 
-        if ($this->app_config['categories']['enabled'])
-        {
+        if ($this->app_config['categories']['enabled']) {
             $params['widget'] = Widget_Category_Selector::widget(
                 array(
                     'width'                     => '260px',
@@ -42,11 +41,13 @@ class Controller_Admin_Application extends \Nos\Controller
         return \View::forge('noviusos_blognews::admin/application/popup', $params, false);
     }
 
-    function action_popup_save() {
+    public function action_popup_save()
+    {
         return $this->action_preview();
     }
 
-    function action_preview() {
+    public function action_preview()
+    {
         $params = $_POST;
 
         $post = $this->class_post;

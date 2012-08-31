@@ -43,6 +43,7 @@ require(
                 e.preventDefault();
                 /*if ($verification.length && $verification.val() != $verification.data('verification')) {
                     $.nosNotify(<?= \Format::forge()->to_json(__('Wrong confirmation')); ?>, 'error');
+
                     return;
                 }*/
                 $container.nosAjax({

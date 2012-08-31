@@ -2,4 +2,4 @@
     <div class="summary">
         <?= nl2br($item->post_summary) ?>
     </div>
-<?php } ?>
+<?php }

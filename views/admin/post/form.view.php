@@ -8,8 +8,6 @@ foreach ($fieldset->field() as $field) {
     }
 }
 
-
-
 echo $fieldset->open(Uri::current());
 //<?= $fieldset->open('admin/noviusos_blog/blog/form'.($blog->is_new() ? '' : '/'.$blog->blog_id));
 
@@ -21,12 +19,9 @@ Event::register_function('config|noviusos_blognews::views/admin/post/form', 1, f
 
 $config = Config::load('noviusos_blognews::views/admin/post/form', true);
 
-
 echo View::forge('nos::form/layout_standard', $config, false);
 
-
 echo $fieldset->close();
-
 
 ?>
 

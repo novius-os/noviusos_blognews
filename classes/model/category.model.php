@@ -50,7 +50,8 @@ class Model_Category extends \Nos\Orm\Model
     protected static $_belongs_to = array();
     protected static $_many_many = array();
 
-    public static function _init() {
+    public static function _init()
+    {
         static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
             'data' => array(
                 \Nos\DataCatcher::TYPE_TITLE => array(
@@ -63,10 +64,10 @@ class Model_Category extends \Nos\Orm\Model
                     },
                     'options' => function($category) {
                         $urls = array();
-                        foreach ($category->urls() as $possible)
-                        {
+                        foreach ($category->urls() as $possible) {
                             $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
                         }
+
                         return $urls;
                     },
                     'useTitle' => __('Url'),
@@ -121,11 +122,13 @@ class Model_Category extends \Nos\Orm\Model
         return parent::relations($specific);
     }
 
-    public static function get_primary_key() {
+    public static function get_primary_key()
+    {
         return static::$_primary_key;
     }
 
-    public static function get_table_name() {
+    public static function get_table_name()
+    {
         return static::$_table_name;
     }
 }

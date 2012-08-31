@@ -41,6 +41,7 @@ return array(
         'actions' => array(
             'visualise' => function($item) {
                 $url = $item->url_canonical(array('preview' => true));
+
                 return !empty($url);
             }
         ),
@@ -58,49 +59,54 @@ return array(
                     $query->where(array('evt_date_begin', '<=', $end->format('mysql')));
                 }
             }
+
             return $query;
         },
-		'tag_id' => function($value, $query) {
+        'tag_id' => function($value, $query) {
 
-			if ( is_array($value) && count($value) && $value[0]) {
-				$query->related('tags', array(
-					'where' => array(
-						array('tags.tag_id', 'in', $value),
-					),
-				));
-			}
-			return $query;
-		},
+            if ( is_array($value) && count($value) && $value[0]) {
+                $query->related('tags', array(
+                    'where' => array(
+                        array('tags.tag_id', 'in', $value),
+                    ),
+                ));
+            }
+
+            return $query;
+        },
         'cat_id' => function($value, $query) {
-			if ( is_array($value) && count($value) && $value[0]) {
-				$query->related('categories', array(
-					'where' => array(
-						array('categories.cat_id', 'in', $value),
-					),
-				));
-			}
-			return $query;
-		},
+            if ( is_array($value) && count($value) && $value[0]) {
+                $query->related('categories', array(
+                    'where' => array(
+                        array('categories.cat_id', 'in', $value),
+                    ),
+                ));
+            }
+
+            return $query;
+        },
         'author_id' => function($value, $query) {
-			if ( is_array($value) && count($value) && $value[0]) {
-				$query->where(array('post_author_id', 'in', $value));
-			}
-			return $query;
-		},
-		'post_created_at' => function($value, $query) {
-			list($begin, $end) = explode('|', $value.'|');
-			if ($begin) {
-				if ($begin = Date::create_from_string($begin, '%Y-%m-%d')) {
-					$query->where(array('post_created_at', '>=', $begin->format('mysql')));
-				}
-			}
-			if ($end) {
-				if ($end = Date::create_from_string($end, '%Y-%m-%d')) {
-					$query->where(array('post_created_at', '<=', $end->format('mysql')));
-				}
-			}
-			return $query;
-		},
+            if ( is_array($value) && count($value) && $value[0]) {
+                $query->where(array('post_author_id', 'in', $value));
+            }
+
+            return $query;
+        },
+        'post_created_at' => function($value, $query) {
+            list($begin, $end) = explode('|', $value.'|');
+            if ($begin) {
+                if ($begin = Date::create_from_string($begin, '%Y-%m-%d')) {
+                    $query->where(array('post_created_at', '>=', $begin->format('mysql')));
+                }
+            }
+            if ($end) {
+                if ($end = Date::create_from_string($end, '%Y-%m-%d')) {
+                    $query->where(array('post_created_at', '<=', $end->format('mysql')));
+                }
+            }
+
+            return $query;
+        },
     ),
     'appdesk' => array(
         'tab' => array(

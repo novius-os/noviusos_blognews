@@ -10,14 +10,14 @@
  */
 
 return array(
-	'query' => array(
-		'model' => 'Nos\Model_User',
-		'order_by' => \DB::expr('CONCAT(COALESCE(user_firstname, ""), user_name)'),
-	),
-	'dataset' => array(
-		'id' => 'user_id',
-		'title' => function($item) {
-			return $item->fullname();
-		},
-	),
+    'query' => array(
+        'model' => 'Nos\Model_User',
+        'order_by' => \DB::expr('CONCAT(COALESCE(user_firstname, ""), user_name)'),
+    ),
+    'dataset' => array(
+        'id' => 'user_id',
+        'title' => function($item) {
+            return $item->fullname();
+        },
+    ),
 );

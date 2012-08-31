@@ -20,7 +20,6 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
      */
     protected static $ns_folder;
 
-
     /**
      * méthode magique appelée à l'initialisation du controlleur.
      * renseigne nos variables statiques
@@ -48,17 +47,16 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         $this->config['model'] = $class_post;
         $this->config['fields'] = $this->config['fields'](\Inflector::get_namespace(get_class($this)), $application_name);
 
-
-        if (!$this->app_config['summary']['enabled']){
+        if (!$this->app_config['summary']['enabled']) {
             unset($this->config['layout']['subtitle']);
         }
-        if (!$this->app_config['tags']['enabled']){
+        if (!$this->app_config['tags']['enabled']) {
             unset($this->config['layout']['menu'][__('Tags')]);
         }
-        if (!$this->app_config['categories']['enabled']){
+        if (!$this->app_config['categories']['enabled']) {
             unset($this->config['layout']['menu'][__('Categories')]);
         }
-        if (!$this->app_config['authors']['enabled']){
+        if (!$this->app_config['authors']['enabled']) {
             $this->config['layout']['menu'][__('Meta')] = array('field_template' => '{field}', 'fields' => array('post_created_at_date', 'post_created_at_time', 'post_read'));
         }
 
@@ -68,11 +66,9 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
     protected function form_item()
     {
         parent::form_item();
-        if ($this->item->is_new())
-        {
+        if ($this->item->is_new()) {
             $this->item->author = \Session::user();
-            if ($this->item_from)
-            {
+            if ($this->item_from) {
                 $this->item->tags = $this->item_from->tags;
             }
         }
@@ -82,6 +78,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
     {
         $fields = parent::fields($fields);
         \Arr::set($fields, 'author->user_fullname.form.value', $this->item->author->fullname());
+
         return $fields;
     }
 }

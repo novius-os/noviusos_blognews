@@ -8,10 +8,6 @@
  * @link http://www.novius-os.org
  */
 
-
-
-
-
 $datas = array(
     'controller_url'  => 'admin/noviusos_blognews/post',
     'model' => 'Nos\\BlogNews\\Model_Post',
@@ -145,6 +141,7 @@ $datas = array(
                     if (\Input::method() == 'POST') {
                         return \Input::post('post_created_at_date').' '.\Input::post('post_created_at_time').':00';
                     }
+
                     return $item->post_created_at;
                 }
             ),
@@ -209,10 +206,8 @@ $datas = array(
                     unset($item->categories);
 
                     $category_class = $namespace.'Model_Category';
-                    if(!empty($data['categories']))
-                    {
-                        foreach($data['categories'] as $cat_id)
-                        {
+                    if (!empty($data['categories'])) {
+                        foreach ($data['categories'] as $cat_id) {
                             if (ctype_digit($cat_id) ) {
                                 $item->categories[$cat_id] = $category_class::find($cat_id); // @todo: come back after...
                             }
@@ -233,6 +228,5 @@ $datas = array(
         );
     }
 );
-
 
 return $datas;

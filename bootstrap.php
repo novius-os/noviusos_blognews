@@ -23,6 +23,7 @@ function forge($self, $className, $args = array())
     ), $args);
 
     $class      = namespacize($self, $className);
+
     return $class::forge($args['data'], $args['new'], $args['view']);
 }
 

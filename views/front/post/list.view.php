@@ -7,5 +7,5 @@
     }
 ?>
     </div>
-    <? if ($pagination) echo \View::forge('noviusos_blognews::front/post/pagination', array('type' => $type, 'item' => $item, 'pagination' => $pagination), false) ?>
+    <?php if ($pagination) echo \View::forge('noviusos_blognews::front/post/pagination', array('type' => $type, 'item' => $item, 'pagination' => $pagination), false) ?>
 </div>

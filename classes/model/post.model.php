@@ -45,7 +45,8 @@ class Model_Post extends \Nos\Orm\Model
     protected static $_has_many  = array();
     protected static $_many_many = array();
 
-    public static function _init() {
+    public static function _init()
+    {
         static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
             'data' => array(
                 \Nos\DataCatcher::TYPE_TITLE => array(
@@ -59,6 +60,7 @@ class Model_Post extends \Nos\Orm\Model
                             return null;
                         }
                         reset($urls);
+
                         return key($urls);
                     },
                     'options' => function($post) {
@@ -86,19 +88,17 @@ class Model_Post extends \Nos\Orm\Model
         );
     }
 
-    public static function relations($specific = false) {
+    public static function relations($specific = false)
+    {
         $class = get_called_class();
         $category_class = \Inflector::get_namespace($class).'Model_Category';
         list($category_pk) = $category_class::primary_key();
         $tag_class = \Inflector::get_namespace($class).'Model_Tag';
         list($tag_pk) = $tag_class::primary_key();
 
-
-
         // @todo: should be loaded on config somewhere maybe
         $table_prefix_pos = strrpos(static::$_table_name, '_');
         $table_prefix = substr(static::$_table_name, 0, $table_prefix_pos);
-
 
         static::$_many_many['categories'] = array(
             'table_through' => $table_prefix.'_category_post',
@@ -136,8 +136,7 @@ class Model_Post extends \Nos\Orm\Model
         $app = strtolower($app);
         \Config::load('noviusos_'.$app.'::config', true);
         $withCom = \Config::get('noviusos_'.$app.'::config.comments.enabled');
-        if ($withCom)
-        {
+        if ($withCom) {
             static::$_has_many['comments'] = array(
                 'key_from' => 'post_id',
                 'model_to' => '\Nos\Comments\Model_Comment',
@@ -151,16 +150,18 @@ class Model_Post extends \Nos\Orm\Model
         return parent::relations($specific);
     }
 
-    public static function get_primary_key() {
+    public static function get_primary_key()
+    {
         return static::$_primary_key;
     }
 
-    public static function get_table_name() {
+    public static function get_table_name()
+    {
         return static::$_table_name;
     }
 
-
-    public static function get_first($where, $preview = false) {
+    public static function get_first($where, $preview = false)
+    {
         // First argument is a string => it's the virtual name
         if (!is_array($where)) {
             $where = array(array('post_virtual_name', '=', $where));
@@ -169,10 +170,12 @@ class Model_Post extends \Nos\Orm\Model
         if (!$preview) {
             $where[] = array('post_published', '=', true);
         }
+
         return static::find('first', array('where' => $where));
     }
 
-    public static function get_query($params) {
+    public static function get_query($params)
+    {
         $query = static::query()
             ->related(array('author'));
 
@@ -204,7 +207,8 @@ class Model_Post extends \Nos\Orm\Model
         return $query;
     }
 
-    public static function get_all($params) {
+    public static function get_all($params)
+    {
         $query = static::get_query($params);
         $posts = $query->get();
         $keys = array_keys((array) $posts);
@@ -221,15 +225,19 @@ class Model_Post extends \Nos\Orm\Model
             ))->get();
         }
         static::count_multiple_comments($posts);
+
         return $posts;
     }
 
-    public static function count_all($params) {
+    public static function count_all($params)
+    {
         $query = static::get_query($params);
+
         return $query->count();
     }
 
-    public static function count_multiple_comments($items) {
+    public static function count_multiple_comments($items)
+    {
         $class = get_called_class();
         list(,,$app,) = explode('\\', $class);
         $app = strtolower($app);
@@ -258,15 +266,17 @@ class Model_Post extends \Nos\Orm\Model
                 $items[$key]->nb_comments = $comments_count[$items[$key]->id];
             }
         }
+
         return $items;
     }
 
-
     protected $nb_comments = null;
-    public function count_comments() {
+    public function count_comments()
+    {
         if ($this->nb_comments === null) {
             $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_from_table' => static::$_table_name))));
         }
+
         return $this->nb_comments;
     }
 }

@@ -10,9 +10,9 @@
 
 namespace Nos\BlogNews;
 
-class Widget_Category_Selector extends \Nos\Widget_Selector {
-
-    var $lang = null;
+class Widget_Category_Selector extends \Nos\Widget_Selector
+{
+    public $lang = null;
     /**
      * Add a class and an id with a prefix to the widget attributes
      * @param $attributes
@@ -31,36 +31,34 @@ class Widget_Category_Selector extends \Nos\Widget_Selector {
             $this->lang = $attributes['widget_options']['instance']->get_lang();
         }
 
-        if(isset($attributes['widget_options']) && isset($attributes['widget_options']['parents'])){
+        if (isset($attributes['widget_options']) && isset($attributes['widget_options']['parents'])) {
             $this->widget_options['parents'] = $attributes['widget_options']['parents'];
             unset($attributes['widget_options']['parents']);
         }
 
     }
 
-    public function build() {
-
-        if(isset($this->widget_options) && isset($this->widget_options['multiple'])&& $this->widget_options['multiple']){
+    public function build()
+    {
+        if (isset($this->widget_options) && isset($this->widget_options['multiple'])&& $this->widget_options['multiple']) {
 
             //it is necessary to construct the "selected values" array with keys written like "namespace\model|id"
             // because it must be considered as JS Object when transformed to json (see modeltree_checkbox)
             // and this is the syntax used in this widget.
-            $ids = (array)$this->value;
+            $ids = (array) $this->value;
             $selected = array();
             $pre_selected = array();
             $disabled =  array();
-            if(isset($this->widget_options) && isset($this->widget_options['parents']))
-            {
+            if (isset($this->widget_options) && isset($this->widget_options['parents'])) {
                 $pre_selected = $this->widget_options['parents'];
                 unset($this->widget_options['parents']);
             }
-            foreach($ids as $id => $value)
-            {
+            foreach ($ids as $id => $value) {
                 $selected[$this->widget_options['namespace'].'Model_Category|'.$id] = array(
                     'id' => $id,
                     'model' => $this->widget_options['namespace'].'Model_Category',
                 );
-                if(in_array($id, $pre_selected)){
+                if (in_array($id, $pre_selected)) {
                     $disabled[$this->widget_options['namespace'].'Model_Category|'.$id] = array(
                         'id' => $id,
                         'model' => $this->widget_options['namespace'].'Model_Category',
@@ -72,7 +70,6 @@ class Widget_Category_Selector extends \Nos\Widget_Selector {
             $selected = array('id'=>$id);
             $disabled = array();
         }
-
 
         return $this->template(static::widget(array(
             'input_name' => $this->name,
@@ -98,11 +95,11 @@ class Widget_Category_Selector extends \Nos\Widget_Selector {
      * @param array $options
      */
 
-    public static function widget($options = array(), $attributes = array()) {
+    public static function widget($options = array(), $attributes = array())
+    {
         $view = 'inspector/modeltree_radio';
         $defaultSelected = null;
-        if (isset($options['multiple']) && $options['multiple'])
-        {
+        if (isset($options['multiple']) && $options['multiple']) {
             $view = 'inspector/modeltree_checkbox';
             $defaultSelected = array();
         }
@@ -124,6 +121,7 @@ class Widget_Category_Selector extends \Nos\Widget_Selector {
             'height' => '150px',
             'width' => null,
         ), $options);
+
         return (string) \Request::forge($options['application_name'].'/admin/inspector/category/list')->execute(
             array(
                 $view,

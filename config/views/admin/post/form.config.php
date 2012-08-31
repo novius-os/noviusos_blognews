@@ -29,16 +29,16 @@ $datas = array(
     ),
 );
 
-if (!\Config::get('noviusos_news::config.summary.enabled')){
+if (!\Config::get('noviusos_news::config.summary.enabled')) {
     unset($datas['subtitle']);
 }
-if (!\Config::get('noviusos_news::config.tags.enabled')){
+if (!\Config::get('noviusos_news::config.tags.enabled')) {
     unset($datas['menu'][__('Tags')]);
 }
-if (!\Config::get('noviusos_news::config.categories.enabled')){
+if (!\Config::get('noviusos_news::config.categories.enabled')) {
     unset($datas['menu'][__('Categories')]);
 }
-if (!\Config::get('noviusos_news::config.authors.enabled')){
+if (!\Config::get('noviusos_news::config.authors.enabled')) {
     $datas['menu'][__('Meta')] = array('field_template' => '{field}', 'fields' => array('post_created_at_date', 'post_created_at_time', 'post_read'));
 }
 return $datas;

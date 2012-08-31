@@ -1,7 +1,8 @@
 <?php
 namespace Nos\BlogNews;
 
-class Model_Tag extends \Nos\Orm\Model {
+class Model_Tag extends \Nos\Orm\Model
+{
     protected static $_table_name = 'nos_tag';
     protected static $_primary_key = array('tag_id');
 
@@ -13,7 +14,8 @@ class Model_Tag extends \Nos\Orm\Model {
         ),
     );
 
-    public static function _init() {
+    public static function _init()
+    {
         static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
             'data' => array(
                 \Nos\DataCatcher::TYPE_TITLE => array(
@@ -26,10 +28,10 @@ class Model_Tag extends \Nos\Orm\Model {
                     },
                     'options' => function($tag) {
                         $urls = array();
-                        foreach ($tag->urls() as $possible)
-                        {
+                        foreach ($tag->urls() as $possible) {
                             $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
                         }
+
                         return $urls;
                     },
                     'useTitle' => __('Url'),

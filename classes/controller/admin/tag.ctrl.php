@@ -2,10 +2,9 @@
 namespace Nos\BlogNews;
 
 use Nos\Controller;
-use View;
 
-class Controller_Admin_Tag extends \Nos\Controller_Admin_Crud {
-
+class Controller_Admin_Tag extends \Nos\Controller_Admin_Crud
+{
     /**
      * nom de la classe avec ns pour le modèle Model_Post
      * (on le déduit du ns qui instancie le modèle)
@@ -20,7 +19,6 @@ class Controller_Admin_Tag extends \Nos\Controller_Admin_Crud {
      * @var string
      */
     protected static $ns_folder;
-
 
     /**
      * méthode magique appelée à l'initialisation du controlleur.

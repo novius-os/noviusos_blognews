@@ -2,7 +2,6 @@
 $fieldset->populate_with_instance($category);
 $fieldset->form()->set_config('field_template',  "\t\t<tr><th class=\"{error_class}\">{label}{required}</th><td class=\"{error_class}\">{field} {error_msg}</td></tr>\n");
 
-
 echo $fieldset->open(Uri::current());
 //<?= $fieldset->open('admin/noviusos_blog/blog/form'.($blog->is_new() ? '' : '/'.$blog->blog_id));
 
@@ -14,12 +13,9 @@ Event::register_function('config|noviusos_blognews::views/admin/category/form', 
 
 $config = Config::load('noviusos_blognews::views/admin/category/form', true);
 
-
 echo View::forge('nos::form/layout_standard', $config, false);
 
-
 echo $fieldset->close();
-
 
 ?>
 
@@ -29,8 +25,6 @@ echo $fieldset->close();
         function ($) {
             $(function () {
                 var tabInfos = <?= \Format::forge()->to_json($tabInfos) ?>;
-
-
 
                 var $container = $('#<?= $fieldset->form()->get_attribute('id') ?>');
                 $container.nosOnShow('bind', function() {
