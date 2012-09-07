@@ -12,7 +12,10 @@ return array (
         'delete in the following languages' => __('Delete this categorie in the following languages:'),
         'item deleted' => __('This categorie has been deleted.'),
         'not found' => __('categorie not found'),
-        'blank_state_item_text' => __('categorie'),
+        'error added in lang not parent' => __('This category cannot be added {lang} because its {parent} is not available in this language yet.'),
+        'error added in lang' => __('This category cannot be added {lang}.'),
+        'item inexistent in lang yet' => __('This category has not been added in {lang} yet.'),
+        'add a item in lang' => __('Add a new category in {lang}'),
     ),
     'tab' => array(
         'iconUrl' => 'static/apps/noviusosdev_blognews/img/16/post.png',

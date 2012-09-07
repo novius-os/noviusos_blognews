@@ -21,7 +21,9 @@ $datas = array(
         'delete in the following languages' => __('Delete this post in the following languages:'),
         'item deleted' => __('This post has been deleted.'),
         'not found' => __('Post not found'),
-        'blank_state_item_text' => __('post'),
+        'error added in lang' => __('This post cannot be added {lang}.'),
+        'item inexistent in lang yet' => __('This post has not been added in {lang} yet.'),
+        'add a item in lang' => __('Add a new post in {lang}'),
     ),
     'tab' => array(
         'iconUrl' => 'static/apps/noviusos_blognews/img/16/post.png',

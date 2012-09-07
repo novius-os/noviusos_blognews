@@ -10,6 +10,5 @@ return array (
         'delete in the following languages' => __('Delete this tag in the following languages:'),
         'item deleted' => __('This tag has been deleted.'),
         'not found' => __('Tag not found'),
-        'blank_state_item_text' => __('tag'),
     ),
 );
