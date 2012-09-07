@@ -51,7 +51,7 @@ class Model_Post extends \Nos\Orm\Model
             'data' => array(
                 \Nos\DataCatcher::TYPE_TITLE => array(
                     'value' => 'post_title',
-                    'useTitle' => __('Title'),
+                    'useTitle' => __('Use post title'),
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
                     'value' => function($post) {
@@ -66,23 +66,22 @@ class Model_Post extends \Nos\Orm\Model
                     'options' => function($post) {
                         return $post->urls();
                     },
-                    'useTitle' => __('Url'),
                 ),
                 \Nos\DataCatcher::TYPE_TEXT => array(
                     'value' => function($post) {
                         return $post->post_summary;
                     },
-                    'useTitle' => __('Description'),
+                    'useTitle' => __('Use post summary'),
                 ),
             ),
             'data_catchers' => array(
                 array(
                     'data_catcher' => 'rss_item',
-                    'title' => __('RSS Post item'),
+                    'title' => __('RSS'),
                 ),
                 'comments_rss_channel' => array(
                     'data_catcher' => 'rss_channel',
-                    'title' => __('RSS Post channel comments'),
+                    'title' => __('RSS Comments channel for this post'),
                 ),
             ),
         );

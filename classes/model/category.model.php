@@ -56,7 +56,7 @@ class Model_Category extends \Nos\Orm\Model
             'data' => array(
                 \Nos\DataCatcher::TYPE_TITLE => array(
                     'value' => 'cat_title',
-                    'useTitle' => __('Title'),
+                    'useTitle' => __('Use category title'),
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
                     'value' => function($category) {
@@ -70,13 +70,12 @@ class Model_Category extends \Nos\Orm\Model
 
                         return $urls;
                     },
-                    'useTitle' => __('Url'),
                 ),
             ),
             'data_catchers' => array(
                 'blog_posts_rss_channel' => array(
                     'data_catcher' => 'rss_channel',
-                    'title' => __('RSS Post channel'),
+                    'title' => __('RSS Posts channel for this category'),
                 ),
             ),
         );
