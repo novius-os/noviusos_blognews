@@ -3,8 +3,8 @@ namespace Nos\BlogNews;
 
 class Model_Tag extends \Nos\Orm\Model
 {
-    protected static $_table_name = 'nos_tag';
     protected static $_primary_key = array('tag_id');
+    protected static $_table_name = '';
 
     protected static $_many_many = array();
 

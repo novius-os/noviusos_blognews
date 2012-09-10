@@ -6,7 +6,7 @@ class Model_Post extends \Nos\Orm\Model
 {
 
     protected static $_primary_key = array('news_id');
-    protected static $_table_name = 'blognews_post';
+    protected static $_table_name = '';
 
     protected static $_observers = array(
         'Orm\Observer_CreatedAt' => array(
