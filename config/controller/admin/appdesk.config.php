@@ -240,6 +240,7 @@ return array(
                     'url' => 'admin/{{blognews.dir}}/inspector/category/list',
                     'inputName' => 'cat_id[]',
                     'label' => __('Categories'),
+                    'langChange' => true,
                     'treeGrid' => array(
                         'treeUrl' => 'admin/{{blognews.dir}}/inspector/category/json',
                         'sortable' => true,
