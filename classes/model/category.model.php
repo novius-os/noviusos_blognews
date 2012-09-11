@@ -5,7 +5,7 @@ namespace Nos\BlogNews;
 class Model_Category extends \Nos\Orm\Model
 {
     protected static $_primary_key = array('category_id');
-    protected static $_table_name = 'blognews_category';
+    protected static $_table_name = '';
 
     protected static $_observers = array(
         'Orm\Observer_CreatedAt' => array(
