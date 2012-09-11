@@ -190,7 +190,7 @@ return array(
             // Largeur de la colonne des inspecteurs de gauche en px
             'splittersVertical' => 250,
             'grid' => array(
-                'proxyUrl' => 'admin/{{blognews.dir}}/appdesk/json',
+                'urlJson' => 'admin/{{blognews.dir}}/appdesk/json',
 
                 /**
                  * Liste des colonnes du affich�es dans la grid. Les cl�s sont celles du dataset d�finies dans le fichier de config PHP
