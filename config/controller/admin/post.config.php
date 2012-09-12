@@ -23,7 +23,8 @@ $datas = array(
         'not found' => __('Post not found'),
         'error added in lang' => __('This post cannot be added {lang}.'),
         'item inexistent in lang yet' => __('This post has not been added in {lang} yet.'),
-        'add a item in lang' => __('Add a new post in {lang}'),
+        'add an item in lang' => __('Add a new post in {lang}'),
+        'delete an item' => __('Delete a post'),
     ),
     'tab' => array(
         'iconUrl' => 'static/apps/noviusos_blognews/img/16/post.png',

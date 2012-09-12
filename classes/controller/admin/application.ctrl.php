@@ -53,17 +53,20 @@ class Controller_Admin_Application extends \Nos\Controller
         $post = $this->class_post;
         $cat = $this->class_cat;
         //TODO : passer la langue du wysiwyg qui appelle la preview
-        $params['lang']             = 'FR_fr';
-        $params['cat_id']           = \Input::post('cat_id',null);
-        $params['limit']            = \Input::post('item_per_page',null);
-        $params['datas']            = $post::get_all($params);
-        if (isset($params['cat_id']))
-            $params['categorie']        = ' de la catégorie ' . $cat::find($params['cat_id'])->cat_title;
-        else
-            $params['categorie']        = '';
+        $params['lang']   = 'fr_FR';
+        $params['cat_id'] = \Input::post('cat_id',null);
+        $params['limit']  = \Input::post('item_per_page',null);
+        $params['datas']  = $post::get_all($params);
+        if (isset($params['cat_id'])) {
+            $params['category']        = strtr(__('Category: {{category}}'), array(
+                '{{category}}' => $cat::find($params['cat_id'])->cat_title,
+            ));
+        } else {
+            $params['category']        = '';
+        }
         $body = array(
             'config'        => \Format::forge()->to_json($_POST),
-            'preview'       => \View::forge('noviusos_blognews::admin/application/preview',$params)->render(),
+            'preview'       => \View::forge('noviusos_blognews::admin/application/preview', $params, false)->render(),
         );
         \Response::json($body);
     }
