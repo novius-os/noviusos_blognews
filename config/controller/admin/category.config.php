@@ -65,13 +65,12 @@ return array (
         ),
         'cat_virtual_name' => array(
             'label' => __('URL: '),
-            'form' => array(
-                'type' => 'text',
-            ),
+            'widget' => 'Nos\Widget_Virtualname',
             'validation' => array(
                 'required',
                 'min_length' => array(2),
             ),
+            'template' => "\t\t<tr><th class=\"{error_class}\">{label}{required}</th><td class=\"{error_class}\">{field} {use_title_checkbox} {error_msg}</td></tr>\n"
         ),
         'cat_parent_id' => array(
             'label' => __('Dans la catégorie: '),
