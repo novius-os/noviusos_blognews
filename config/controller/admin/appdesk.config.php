@@ -160,7 +160,7 @@ return array(
                 'items' => __("posts"),
                 'item' => __("post")
             ),
-            'adds' => array(
+            'buttons' => array(
                 'post' => array(
                     'label' => __('Add a post'),
                     'action' => array(
