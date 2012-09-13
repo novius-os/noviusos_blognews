@@ -25,7 +25,9 @@ class Model_Post extends \Nos\Orm\Model
         'Nos\Orm_Behaviour_Publishable' => array(
             'publication_bool_property' => 'post_published',
         ),
-        'Nos\Orm_Behaviour_Url' => array(),
+        'Nos\Orm_Behaviour_Urlenhancer' => array(
+            'enhancers' => array(),
+        ),
         'Nos\Orm_Behaviour_Virtualname' => array(
             'events' => array('before_save', 'after_save'),
             'virtual_name_property' => 'post_virtual_name',
@@ -36,12 +38,53 @@ class Model_Post extends \Nos\Orm\Model
             'common_id_property' => 'post_lang_common_id',
             'single_id_property' => 'post_lang_single_id',
             'invariant_fields'   => array(),
-        )
+        ),
     );
 
     protected static $_belongs_to  = array();
     protected static $_has_many  = array();
     protected static $_many_many = array();
+
+    public static function _init() {
+        static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
+            'data' => array(
+                \Nos\DataCatcher::TYPE_TITLE => array(
+                    'value' => 'post_title',
+                    'useTitle' => __('Title'),
+                ),
+                \Nos\DataCatcher::TYPE_URL => array(
+                    'value' => function($post) {
+                        $urls = $post->urls();
+                        if (empty($urls)) {
+                            return null;
+                        }
+                        reset($urls);
+                        return key($urls);
+                    },
+                    'options' => function($post) {
+                        return $post->urls();
+                    },
+                    'useTitle' => __('Url'),
+                ),
+                \Nos\DataCatcher::TYPE_TEXT => array(
+                    'value' => function($post) {
+                        return $post->post_summary;
+                    },
+                    'useTitle' => __('Description'),
+                ),
+            ),
+            'data_catchers' => array(
+                array(
+                    'data_catcher' => 'rss_item',
+                    'title' => __('RSS Post item'),
+                ),
+                'comments_rss_channel' => array(
+                    'data_catcher' => 'rss_channel',
+                    'title' => __('RSS Post channel comments'),
+                ),
+            ),
+        );
+    }
 
     public static function relations($specific = false) {
         $class = get_called_class();
@@ -164,12 +207,11 @@ class Model_Post extends \Nos\Orm\Model
     public static function get_all($params) {
         $query = static::get_query($params);
         $posts = $query->get();
-
+        $keys = array_keys((array) $posts);
 
         // Re-fetch with a 2nd request to get all the relations (not only the filtered ones)
         // @todo : to take a look later, see if the orm can't be fixed
-        if (!empty($params['tag']) || !empty($params['category'])) {
-            $keys = array_keys((array) $posts);
+        if (!empty($post) && (!empty($params['tag']) || !empty($params['category']))) {
             $posts = static::query(array(
                 'where' => array(
                     array('post_id', 'IN', $keys),
@@ -185,28 +227,6 @@ class Model_Post extends \Nos\Orm\Model
     public static function count_all($params) {
         $query = static::get_query($params);
         return $query->count();
-    }
-
-
-    // @todo: these function need to be moved
-    public function get_url($params = array()) {
-
-        return $this->first_url();
-//        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
-//        $page = isset($params['page']) ? $params['page'] : 1;
-
-//        return $url.urlencode($this->post_virtual_name).'.html';
-    }
-
-    public static function get_list_url($params = array()) {
-        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
-        $page = isset($params['page']) ? $params['page'] : 1;
-
-        if ($page == 1) {
-            return mb_substr($url, 0, -1).'.html';
-        }
-        return $url.'page/'.$page.'.html';
-
     }
 
     public static function count_multiple_comments($items) {

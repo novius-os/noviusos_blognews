@@ -35,12 +35,12 @@ return array(
         ),
         'url' => array(
             'value' => function($item) {
-                return $item->first_url();
+                return $item->url_canonical(array('preview' => true));
             },
         ),
         'actions' => array(
             'visualise' => function($item) {
-                $url = $item->first_url();
+                $url = $item->url_canonical(array('preview' => true));
                 return !empty($url);
             }
         ),

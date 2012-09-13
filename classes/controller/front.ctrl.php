@@ -35,15 +35,20 @@ class Controller_Front extends Controller_Front_Application {
     public static $post_class;
     public static $category_class;
 
+    public static function _init() {
+        $namespace = \Inflector::get_namespace(get_called_class());
+        static::$tag_class = $namespace.'Model_Tag';
+        static::$post_class = $namespace.'Model_Post';
+        static::$category_class = $namespace.'Model_Category';
+    }
+
     public function before()
     {
+        parent::before();
     	$this->app_config = \Arr::merge($this->app_config, static::getGlobalConfiguration());
-        static::$tag_class = namespacize($this, 'Model_Tag');
-        static::$post_class = namespacize($this, 'Model_Post');
-        static::$category_class = namespacize($this, 'Model_Category');
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
-        list($application_name) = static::getLocation();
+        list($application_name) = \Config::configFile(get_called_class());
         \Config::load('noviusos_blognews::controller/front', true);
 
 
@@ -62,17 +67,22 @@ class Controller_Front extends Controller_Front_Application {
         parent::before();
     }
 
-    public function action_home($args = array())
-    {
-        $this->page_from = $this->main_controller->getPage();
-        $this->config['item_per_page'] = (int)$args['item_per_page'];
-        return $this->display_list_main($args);
+    public function after($response) {
+        $nuggets = $this->page_from->get_catcher_nuggets('posts_rss_channel');
+        $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Posts list');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
+
+        $nuggets = $this->page_from->get_catcher_nuggets('posts_rss_channel');
+        $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Comments list');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
+        return parent::after($response);
     }
 
 
     public function action_main($args = array()) {
+        $tag_class = static::$tag_class;
 
-        list($application_name) = static::getLocation();
+        list($application_name) = \Config::configFile(get_called_class());
 
         $this->page_from = $this->main_controller->getPage();
 
@@ -81,9 +91,14 @@ class Controller_Front extends Controller_Front_Application {
         \View::set_global('config', $this->config);
 
         $enhancer_url = $this->main_controller->getEnhancerUrl();
+
+
+
         if (!empty($enhancer_url)) {
 	        $this->enhancerUrl_segments = explode('/', $enhancer_url);
-                $segments = $this->enhancerUrl_segments;
+            $segments = $this->enhancerUrl_segments;
+
+
 
 	        if (empty($segments[1])) {
                 return $this->display_item($args);
@@ -113,12 +128,79 @@ class Controller_Front extends Controller_Front_Application {
 	        } else if ($segments[0] === 'category') {
 		        $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
 		        return $this->display_list_category($args);
-	        }
+	        } else if ($segments[0] == 'rss') {
+                $post_class = static::$post_class;
+                $rss_generator = new \Nos\RssGenerator('');
+                $rss_generator->link = \Uri::base(false).$this->main_controller->getUrl();
+                $rss_generator->language = $this->page_from->page_lang;
+                $content = false;
+                if ($segments[1] === 'posts') {
+                    if (empty($segments[2])) {
+                        $posts = $this->_get_post_list();
+
+                        $nuggets = $this->page_from->get_catcher_nuggets('posts_rss_channel');
+                        $rss_generator->title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Posts list');
+                        $rss_generator->description = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TEXT]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Posts list');
+                    } else if ($segments[2] === 'category' && !empty($segments[3])) {
+                        $category = $this->_get_category($segments[3]);
+                        $posts = $this->_get_post_list(array('category' => $category));
+
+                        $nuggets = $category->get_catcher_nuggets('posts_rss_channel');
+                        $rss_generator->title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Category posts list');
+                        $rss_generator->description = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TEXT]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Category posts list');
+                    } else if ($segments[2] === 'tag' && !empty($segments[3])) {
+                        $tag = $this->_get_tag($segments[3]);
+                        $posts = $this->_get_post_list(array('tag' => $tag));
+
+                        $nuggets = $tag->get_catcher_nuggets('posts_rss_channel');
+                        $rss_generator->title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Tag posts list');
+                        $rss_generator->description = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TEXT]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Tag posts list');
+                    } else {
+                        throw new \Nos\NotFoundException();
+                    }
+                    $content = $rss_generator->getFromNuggets($posts);
+
+                } else if ($segments[1] === 'comments') {
+                    if (empty($segments[2])) {
+                        $nuggets = $this->page_from->get_catcher_nuggets('comments_rss_channel');
+                        $rss_generator->title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Comments list');
+                        $rss_generator->description = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TEXT]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Comments list');
+
+                        $comments = \Nos\Comments\Model_Comment::find('all');
+                    } else {
+                        $post = $this->_get_post(array(array('post_virtual_name', '=', $segments[2]), array('post_lang', '=', $this->page_from->page_lang)));
+                        if (empty($post)) {
+                            throw new \Nos\NotFoundException();
+                        }
+
+                        $nuggets = $post->get_catcher_nuggets('comments_rss_channel');
+                        $rss_generator->title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Post comments list');
+                        $rss_generator->description = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TEXT]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Post comments list');
+
+                        $comments = $post->comments;
+                    }
+
+                    $content = $rss_generator->getFromNuggets($comments);
+                }
+                \Response::forge($content, 200, array(
+                    'Content-Type' => 'application/xml',
+                ))->send(true);
+                \Event::shutdown();
+                exit();
+
+            }
 
 	        throw new \Nos\NotFoundException();
         }
 
         $this->init_pagination(1);
+        return $this->display_list_main($args);
+    }
+
+    public function action_home($args = array())
+    {
+        $this->page_from = $this->main_controller->getPage();
+        $this->config['item_per_page'] = (int)$args['item_per_page'];
         return $this->display_list_main($args);
     }
 
@@ -139,14 +221,13 @@ class Controller_Front extends Controller_Front_Application {
     }
 
     public function display_list_tag() {
-        $tag_class = static::$tag_class;
-
         list(, $tag) = $this->enhancerUrl_segments;
-        $tag = $tag_class::find('first', array('where' => array(array(
-            'tag_label', 'LIKE', strtolower($tag),
-        ))));
-
+        $tag = $this->_get_tag($tag);
         $posts = $this->_get_post_list(array('tag' => $tag));
+
+        $nuggets = $tag->get_catcher_nuggets('posts_rss_channel');
+        $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Tag posts list');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -157,13 +238,13 @@ class Controller_Front extends Controller_Front_Application {
     }
 
     public function display_list_category() {
-        $category_class = static::$category_class;
-
         list(, $category) = $this->enhancerUrl_segments;
-        $category = $category_class::find('first', array('where' => array(array(
-            'cat_virtual_name', 'LIKE', strtolower($category),
-        ))));
+        $category = $this->_get_category($category);
         $posts = $this->_get_post_list(array('category' => $category));
+
+        $nuggets = $category->get_catcher_nuggets('posts_rss_channel');
+        $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Category posts list');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -187,8 +268,13 @@ class Controller_Front extends Controller_Front_Application {
         if (empty($post)) {
             throw new \Nos\NotFoundException();
         }
-        $page = \Nos\Nos::main_controller()->getPage();
-        \Nos\Nos::main_controller()->setTitle($page->page_title . ' - ' . $post->post_title);
+
+        $nuggets = $post->get_catcher_nuggets('comments_rss_channel');
+        $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Post comments list');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
+
+        $page = $this->main_controller->getPage();
+        $this->main_controller->setTitle($page->page_title . ' - ' . $post->post_title);
         $page->page_title = $post->post_title;
         $add_comment_success = 'none';
         if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
@@ -200,7 +286,7 @@ class Controller_Front extends Controller_Front_Application {
 
         return View::forge($this->config['views']['item'], array(
             'add_comment_success'   => $add_comment_success,
-            'item'                  => $post
+            'item'                  => $post,
         ), false);
     }
 
@@ -210,8 +296,34 @@ class Controller_Front extends Controller_Front_Application {
         return $post_class::get_first($where, $this->main_controller->isPreview());
     }
 
-    protected function _get_post_list($params = array()) {
+    protected function _get_category($category) {
+        $category_class = static::$category_class;
 
+        $category = $category_class::find('first', array('where' => array(
+            array('cat_virtual_name', 'LIKE', strtolower($category),),
+            array('cat_lang', '=', $this->page_from->page_lang),
+        )));
+        if (empty($category)) {
+            throw new \Nos\NotFoundException();
+        }
+
+        return $category;
+    }
+
+    protected function _get_tag($tag) {
+        $tag_class = static::$tag_class;
+
+        $tag = $tag_class::find('first', array('where' => array(array(
+            'tag_label', 'LIKE', strtolower($tag),
+        ))));
+        if (empty($tag)) {
+            throw new \Nos\NotFoundException();
+        }
+
+        return $tag;
+    }
+
+    protected function _get_post_list($params = array()) {
         $post_class = static::$post_class;
 
         // Apply language
@@ -247,20 +359,19 @@ class Controller_Front extends Controller_Front_Application {
 
     static function get_url_model($item, $params = array()) {
         $model = get_class($item);
-        $url = isset($params['urlPath']) ? $params['urlPath'] : \Nos\Nos::main_controller()->getEnhancedUrlPath();
         $page = isset($params['page']) ? $params['page'] : 1;
 
         switch ($model) {
-            case static::$post_class :
-                return $url.urlencode($item->post_virtual_name).'.html';
+            case static::$post_class:
+                return urlencode($item->post_virtual_name).'.html';
                 break;
 
-            case static::$tag_class :
-                return $url.'tag/'.urlencode($item->tag_label).($page > 1 ? '/'.$page : '').'.html';
+            case static::$tag_class:
+                return 'tag/'.urlencode($item->tag_label).($page > 1 ? '/'.$page : '').'.html';
                 break;
 
-            case static::$category_class :
-                return $item->get_url();
+            case static::$category_class:
+                return 'category/'.urlencode($item->cat_virtual_name).($page > 1 ? '/'.$page : '').'.html';
                 break;
         }
         return false;
