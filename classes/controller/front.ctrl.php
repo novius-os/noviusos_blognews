@@ -410,6 +410,8 @@ class Controller_Front extends Controller_Front_Application
                 $comm->comm_ip = \Input::ip();
                 $comm->save();
 
+                \Event::trigger_function('noviusos_blognews|front->_add_comment', array(&$comm, &$post));
+
                 \Cookie::set('comm_email', \Input::post('comm_email'));
                 \Cookie::set('comm_author', \Input::post('comm_author'));
 
