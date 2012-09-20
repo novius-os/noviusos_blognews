@@ -47,18 +47,17 @@ return array(
         ),
     ),
     'inputs' => array(
-        'startdate' =>
-            function ($value, $query)
-            {
+        'created_at' =>
+            function($value, $query) {
                 list($begin, $end) = explode('|', $value.'|');
                 if ($begin) {
                     if ($begin = Date::create_from_string($begin, '%Y-%m-%d')) {
-                        $query->where(array('evt_date_begin', '>=', $begin->format('mysql')));
+                        $query->where(array('post_created_at', '>=', $begin->format('mysql')));
                     }
                 }
                 if ($end) {
                     if ($end = Date::create_from_string($end, '%Y-%m-%d')) {
-                        $query->where(array('evt_date_begin', '<=', $end->format('mysql')));
+                        $query->where(array('post_created_at', '<=', $end->format('mysql')));
                     }
                 }
 
@@ -239,11 +238,11 @@ return array(
              * Liste des inspecteurs autour de la grid
              */
             'inspectors' => array(
-                'startdate' => array(
+                'created_at' => array(
                     'vertical' => true,
                     'label' => __('Created date'),
                     'url' => 'admin/noviusos_blognews/inspector/date/list',
-                    'inputName' => 'startdate'
+                    'inputName' => 'created_at'
                 ),
                 'categories' => array(
                     'vertical' => true,

@@ -1,6 +1,6 @@
-<div class="posts_list">
+<div class="blognews_posts_list">
     <?= \View::forge('noviusos_blognews::front/post/list_title', array('type' => $type, 'item' => $item), false) ?>
-    <div class="list">
+    <div class="blognews_list">
 <?php
 foreach ($posts as $post) {
     echo \View::forge('noviusos_blognews::front/post/item', array('item' => $post));

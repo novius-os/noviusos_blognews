@@ -77,14 +77,14 @@ class Controller_Front extends Controller_Front_Application
             '<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments.html">'
         );
 
+        $this->main_controller->addCss('static/apps/noviusos_blognews/css/blognews.css');
+
         return parent::after($response);
     }
 
 
     public function action_main($args = array())
     {
-        $tag_class = static::$tag_class;
-
         list($application_name) = \Config::configFile(get_called_class());
 
         $this->page_from = $this->main_controller->getPage();
@@ -95,11 +95,9 @@ class Controller_Front extends Controller_Front_Application
 
         $enhancer_url = $this->main_controller->getEnhancerUrl();
 
-
         if (!empty($enhancer_url)) {
             $this->enhancerUrl_segments = explode('/', $enhancer_url);
             $segments = $this->enhancerUrl_segments;
-
 
             if (empty($segments[1])) {
                 return $this->display_item($args);

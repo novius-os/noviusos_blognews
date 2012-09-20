@@ -1,7 +1,7 @@
 <?php
 if ($app_config['comments']['enabled'] && $app_config['comments']['show_nb']) {
     ?>
-    <div class="nb_comments">
+    <div class="blognews_nb_comments">
     <?php
     if ($item->count_comments() > 0) {
         if ($item->count_comments() > 1) {

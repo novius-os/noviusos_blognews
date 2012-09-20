@@ -1,19 +1,17 @@
-<div class="post">
+<div class="blognews_post">
+    <?= \View::forge('noviusos_blognews::front/post/thumbnail', array('item' => $item)) ?>
     <?= \View::forge('noviusos_blognews::front/post/title', array('item' => $item)) ?>
     <?= \View::forge('noviusos_blognews::front/post/publication_date', array('item' => $item)) ?>
-    <br class="clearfloat"/>
 
     <?= \View::forge('noviusos_blognews::front/post/summary', array('item' => $item)) ?>
     <?= \View::forge('noviusos_blognews::front/post/content', array('item' => $item)) ?>
-    <div style="clear:both;"></div>
-    <img src="<?= '' ?>" title="" alt="" />
 
     <?= \View::forge('noviusos_blognews::front/post/tags', array('item' => $item)) ?>
     <?= \View::forge('noviusos_blognews::front/post/categories', array('item' => $item)) ?>
 <?php
 if ($app_config['comments']['enabled']) {
     ?>
-    <div class="comments" id="comments">
+    <div class="blognews_comments" id="comments">
         <?= \View::forge('noviusos_blognews::front/comment/nb', array('item' => $item)) ?>
     <?php
     if ($app_config['comments']['show']) {
