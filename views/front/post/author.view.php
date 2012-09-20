@@ -2,4 +2,5 @@
     <div class="author">
         <?= Str::tr(__('Author: :author'), array('author' => $item->author->fullname() ?: $item->post_author)) ?>
     </div>
-<?php }
+    <?php
+}

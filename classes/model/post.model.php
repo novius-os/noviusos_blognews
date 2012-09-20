@@ -54,23 +54,29 @@ class Model_Post extends \Nos\Orm\Model
                     'useTitle' => __('Use post title'),
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
-                    'value' => function($post) {
-                        $urls = $post->urls();
-                        if (empty($urls)) {
-                            return null;
-                        }
-                        reset($urls);
+                    'value' =>
+                        function($post)
+                        {
+                            $urls = $post->urls();
+                            if (empty($urls)) {
+                                return null;
+                            }
+                            reset($urls);
 
-                        return key($urls);
-                    },
-                    'options' => function($post) {
-                        return $post->urls();
-                    },
+                            return key($urls);
+                        },
+                    'options' =>
+                        function($post)
+                        {
+                            return $post->urls();
+                        },
                 ),
                 \Nos\DataCatcher::TYPE_TEXT => array(
-                    'value' => function($post) {
-                        return $post->post_summary;
-                    },
+                    'value' =>
+                        function($post)
+                        {
+                            return $post->post_summary;
+                        },
                     'useTitle' => __('Use post summary'),
                 ),
             ),

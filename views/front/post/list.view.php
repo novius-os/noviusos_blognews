@@ -2,10 +2,14 @@
     <?= \View::forge('noviusos_blognews::front/post/list_title', array('type' => $type, 'item' => $item), false) ?>
     <div class="list">
 <?php
-    foreach ($posts as $post) {
-        echo \View::forge('noviusos_blognews::front/post/item', array('item' => $post));
-    }
+foreach ($posts as $post) {
+    echo \View::forge('noviusos_blognews::front/post/item', array('item' => $post));
+}
 ?>
     </div>
-    <?php if ($pagination) echo \View::forge('noviusos_blognews::front/post/pagination', array('type' => $type, 'item' => $item, 'pagination' => $pagination), false) ?>
+<?php
+if ($pagination) {
+    echo \View::forge('noviusos_blognews::front/post/pagination', array('type' => $type, 'item' => $item, 'pagination' => $pagination), false);
+}
+?>
 </div>

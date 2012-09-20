@@ -23,17 +23,21 @@ class Model_Tag extends \Nos\Orm\Model
                     'useTitle' => __('Use tag label'),
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
-                    'value' => function($tag) {
-                        return $tag->url_canonical();
-                    },
-                    'options' => function($tag) {
-                        $urls = array();
-                        foreach ($tag->urls() as $possible) {
-                            $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
-                        }
+                    'value' =>
+                        function($tag)
+                        {
+                            return $tag->url_canonical();
+                        },
+                    'options' =>
+                        function($tag)
+                        {
+                            $urls = array();
+                            foreach ($tag->urls() as $possible) {
+                                $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
+                            }
 
-                        return $urls;
-                    },
+                            return $urls;
+                        },
                 ),
             ),
             'data_catchers' => array(

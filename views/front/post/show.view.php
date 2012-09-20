@@ -10,15 +10,25 @@
 
     <?= \View::forge('noviusos_blognews::front/post/tags', array('item' => $item)) ?>
     <?= \View::forge('noviusos_blognews::front/post/categories', array('item' => $item)) ?>
-<?php if ($app_config['comments']['enabled']) { ?>
+<?php
+if ($app_config['comments']['enabled']) {
+    ?>
     <div class="comments" id="comments">
         <?= \View::forge('noviusos_blognews::front/comment/nb', array('item' => $item)) ?>
-        <?php if ($app_config['comments']['show']) { ?>
-            <?= \View::forge('noviusos_comments::front/list', array('comments' => $item->comments), true) ?>
-        <?php } ?>
-        <?php if ($app_config['comments']['can_post']) { ?>
+    <?php
+    if ($app_config['comments']['show']) {
+        ?>
+        <?= \View::forge('noviusos_comments::front/list', array('comments' => $item->comments), true) ?>
+        <?php
+    }
+    if ($app_config['comments']['can_post']) {
+        ?>
             <?= \View::forge('noviusos_comments::front/form', array('add_comment_success' => $add_comment_success, 'use_recaptcha' => $app_config['comments']['use_recaptcha']), true) ?>
-        <?php } ?>
+        <?php
+    }
+    ?>
     </div>
-<?php } ?>
+    <?php
+}
+?>
 </div>

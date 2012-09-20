@@ -1,5 +1,6 @@
 <?php
 use Nos\I18n;
+
 return array(
     'query' => array(
         'model' => 'Nos\BlogNews\Model_Post',
@@ -14,32 +15,31 @@ return array(
             'json' => array('static/apps/_blognews/js/admin/blognews.js', ''),
         ),
     ),
-    'i18n' => array(
-    ),
+    'i18n' => array(),
     'dataset' => array(
-        'id'            => 'post_id',
-        'title'         => 'post_title',
+        'id' => 'post_id',
+        'title' => 'post_title',
         'author' => array(
             'search_relation' => 'author',
-            'search_column'   => 'author.user_name',
-            'value' =>  function($item) {
+            'search_column' => 'author.user_name',
+            'value' => function ($item) {
                 return $item->author->fullname();
             },
         ),
         'post_created_at' => array(
-            'search_column'    =>  'post_created_at',
-            'dataType'         => 'datetime',
-            'value'            => function($item) {
+            'search_column' => 'post_created_at',
+            'dataType' => 'datetime',
+            'value' => function ($item) {
                 return \Date::create_from_string($item->post_created_at, 'mysql')->format('%m/%d/%Y %H:%M:%S'); //%m/%d/%Y %H:%i:%s
             },
         ),
         'url' => array(
-            'value' => function($item) {
+            'value' => function ($item) {
                 return $item->url_canonical(array('preview' => true));
             },
         ),
         'actions' => array(
-            'visualise' => function($item) {
+            'visualise' => function ($item) {
                 $url = $item->url_canonical(array('preview' => true));
 
                 return !empty($url);
@@ -47,66 +47,81 @@ return array(
         ),
     ),
     'inputs' => array(
-        'startdate' => function($value, $query) {
-            list($begin, $end) = explode('|', $value.'|');
-            if ($begin) {
-                if ($begin = Date::create_from_string($begin, '%Y-%m-%d')) {
-                    $query->where(array('evt_date_begin', '>=', $begin->format('mysql')));
+        'startdate' =>
+            function ($value, $query)
+            {
+                list($begin, $end) = explode('|', $value.'|');
+                if ($begin) {
+                    if ($begin = Date::create_from_string($begin, '%Y-%m-%d')) {
+                        $query->where(array('evt_date_begin', '>=', $begin->format('mysql')));
+                    }
                 }
-            }
-            if ($end) {
-                if ($end = Date::create_from_string($end, '%Y-%m-%d')) {
-                    $query->where(array('evt_date_begin', '<=', $end->format('mysql')));
+                if ($end) {
+                    if ($end = Date::create_from_string($end, '%Y-%m-%d')) {
+                        $query->where(array('evt_date_begin', '<=', $end->format('mysql')));
+                    }
                 }
-            }
 
-            return $query;
-        },
-        'tag_id' => function($value, $query) {
-
-            if ( is_array($value) && count($value) && $value[0]) {
-                $query->related('tags', array(
-                    'where' => array(
-                        array('tags.tag_id', 'in', $value),
-                    ),
-                ));
-            }
-
-            return $query;
-        },
-        'cat_id' => function($value, $query) {
-            if ( is_array($value) && count($value) && $value[0]) {
-                $query->related('categories', array(
-                    'where' => array(
-                        array('categories.cat_id', 'in', $value),
-                    ),
-                ));
-            }
-
-            return $query;
-        },
-        'author_id' => function($value, $query) {
-            if ( is_array($value) && count($value) && $value[0]) {
-                $query->where(array('post_author_id', 'in', $value));
-            }
-
-            return $query;
-        },
-        'post_created_at' => function($value, $query) {
-            list($begin, $end) = explode('|', $value.'|');
-            if ($begin) {
-                if ($begin = Date::create_from_string($begin, '%Y-%m-%d')) {
-                    $query->where(array('post_created_at', '>=', $begin->format('mysql')));
+                return $query;
+            },
+        'tag_id' =>
+            function ($value, $query)
+            {
+                if (is_array($value) && count($value) && $value[0]) {
+                    $query->related(
+                        'tags',
+                        array(
+                            'where' => array(
+                                array('tags.tag_id', 'in', $value),
+                            ),
+                        )
+                    );
                 }
-            }
-            if ($end) {
-                if ($end = Date::create_from_string($end, '%Y-%m-%d')) {
-                    $query->where(array('post_created_at', '<=', $end->format('mysql')));
-                }
-            }
 
-            return $query;
-        },
+                return $query;
+            },
+        'cat_id' =>
+            function ($value, $query)
+            {
+                if (is_array($value) && count($value) && $value[0]) {
+                    $query->related(
+                        'categories',
+                        array(
+                            'where' => array(
+                                array('categories.cat_id', 'in', $value),
+                            ),
+                        )
+                    );
+                }
+
+                return $query;
+            },
+        'author_id' =>
+            function ($value, $query)
+            {
+                if (is_array($value) && count($value) && $value[0]) {
+                    $query->where(array('post_author_id', 'in', $value));
+                }
+
+                return $query;
+            },
+        'post_created_at' =>
+            function ($value, $query)
+            {
+                list($begin, $end) = explode('|', $value.'|');
+                if ($begin) {
+                    if ($begin = Date::create_from_string($begin, '%Y-%m-%d')) {
+                        $query->where(array('post_created_at', '>=', $begin->format('mysql')));
+                    }
+                }
+                if ($end) {
+                    if ($end = Date::create_from_string($end, '%Y-%m-%d')) {
+                        $query->where(array('post_created_at', '<=', $end->format('mysql')));
+                    }
+                }
+
+                return $query;
+            },
     ),
     'appdesk' => array(
         'tab' => array(
@@ -152,7 +167,6 @@ return array(
                 ),
             ),
         ),
-
         // Event name for reloading the grid
         'reloadEvent' => '{{blognews.namespace}}\\Model_Post',
         'appdesk' => array(
@@ -186,12 +200,10 @@ return array(
                     ),
                 ),
             ),
-
             // Largeur de la colonne des inspecteurs de gauche en px
             'splittersVertical' => 250,
             'grid' => array(
                 'urlJson' => 'admin/{{blognews.dir}}/appdesk/json',
-
                 /**
                  * Liste des colonnes du affich�es dans la grid. Les cl�s sont celles du dataset d�finies dans le fichier de config PHP
                  */
@@ -223,7 +235,6 @@ return array(
                     ),
                 ),
             ),
-
             /**
              * Liste des inspecteurs autour de la grid
              */

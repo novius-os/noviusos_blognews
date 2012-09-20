@@ -140,39 +140,45 @@ $datas = array(
                 'form' => array(
                     'type' => 'text',
                 ),
-                'populate' => function($item) {
-                    if (\Input::method() == 'POST') {
-                        return \Input::post('post_created_at_date').' '.\Input::post('post_created_at_time').':00';
-                    }
+                'populate' =>
+                    function($item)
+                    {
+                        if (\Input::method() == 'POST') {
+                            return \Input::post('post_created_at_date').' '.\Input::post('post_created_at_time').':00';
+                        }
 
-                    return $item->post_created_at;
-                }
+                        return $item->post_created_at;
+                    }
             ),
             'post_created_at_date' => array(
                 'label' => __('Created on:'),
                 'widget' => 'Nos\Widget_Date_Picker',
                 'template' => '<p>{label}<br/>{field}',
                 'dont_save' => true,
-                'populate' => function($item) {
-
-                    if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00')
-                        return \Date::create_from_string($item->post_created_at, 'mysql')->format('%Y-%m-%d');
-                    else
-                        return \Date::forge()->format('%Y-%m-%d');
-                }
+                'populate' =>
+                    function($item)
+                    {
+                        if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00') {
+                            return \Date::create_from_string($item->post_created_at, 'mysql')->format('%Y-%m-%d');
+                        } else {
+                            return \Date::forge()->format('%Y-%m-%d');
+                        }
+                    }
             ),
             'post_created_at_time' => array(
                 'label' => __('Created time:'),
                 'widget' => 'Nos\Widget_Time_Picker',
                 'dont_save' => true,
                 'template' => ' {field}</p>',
-                'populate' => function($item) {
-
-                    if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00')
-                        return \Date::create_from_string($item->post_created_at, 'mysql')->format('%H:%M');
-                    else
-                        return \Date::forge()->format('%H:%M');
-                }
+                'populate' =>
+                    function($item)
+                    {
+                        if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00') {
+                            return \Date::create_from_string($item->post_created_at, 'mysql')->format('%H:%M');
+                        } else {
+                            return \Date::forge()->format('%H:%M');
+                        }
+                    }
             ),
             'post_read' => array(
                 'label' => __('Read'),
@@ -204,19 +210,21 @@ $datas = array(
                 'form' => array(
                 ),
                 //'dont_populate' => true,
-                'before_save' => function($item, $data) use ($namespace) {
-                    $item->categories;//fetch et 'cree' la relation
-                    unset($item->categories);
+                'before_save' =>
+                    function($item, $data) use ($namespace)
+                    {
+                        $item->categories;//fetch et 'cree' la relation
+                        unset($item->categories);
 
-                    $category_class = $namespace.'Model_Category';
-                    if (!empty($data['categories'])) {
-                        foreach ($data['categories'] as $cat_id) {
-                            if (ctype_digit($cat_id) ) {
-                                $item->categories[$cat_id] = $category_class::find($cat_id); // @todo: come back after...
+                        $category_class = $namespace.'Model_Category';
+                        if (!empty($data['categories'])) {
+                            foreach ($data['categories'] as $cat_id) {
+                                if (ctype_digit($cat_id) ) {
+                                    $item->categories[$cat_id] = $category_class::find($cat_id); // @todo: come back after...
+                                }
                             }
                         }
-                    }
-                },
+                    },
             ),
             'save' => array(
                 'label' => '',

@@ -59,17 +59,21 @@ class Model_Category extends \Nos\Orm\Model
                     'useTitle' => __('Use category title'),
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
-                    'value' => function($category) {
-                        return $category->url_canonical();
-                    },
-                    'options' => function($category) {
-                        $urls = array();
-                        foreach ($category->urls() as $possible) {
-                            $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
-                        }
+                    'value' =>
+                        function($category)
+                        {
+                            return $category->url_canonical();
+                        },
+                    'options' =>
+                        function($category)
+                        {
+                            $urls = array();
+                            foreach ($category->urls() as $possible) {
+                                $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
+                            }
 
-                        return $urls;
-                    },
+                            return $urls;
+                        },
                 ),
             ),
             'data_catchers' => array(

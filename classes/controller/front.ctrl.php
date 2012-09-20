@@ -73,7 +73,9 @@ class Controller_Front extends Controller_Front_Application
 
         $nuggets = $this->page_from->get_catcher_nuggets('posts_rss_channel');
         $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Comments list');
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
+        $this->main_controller->addMeta(
+            '<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments.html">'
+        );
 
         return parent::after($response);
     }
@@ -94,11 +96,9 @@ class Controller_Front extends Controller_Front_Application
         $enhancer_url = $this->main_controller->getEnhancerUrl();
 
 
-
         if (!empty($enhancer_url)) {
             $this->enhancerUrl_segments = explode('/', $enhancer_url);
             $segments = $this->enhancerUrl_segments;
-
 
 
             if (empty($segments[1])) {
@@ -187,9 +187,13 @@ class Controller_Front extends Controller_Front_Application
 
                     $content = $rss_generator->getFromNuggets($comments);
                 }
-                \Response::forge($content, 200, array(
-                    'Content-Type' => 'application/xml',
-                ))->send(true);
+                \Response::forge(
+                    $content,
+                    200,
+                    array(
+                        'Content-Type' => 'application/xml',
+                    )
+                )->send(true);
                 \Event::shutdown();
                 exit();
 
@@ -214,19 +218,23 @@ class Controller_Front extends Controller_Front_Application
     protected function init_pagination($page)
     {
         $this->current_page = $page;
-        $this->pagination   = new \Nos\Pagination();
+        $this->pagination = new \Nos\Pagination();
     }
 
     public function display_list_main($args)
     {
         $posts = $this->_get_post_list($args);
 
-        return View::forge($this->config['views']['list'], array(
-            'posts'       => $posts,
-            'type'        => 'main',
-            'item'        => 'main',
-            'pagination' => $this->pagination
-        ), false);
+        return View::forge(
+            $this->config['views']['list'],
+            array(
+                'posts' => $posts,
+                'type' => 'main',
+                'item' => 'main',
+                'pagination' => $this->pagination
+            ),
+            false
+        );
     }
 
     public function display_list_tag()
@@ -237,14 +245,22 @@ class Controller_Front extends Controller_Front_Application
 
         $nuggets = $tag->get_catcher_nuggets('posts_rss_channel');
         $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Tag posts list');
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
+        $this->main_controller->addMeta(
+            '<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode(
+                $tag->tag_label
+            ).'.html">'
+        );
 
-        return View::forge('noviusos_blognews::front/post/list', array(
-            'posts'       => $posts,
-            'type'        => 'tag',
-            'item'        => $tag,
-            'pagination' => $this->pagination,
-        ), false);
+        return View::forge(
+            'noviusos_blognews::front/post/list',
+            array(
+                'posts' => $posts,
+                'type' => 'tag',
+                'item' => $tag,
+                'pagination' => $this->pagination,
+            ),
+            false
+        );
     }
 
     public function display_list_category()
@@ -255,14 +271,22 @@ class Controller_Front extends Controller_Front_Application
 
         $nuggets = $category->get_catcher_nuggets('posts_rss_channel');
         $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Category posts list');
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
+        $this->main_controller->addMeta(
+            '<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode(
+                $category->cat_virtual_name
+            ).'.html">'
+        );
 
-        return View::forge('noviusos_blognews::front/post/list', array(
-            'posts'       => $posts,
-            'type'        => 'category',
-            'item'        => $category,
-            'pagination' => $this->pagination,
-        ), false);
+        return View::forge(
+            'noviusos_blognews::front/post/list',
+            array(
+                'posts' => $posts,
+                'type' => 'category',
+                'item' => $category,
+                'pagination' => $this->pagination,
+            ),
+            false
+        );
     }
 
     /**
@@ -281,10 +305,14 @@ class Controller_Front extends Controller_Front_Application
 
         $nuggets = $post->get_catcher_nuggets('comments_rss_channel');
         $title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Post comments list');
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
+        $this->main_controller->addMeta(
+            '<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode(
+                $post->post_virtual_name
+            ).'.html">'
+        );
 
         $page = $this->main_controller->getPage();
-        $this->main_controller->setTitle($page->page_title . ' - ' . $post->post_title);
+        $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
         $page->page_title = $post->post_title;
         $add_comment_success = 'none';
         if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
@@ -294,10 +322,14 @@ class Controller_Front extends Controller_Front_Application
             $add_comment_success = $this->_add_comment($post);
         }
 
-        return View::forge($this->config['views']['item'], array(
-            'add_comment_success'   => $add_comment_success,
-            'item'                  => $post,
-        ), false);
+        return View::forge(
+            $this->config['views']['item'],
+            array(
+                'add_comment_success' => $add_comment_success,
+                'item' => $post,
+            ),
+            false
+        );
     }
 
     protected function _get_post($where = array())
@@ -311,10 +343,15 @@ class Controller_Front extends Controller_Front_Application
     {
         $category_class = static::$category_class;
 
-        $category = $category_class::find('first', array('where' => array(
-            array('cat_virtual_name', 'LIKE', strtolower($category),),
-            array('cat_lang', '=', $this->page_from->page_lang),
-        )));
+        $category = $category_class::find(
+            'first',
+            array(
+                'where' => array(
+                    array('cat_virtual_name', 'LIKE', strtolower($category),),
+                    array('cat_lang', '=', $this->page_from->page_lang),
+                )
+            )
+        );
         if (empty($category)) {
             throw new \Nos\NotFoundException();
         }
@@ -326,9 +363,18 @@ class Controller_Front extends Controller_Front_Application
     {
         $tag_class = static::$tag_class;
 
-        $tag = $tag_class::find('first', array('where' => array(array(
-            'tag_label', 'LIKE', strtolower($tag),
-        ))));
+        $tag = $tag_class::find(
+            'first',
+            array(
+                'where' => array(
+                    array(
+                        'tag_label',
+                        'LIKE',
+                        strtolower($tag),
+                    )
+                )
+            )
+        );
         if (empty($tag)) {
             throw new \Nos\NotFoundException();
         }
@@ -341,20 +387,25 @@ class Controller_Front extends Controller_Front_Application
         $post_class = static::$post_class;
 
         // Apply language
-        if (isset($this->page_from->page_lang))
+        if (isset($this->page_from->page_lang)) {
             $params['lang'] = $this->page_from->page_lang;
-        else
+        } else {
             $params['lang'] = 'FR_fr';
+        }
 
         // Apply pagination
-        if (isset($this->pagination)) $this->pagination->set_config(array(
-            'total_items'    => $post_class::count_all($params),
-            'per_page'       => $this->config['item_per_page'],
-            'current_page'   => $this->current_page,
-        ));
-        $params['offset']   = $this->pagination ? (int) $this->pagination->offset : 0;
+        if (isset($this->pagination)) {
+            $this->pagination->set_config(
+                array(
+                    'total_items' => $post_class::count_all($params),
+                    'per_page' => $this->config['item_per_page'],
+                    'current_page' => $this->current_page,
+                )
+            );
+        }
+        $params['offset'] = $this->pagination ? (int) $this->pagination->offset : 0;
 
-        $params['limit']    = $this->config['item_per_page'];
+        $params['limit'] = $this->config['item_per_page'];
 
         if (isset($this->config['order_by'])) {
             $params['order_by'] = $this->config['order_by'];
@@ -396,7 +447,12 @@ class Controller_Front extends Controller_Front_Application
     protected function _add_comment($post)
     {
         if (\Input::post('todo') == 'add_comment') {
-            if (!$this->app_config['comments']['use_recaptcha'] || \ReCaptcha\ReCaptcha::instance()->check_answer(\Input::real_ip(), \Input::post('recaptcha_challenge_field'), \Input::post('recaptcha_response_field'))) {
+            if (!$this->app_config['comments']['use_recaptcha'] || \ReCaptcha\ReCaptcha::instance()->check_answer(
+                \Input::real_ip(),
+                \Input::post('recaptcha_challenge_field'),
+                \Input::post('recaptcha_response_field')
+            )
+            ) {
                 $post_class = static::$post_class;
                 $comm = new Model_Comment();
                 $comm->comm_from_table = $post_class::get_table_name();
