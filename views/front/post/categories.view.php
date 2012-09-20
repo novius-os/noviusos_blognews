@@ -1,5 +1,5 @@
 <?php if ($app_config['categories']['enabled'] && $app_config['categories']['show']) { ?>
-    <div class="categories">
+    <div class="blognews_categories">
     <?php
         if (count($item->categories) > 0) {
             $categories = array();

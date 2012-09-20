@@ -1,5 +1,5 @@
 <?php if ($app_config['tags']['enabled'] && $app_config['tags']['show']) { ?>
-    <div class="tags">
+    <div class="blognews_tags">
 <?php
         if (count($item->tags) > 0) {
             $tags = array();
