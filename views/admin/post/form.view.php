@@ -1,6 +1,6 @@
 <?php
 $fieldset->populate_with_instance($post);
-$fieldset->form()->set_config('field_template',  "\t\t<tr><th class=\"{error_class}\">{label}{required}</th><td class=\"{error_class}\">{field} {error_msg}</td></tr>\n");
+$fieldset->form()->set_config('field_template', "\t\t<tr><th class=\"{error_class}\">{label}{required}</th><td class=\"{error_class}\">{field} {error_msg}</td></tr>\n");
 
 foreach ($fieldset->field() as $field) {
     if ($field->type == 'checkbox') {

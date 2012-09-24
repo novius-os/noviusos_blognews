@@ -72,14 +72,16 @@ class Model_Post extends \Nos\Orm\Model
                         },
                 ),
                 \Nos\DataCatcher::TYPE_IMAGE => array(
-                    'value' => function($post) {
-                        $possible = $post->possible_medias();
+                    'value' =>
+                        function($post) {
+                            $possible = $post->possible_medias();
 
-                        return \Arr::get(array_keys($possible), 0, null);
-                    },
-                    'options' => function($post) {
-                        return $post->possible_medias();
-                    },
+                            return \Arr::get(array_keys($possible), 0, null);
+                        },
+                    'options' =>
+                        function($post) {
+                            return $post->possible_medias();
+                        },
                 ),
                 \Nos\DataCatcher::TYPE_TEXT => array(
                     'value' =>
