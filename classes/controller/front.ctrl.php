@@ -109,6 +109,7 @@ class Controller_Front extends Controller_Front_Application
                         $post->save();
                         $stats[] = $post->post_id;
                         \Session::set('noviusos_'.$application_name.'_stats', $stats);
+                        \Session::write();
                     }
                 }
                 \Nos\Tools_File::send(DOCROOT.'static/apps/noviusos_blognews/img/transparent.gif');
