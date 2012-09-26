@@ -1,4 +1,4 @@
-<div class="blognews_post_item">
+<div class="blognews_post blognews_post_item">
     <div class="blognews_primary_information">
         <?= \View::forge('noviusos_blognews::front/post/thumbnail', array('item' => $item)) ?>
         <?= \View::forge('noviusos_blognews::front/post/title', array('item' => $item)) ?>

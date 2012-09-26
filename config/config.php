@@ -34,6 +34,6 @@ return array(
         'show'    => true,
         'front' => array(
             'format' => 'eu_full'
-        )
-    )
+        ),
+    ),
 );

@@ -89,7 +89,7 @@ class Controller_Front extends Controller_Front_Application
 
         $this->config['item_per_page'] = (int) $args['item_per_page'];
 
-        \View::set_global('config', $this->config);
+        \View::set_global('enhancer_args', $args);
 
         $enhancer_url = $this->main_controller->getEnhancerUrl();
 
