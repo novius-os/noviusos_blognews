@@ -34,9 +34,9 @@ class Model_Post extends \Nos\Orm\Model
         ),
         'Nos\Orm_Behaviour_Translatable' => array(
             'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
-            'lang_property'      => 'post_lang',
-            'common_id_property' => 'post_lang_common_id',
-            'is_main_property' => 'post_lang_is_main',
+            'site_property'      => 'post_site',
+            'common_id_property' => 'post_site_common_id',
+            'is_main_property' => 'post_site_is_main',
             'invariant_fields'   => array(),
         ),
     );
@@ -198,7 +198,7 @@ class Model_Post extends \Nos\Orm\Model
 
         $query->where(array('post_published', true));
 
-        $query->where(array('post_lang', $params['lang']));
+        $query->where(array('post_site', $params['site']));
 
         if (!empty($params['author'])) {
             $query->where(array('post_author_id', $params['author']->user_id));

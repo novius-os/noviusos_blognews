@@ -39,9 +39,9 @@ class Model_Category extends \Nos\Orm\Model
         ),
         'Nos\Orm_Behaviour_Translatable' => array(
             'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
-            'lang_property'      => 'cat_lang',
-            'common_id_property' => 'cat_lang_common_id',
-            'is_main_property' => 'cat_lang_is_main',
+            'site_property'      => 'cat_site',
+            'common_id_property' => 'cat_site_common_id',
+            'is_main_property' => 'cat_site_is_main',
             'invariant_fields'   => array('cat_parent_id', 'cat_sort'),
         ),
     );

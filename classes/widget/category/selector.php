@@ -12,7 +12,7 @@ namespace Nos\BlogNews;
 
 class Widget_Category_Selector extends \Nos\Widget_Selector
 {
-    public $lang = null;
+    public $site = null;
     /**
      * Add a class and an id with a prefix to the widget attributes
      * @param $attributes
@@ -28,7 +28,7 @@ class Widget_Category_Selector extends \Nos\Widget_Selector
         }
 
         if (isset($attributes['widget_options']['instance'])) {
-            $this->lang = $attributes['widget_options']['instance']->get_lang();
+            $this->site = $attributes['widget_options']['instance']->get_site();
         }
 
         if (isset($attributes['widget_options']) && isset($attributes['widget_options']['parents'])) {
@@ -79,7 +79,7 @@ class Widget_Category_Selector extends \Nos\Widget_Selector
             'sortable' => isset($this->widget_options['sortable']) ? $this->widget_options['sortable'] : 0,
             'application_name' => $this->widget_options['application_name'],
             'treeOptions' => array(
-                'lang' => \Arr::get($this->widget_options, 'lang', $this->lang),
+                'site' => \Arr::get($this->widget_options, 'site', $this->site),
             ),
             'height' => \Arr::get($this->widget_options, 'height', '150px'),
             'width' => \Arr::get($this->widget_options, 'width', null),
@@ -116,7 +116,7 @@ class Widget_Category_Selector extends \Nos\Widget_Selector
                 )
             ),
             'treeOptions' => array(
-                'lang' => null,
+                'site' => null,
             ),
             'height' => '150px',
             'width' => null,
