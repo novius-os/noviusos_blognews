@@ -391,7 +391,7 @@ class Controller_Front extends Controller_Front_Application
 
     protected function _add_comment($post)
     {
-        if (\Input::post('todo') == 'add_comment') {
+        if (\Input::post('todo') == 'add_comment' && \Input::post('ismm') == '327') {
             if (!$this->app_config['comments']['use_recaptcha'] || \ReCaptcha\ReCaptcha::instance()->check_answer(\Input::real_ip(), \Input::post('recaptcha_challenge_field'), \Input::post('recaptcha_response_field'))) {
                 $post_class = static::$post_class;
                 $comm = new Model_Comment();
