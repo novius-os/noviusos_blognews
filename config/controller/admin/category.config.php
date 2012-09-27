@@ -31,7 +31,7 @@ return array (
             'expander' => array(
                 'view' => 'nos::form/expander',
                 'params' => array(
-                    'title'   => 'Propriétés',
+                    'title'   => __('Properties'),
                     'nomargin' => true,
                     'options' => array(
                         'allowExpand' => false,
