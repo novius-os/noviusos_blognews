@@ -82,16 +82,6 @@ class Model_Post extends \Nos\Orm\Model
                     'useTitle' => __('Use post summary'),
                 ),
             ),
-            'data_catchers' => array(
-                array(
-                    'data_catcher' => 'rss_item',
-                    'title' => __('RSS'),
-                ),
-                'comments_rss_channel' => array(
-                    'data_catcher' => 'rss_channel',
-                    'title' => __('RSS Comments channel for this post'),
-                ),
-            ),
         );
     }
 
