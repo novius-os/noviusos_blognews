@@ -101,7 +101,11 @@ class Controller_Front extends Controller_Front_Application
                 return $this->display_item($args);
             } elseif ($segments[0] == 'stats') {
 
-                $post = $this->_get_post(array(array('post_id', $segments[1])));
+                $post = $this->_get_post(array(
+                    'where' => array(
+                        array('post_id', $segments[1]),
+                    ),
+                ));
                 if (!empty($post)) {
                     $stats = \Session::get('noviusos_'.$application_name.'_stats', array());
                     if (!in_array($post->post_id, $stats)) {
@@ -168,9 +172,18 @@ class Controller_Front extends Controller_Front_Application
                         $rss_generator->title = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Comments list');
                         $rss_generator->description = isset($nuggets->content_data[\Nos\DataCatcher::TYPE_TEXT]) ? $nuggets->content_data[\Nos\DataCatcher::TYPE_TITLE] : __('Comments list');
 
-                        $comments = \Nos\Comments\Model_Comment::find('all');
+                        $comments = \Nos\Comments\Model_Comment::find('all', array(
+                            'order_by' => array('comm_created_at' => 'DESC'),
+                        ));
                     } else {
-                        $post = $this->_get_post(array(array('post_virtual_name', '=', $segments[2]), array('post_lang', '=', $this->page_from->page_lang)));
+                        $post = $this->_get_post(array(
+                            'where' => array(
+                                array('post_virtual_name', '=', $segments[2]),
+                                array('post_lang', '=', $this->page_from->page_lang),
+                            ),
+                            'related' => 'comments',
+                            'order_by' => array('comments.comm_created_at' => 'DESC'),
+                        ));
                         if (empty($post)) {
                             throw new \Nos\NotFoundException();
                         }
@@ -271,7 +284,12 @@ class Controller_Front extends Controller_Front_Application
     public function display_item()
     {
         list($item_virtual_name) = $this->enhancerUrl_segments;
-        $post = $this->_get_post(array(array('post_virtual_name', '=', $item_virtual_name), array('post_lang', '=', $this->page_from->page_lang)));
+        $post = $this->_get_post(array(
+            'where' => array(
+                array('post_virtual_name', '=', $item_virtual_name),
+                array('post_lang', '=', $this->page_from->page_lang),
+            ),
+        ));
         if (empty($post)) {
             throw new \Nos\NotFoundException();
         }
@@ -297,11 +315,11 @@ class Controller_Front extends Controller_Front_Application
         ), false);
     }
 
-    protected function _get_post($where = array())
+    protected function _get_post($options = array())
     {
         $post_class = static::$post_class;
 
-        return $post_class::get_first($where, $this->main_controller->isPreview());
+        return $post_class::get_first($options, $this->main_controller->isPreview());
     }
 
     protected function _get_category($category)

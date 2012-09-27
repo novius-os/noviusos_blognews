@@ -1,9 +1,10 @@
 <?php
 
-echo $pagination->create_links(function($page) use ($type, $item, $config) {
+echo $pagination->create_links(function($page) use ($type, $item) {
 
     if ($type == 'main') {
-        return \Nos\Nos::main_controller()->getEnhancedUrlPath().($page == 1) ? '' : 'page/'.$page.'.html';
+        $url = \Nos\Nos::main_controller()->getPageUrl();
+        return $page == 1 ? $url : str_replace('.html', '/page/'.$page.'.html', $url);
     } else {
         return $item->url(array('page' => $page));
     }

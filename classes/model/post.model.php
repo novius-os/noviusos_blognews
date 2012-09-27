@@ -78,9 +78,7 @@ class Model_Post extends \Nos\Orm\Model
                     },
                 ),
                 \Nos\DataCatcher::TYPE_TEXT => array(
-                    'value' => function($post) {
-                        return $post->post_summary;
-                    },
+                    'value' => 'post_summary',
                     'useTitle' => __('Use post summary'),
                 ),
             ),
@@ -169,18 +167,22 @@ class Model_Post extends \Nos\Orm\Model
         return static::$_table_name;
     }
 
-    public static function get_first($where, $preview = false)
+    public static function get_first($options, $preview = false)
     {
         // First argument is a string => it's the virtual name
-        if (!is_array($where)) {
-            $where = array(array('post_virtual_name', '=', $where));
+        if (!is_array($options)) {
+            $options = array(
+                'where' => array(
+                    array('post_virtual_name', '=', $options),
+                ),
+            );
         }
 
         if (!$preview) {
-            $where[] = array('post_published', '=', true);
+            $options['where'][] = array('post_published', '=', true);
         }
 
-        return static::find('first', array('where' => $where));
+        return static::find('first', $options);
     }
 
     public static function get_query($params)
