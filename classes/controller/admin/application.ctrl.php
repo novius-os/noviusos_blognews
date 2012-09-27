@@ -29,7 +29,7 @@ class Controller_Admin_Application extends \Nos\Controller
                     'height'                    => '200px',
                     'input_name'                => 'cat_id',
                     'treeOptions'               => array(
-                        'site'                  => 'fr_FR'
+                        'context'                  => 'fr_FR'
                     ),
                     'namespace'                 => \Inflector::get_namespace(get_called_class()),
                     'application_name'          => $application_name,
@@ -52,8 +52,8 @@ class Controller_Admin_Application extends \Nos\Controller
 
         $post = $this->class_post;
         $cat = $this->class_cat;
-        //TODO : pass the site that calls the wysiwyg preview
-        $params['site']   = 'fr_FR';
+        //TODO : pass the context that calls the wysiwyg preview
+        $params['context']   = 'fr_FR';
         $params['cat_id'] = \Input::post('cat_id', null);
         $params['limit']  = \Input::post('item_per_page', null);
         $params['datas']  = $post::get_all($params);

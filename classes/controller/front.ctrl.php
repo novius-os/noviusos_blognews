@@ -135,7 +135,7 @@ class Controller_Front extends Controller_Front_Application
                 $post_class = static::$post_class;
                 $rss_generator = new \Nos\RssGenerator('');
                 $rss_generator->link = \Uri::base(false).$this->main_controller->getUrl();
-                $rss_generator->language = $this->page_from->page_site;
+                $rss_generator->language = $this->page_from->page_context;
                 $content = false;
                 if ($segments[1] === 'posts') {
                     if (empty($segments[2])) {
@@ -171,7 +171,7 @@ class Controller_Front extends Controller_Front_Application
 
                         $comments = \Nos\Comments\Model_Comment::find('all');
                     } else {
-                        $post = $this->_get_post(array(array('post_virtual_name', '=', $segments[2]), array('post_site', '=', $this->page_from->page_site)));
+                        $post = $this->_get_post(array(array('post_virtual_name', '=', $segments[2]), array('post_context', '=', $this->page_from->page_context)));
                         if (empty($post)) {
                             throw new \Nos\NotFoundException();
                         }
@@ -296,7 +296,7 @@ class Controller_Front extends Controller_Front_Application
     public function display_item()
     {
         list($item_virtual_name) = $this->enhancerUrl_segments;
-        $post = $this->_get_post(array(array('post_virtual_name', '=', $item_virtual_name), array('post_site', '=', $this->page_from->page_site)));
+        $post = $this->_get_post(array(array('post_virtual_name', '=', $item_virtual_name), array('post_context', '=', $this->page_from->page_context)));
         if (empty($post)) {
             throw new \Nos\NotFoundException();
         }
@@ -346,7 +346,7 @@ class Controller_Front extends Controller_Front_Application
             array(
                 'where' => array(
                     array('cat_virtual_name', 'LIKE', strtolower($category),),
-                    array('cat_site', '=', $this->page_from->page_site),
+                    array('cat_context', '=', $this->page_from->page_context),
                 )
             )
         );
@@ -384,11 +384,11 @@ class Controller_Front extends Controller_Front_Application
     {
         $post_class = static::$post_class;
 
-        // Apply site
-        if (isset($this->page_from->page_site)) {
-            $params['site'] = $this->page_from->page_site;
+        // Apply context
+        if (isset($this->page_from->page_context)) {
+            $params['context'] = $this->page_from->page_context;
         } else {
-            $params['site'] = 'FR_fr';
+            $params['context'] = 'FR_fr';
         }
 
         // Apply pagination
