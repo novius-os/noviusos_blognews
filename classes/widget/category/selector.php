@@ -105,7 +105,7 @@ class Widget_Category_Selector extends \Nos\Widget_Selector
         }
 
         $options = \Arr::merge(array(
-            'treeUrl' => 'admin/'.$options['application_name'].'/inspector/category/json',
+            'urlJson' => 'admin/'.$options['application_name'].'/inspector/category/json',
             'input_name' => null,
             'selected' => $defaultSelected,
             'disabled' => array(

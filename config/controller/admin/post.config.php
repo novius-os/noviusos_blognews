@@ -9,8 +9,8 @@
  */
 
 $datas = array(
-    'controller_url'  => 'admin/noviusos_blognews/post',
-    'model' => 'Nos\\BlogNews\\Model_Post',
+    'controller_url'  => 'admin/{{application_name}}/post',
+    'model' => '{{namespace}}\Model_Post',
     'messages' => array(
         'successfully added' => __('Post successfully added.'),
         'successfully saved' => __('Post successfully saved.'),
@@ -27,7 +27,7 @@ $datas = array(
         'delete an item' => __('Delete a post'),
     ),
     'tab' => array(
-        'iconUrl' => 'static/apps/noviusos_blognews/img/16/post.png',
+        'iconUrl' => 'static/apps/{{application_name}}/img/16/post.png',
         'labels' => array(
             'insert' => __('Add a post'),
             'blankSlate' => __('Translate a post'),
@@ -72,172 +72,170 @@ $datas = array(
             __('Categories') => array('categories'),
         ),
     ),
-    'fields' => function($namespace, $application_name) {
-        return array(
-            'post_id' => array (
-                'label' => 'ID: ',
-                'form' => array(
-                    'type' => 'hidden',
-                ),
-                'dont_save' => true,
-                // requis car la clé primaire ne correspond pas (le getter fait le taf mais
-                // les mécanismes internes lèvent une exception)
+    'fields' => array(
+        'post_id' => array (
+            'label' => 'ID: ',
+            'form' => array(
+                'type' => 'hidden',
             ),
-            'post_title' => array(
-                'label' => 'Titre',
-                'form' => array(
-                    'type' => 'text',
-                ),
-                'validation' => array(
-                    'required',
-                    'min_length' => array(2),
-                ),
+            'dont_save' => true,
+            // requis car la clé primaire ne correspond pas (le getter fait le taf mais
+            // les mécanismes internes lèvent une exception)
+        ),
+        'post_title' => array(
+            'label' => 'Titre',
+            'form' => array(
+                'type' => 'text',
             ),
-            'post_summary' => array (
-                'label' => __('Summary'),
-                'template' => '<td class="row-field">{field}</td>',
-                'form' => array(
-                    'type' => 'textarea',
-                    'rows' => '6',
-                ),
+            'validation' => array(
+                'required',
+                'min_length' => array(2),
             ),
-            'post_author_alias' => array(
-                'label' => __('Alias: '),
-                'form' => array(
-                    'type' => 'text',
-                ),
+        ),
+        'post_summary' => array (
+            'label' => __('Summary'),
+            'template' => '<td class="row-field">{field}</td>',
+            'form' => array(
+                'type' => 'textarea',
+                'rows' => '6',
             ),
-            'post_virtual_name' => array(
-                'label' => __('URL: '),
-                'widget' => 'Nos\Widget_Virtualname',
-                'validation' => array(
-                    'required',
-                    'min_length' => array(2),
-                ),
+        ),
+        'post_author_alias' => array(
+            'label' => __('Alias: '),
+            'form' => array(
+                'type' => 'text',
             ),
-            'author->user_fullname' => array(
-                'label' => __('Author: '),
-                'widget' => 'Nos\Widget_Text',
-                'editable' => false,
-                'template' => '<p>{label} {field}</p>'
+        ),
+        'post_virtual_name' => array(
+            'label' => __('URL: '),
+            'widget' => 'Nos\Widget_Virtualname',
+            'validation' => array(
+                'required',
+                'min_length' => array(2),
             ),
-            'wysiwygs->content->wysiwyg_text' => array(
-                'label' => __('Content'),
-                'widget' => 'Nos\Widget_Wysiwyg',
-                'template' => '{field}',
-                'form' => array(
-                    'style' => 'width: 100%; height: 500px;',
-                ),
+        ),
+        'author->user_fullname' => array(
+            'label' => __('Author: '),
+            'widget' => 'Nos\Widget_Text',
+            'editable' => false,
+            'template' => '<p>{label} {field}</p>'
+        ),
+        'wysiwygs->content->wysiwyg_text' => array(
+            'label' => __('Content'),
+            'widget' => 'Nos\Widget_Wysiwyg',
+            'template' => '{field}',
+            'form' => array(
+                'style' => 'width: 100%; height: 500px;',
             ),
-            'medias->thumbnail->medil_media_id' => array(
-                'label' => '',
-                'widget' => 'Nos\Widget_Media',
-                'form' => array(
-                    'title' => 'Thumbnail',
-                ),
+        ),
+        'medias->thumbnail->medil_media_id' => array(
+            'label' => '',
+            'widget' => 'Nos\Widget_Media',
+            'form' => array(
+                'title' => 'Thumbnail',
             ),
-            'post_created_at' => array(
-                'form' => array(
-                    'type' => 'text',
-                ),
-                'populate' =>
-                    function($item)
-                    {
-                        if (\Input::method() == 'POST') {
-                            return \Input::post('post_created_at_date').' '.\Input::post('post_created_at_time').':00';
-                        }
+        ),
+        'post_created_at' => array(
+            'form' => array(
+                'type' => 'text',
+            ),
+            'populate' =>
+                function($item)
+                {
+                    if (\Input::method() == 'POST') {
+                        return \Input::post('post_created_at_date').' '.\Input::post('post_created_at_time').':00';
+                    }
 
-                        return $item->post_created_at;
+                    return $item->post_created_at;
+                }
+        ),
+        'post_created_at_date' => array(
+            'label' => __('Created on:'),
+            'widget' => 'Nos\Widget_Date_Picker',
+            'template' => '<p>{label}<br/>{field}',
+            'dont_save' => true,
+            'populate' =>
+                function($item)
+                {
+                    if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00') {
+                        return \Date::create_from_string($item->post_created_at, 'mysql')->format('%Y-%m-%d');
+                    } else {
+                        return \Date::forge()->format('%Y-%m-%d');
                     }
-            ),
-            'post_created_at_date' => array(
-                'label' => __('Created on:'),
-                'widget' => 'Nos\Widget_Date_Picker',
-                'template' => '<p>{label}<br/>{field}',
-                'dont_save' => true,
-                'populate' =>
-                    function($item)
-                    {
-                        if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00') {
-                            return \Date::create_from_string($item->post_created_at, 'mysql')->format('%Y-%m-%d');
-                        } else {
-                            return \Date::forge()->format('%Y-%m-%d');
-                        }
+                }
+        ),
+        'post_created_at_time' => array(
+            'label' => __('Created time:'),
+            'widget' => 'Nos\Widget_Time_Picker',
+            'dont_save' => true,
+            'template' => ' {field}</p>',
+            'populate' =>
+                function($item)
+                {
+                    if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00') {
+                        return \Date::create_from_string($item->post_created_at, 'mysql')->format('%H:%M');
+                    } else {
+                        return \Date::forge()->format('%H:%M');
                     }
+                }
+        ),
+        'post_read' => array(
+            'label' => __('Read'),
+            'template' => '<p>{label} {field} times</p>',
+            'form' => array(
+                'type' => 'text',
+                'size' => '4',
             ),
-            'post_created_at_time' => array(
-                'label' => __('Created time:'),
-                'widget' => 'Nos\Widget_Time_Picker',
-                'dont_save' => true,
-                'template' => ' {field}</p>',
-                'populate' =>
-                    function($item)
-                    {
-                        if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00') {
-                            return \Date::create_from_string($item->post_created_at, 'mysql')->format('%H:%M');
-                        } else {
-                            return \Date::forge()->format('%H:%M');
-                        }
-                    }
+        ),
+        'tags' => array(
+            'label' => __('Tags'),
+            'widget' => 'Nos\Widget_Tag',
+            'widget_options' => array(
+                'model'         => '{{namespace}}\\Model_Tag',
+                'label_column'  => 'tag_label',
+                'relation_name' => 'tags'
             ),
-            'post_read' => array(
-                'label' => __('Read'),
-                'template' => '<p>{label} {field} times</p>',
-                'form' => array(
-                    'type' => 'text',
-                    'size' => '4',
-                ),
+        ),
+        'categories' => array(
+            'widget' => 'Nos\BlogNews\Widget_Category_Selector',
+            'widget_options' => array(
+                'width' => '250px',
+                'height' => '250px',
+                'namespace' => '{{namespace}}',
+                'application_name' => '{{application_name}}',
+                'multiple' => '1',
             ),
-            'tags' => array(
-                'label' => __('Tags'),
-                'widget' => 'Nos\Widget_Tag',
-                'widget_options' => array(
-                    'model'         => $namespace.'Model_Tag',
-                    'label_column'  => 'tag_label',
-                    'relation_name' => 'tags'
-                ),
+            'label' => __(''),
+            'form' => array(
             ),
-            'categories' => array(
-                'widget' => 'Nos\BlogNews\Widget_Category_Selector',
-                'widget_options' => array(
-                    'width' => '250px',
-                    'height' => '250px',
-                    'namespace' => $namespace,
-                    'application_name' => $application_name,
-                    'multiple' => '1',
-                ),
-                'label' => __(''),
-                'form' => array(
-                ),
-                //'dont_populate' => true,
-                'before_save' =>
-                    function($item, $data) use ($namespace)
-                    {
-                        $item->categories;//fetch et 'cree' la relation
-                        unset($item->categories);
+            //'dont_populate' => true,
+            'before_save' =>
+                function($item, $data)
+                {
+                    $item->categories;//fetch et 'cree' la relation
+                    unset($item->categories);
 
-                        $category_class = $namespace.'Model_Category';
-                        if (!empty($data['categories'])) {
-                            foreach ($data['categories'] as $cat_id) {
-                                if (ctype_digit($cat_id) ) {
-                                    $item->categories[$cat_id] = $category_class::find($cat_id); // @todo: come back after...
-                                }
+                    $category_class = getBlogNewsNamespace().'Model_Category';
+                    if (!empty($data['categories'])) {
+                        foreach ($data['categories'] as $cat_id) {
+                            if (ctype_digit($cat_id) ) {
+                                $item->categories[$cat_id] = $category_class::find($cat_id); // @todo: come back after...
                             }
                         }
-                    },
+                    }
+                },
+        ),
+        'save' => array(
+            'label' => '',
+            'form' => array(
+                'type' => 'submit',
+                'tag' => 'button',
+                'value' => __('Save'),
+                'class' => 'primary',
+                'data-icon' => 'check',
             ),
-            'save' => array(
-                'label' => '',
-                'form' => array(
-                    'type' => 'submit',
-                    'tag' => 'button',
-                    'value' => __('Save'),
-                    'class' => 'primary',
-                    'data-icon' => 'check',
-                ),
-            ),
-        );
-    }
+        ),
+    )
 );
 
 return $datas;

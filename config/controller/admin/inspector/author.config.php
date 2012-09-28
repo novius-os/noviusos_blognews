@@ -1,5 +1,4 @@
 <?php
-
 /**
  * NOVIUS OS - Web OS for digital communication
  *
@@ -10,14 +9,23 @@
  */
 
 return array(
+    'model' => 'Nos\Model_User',
     'query' => array(
         'model' => 'Nos\Model_User',
         'order_by' => \DB::expr('CONCAT(COALESCE(user_firstname, ""), user_name)'),
     ),
+    'input' => array(
+        'key'   => 'post_author_id',
+    ),
+    'appdesk' => array(
+        'label' => __('Authors'),
+    ),
     'dataset' => array(
-        'id' => 'user_id',
-        'title' => function($item) {
-            return $item->fullname();
-        },
+        'title' => array(
+            'value'         => function($item) {
+                return $item->fullname();
+            },
+            'headerText'    => __('Author')
+        ),
     ),
 );

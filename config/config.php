@@ -1,5 +1,5 @@
 <?php
-return array(
+$ret = array(
     'icons' => array(
         '64' => 'TO BE DEFINED',
         '32' => 'TO BE DEFINED',
@@ -35,5 +35,24 @@ return array(
         'front' => array(
             'format' => 'eu_full'
         )
+    ),
+    'application' => array(
+        'actions' => array(),
+        'name' => _('Blog'),
+        'icons' => array(
+            'large' => '',
+            'medium' => '',
+            'small' => '',
+        ),
+        'actions' => array(
+            'crud' => array(
+                '{{namespace}}\Model_Post',
+                '{{namespace}}\Model_Category',
+                '{{namespace}}\Model_Tag'
+            ),
+        )
     )
 );
+
+
+return $ret;

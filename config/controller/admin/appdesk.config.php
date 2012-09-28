@@ -2,6 +2,12 @@
 use Nos\I18n;
 
 return array(
+    'model' => '{{namespace}}\Model_Post',
+    'inspectors' => array('author', 'tag', 'category', 'date'),
+);
+
+/*
+return array(
     'query' => array(
         'model' => 'Nos\BlogNews\Model_Post',
         'order_by' => array('post_created_at' => 'DESC'),
@@ -203,9 +209,6 @@ return array(
             'splittersVertical' => 250,
             'grid' => array(
                 'urlJson' => 'admin/{{blognews.dir}}/appdesk/json',
-                /**
-                 * Liste des colonnes du affich�es dans la grid. Les cl�s sont celles du dataset d�finies dans le fichier de config PHP
-                 */
                 'columns' => array(
                     'title' => array(
                         'headerText' => __('Title'),
@@ -234,9 +237,6 @@ return array(
                     ),
                 ),
             ),
-            /**
-             * Liste des inspecteurs autour de la grid
-             */
             'inspectors' => array(
                 'created_at' => array(
                     'vertical' => true,
@@ -344,3 +344,4 @@ return array(
         ),
     ),
 );
+*/

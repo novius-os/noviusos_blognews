@@ -43,9 +43,10 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
         $this->config = \Arr::merge($this->config, \Config::get('noviusos_blognews::controller/admin/post'), \Config::loadConfiguration($application_name, 'controller/admin/post'));
-        $this->config['controller_url'] = 'admin/'.$application_name.'/post';
-        $this->config['model'] = $class_post;
-        $this->config['fields'] = $this->config['fields'](\Inflector::get_namespace(get_class($this)), $application_name);
+
+        //$this->config['controller_url'] = 'admin/'.$application_name.'/post';
+        //$this->config['model'] = $class_post;
+        //$this->config['fields'] = $this->config['fields'](\Inflector::get_namespace(get_class($this)), $application_name);
 
         if (!$this->app_config['summary']['enabled']) {
             unset($this->config['layout']['subtitle']);
