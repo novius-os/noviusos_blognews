@@ -50,6 +50,7 @@ $ret = array(
                 '{{namespace}}\Model_Category',
                 '{{namespace}}\Model_Tag'
             ),
+            '{{namespace}}\Model_Tag.edit' => false,
         )
     )
 );

@@ -17,12 +17,16 @@
                     <h3><?= __('Options') ?></h3>
                     <div>
                         <p><label for="item_per_page"><?= __('Item per page:') ?></label> <input type="text" name="item_per_page" id="item_per_page" value="<?= \Fuel\Core\Input::get('item_per_page', 10) ?>" /></p>
-                        <?php if (isset($widget)) { ?>
+<?php
+if (isset($widget)) {
+    ?>
                         <p>
                             <label for="cat_id"><?= __('Category:') ?></label>
                             <?= $widget;?>
                         </p>
-                        <?php } ?>
+    <?php
+}
+?>
                         <p><input type="checkbox" name="link_on_title" id="link_on_title" value="1" <?= \Fuel\Core\Input::get('link_on_title', 0) ? 'checked' : '' ?> /> <label for="link_on_title"><?= __('Link on title') ?></label></p>
                     </div>
                 </div>
