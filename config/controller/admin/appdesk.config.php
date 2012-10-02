@@ -30,6 +30,7 @@ return array(
             'column' => 'post_title',
             'headerText'    => __('Title')
         ),
+        'lang' => true,
         'author' => array(
             'headerText'    => __('Author'),
             'search_relation' => 'author',
@@ -38,8 +39,9 @@ return array(
                 return $item->author->fullname();
             },
         ),
+        'publication_status' => true,
         'post_created_at' => array(
-            'headerText'    => __('Creation date'),
+            'headerText'    => __('Date'),
             'search_column' => 'post_created_at',
             'dataType' => 'datetime',
             'value' => function ($item) {

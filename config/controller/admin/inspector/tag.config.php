@@ -2,7 +2,6 @@
 return array(
     'model' => '{{namespace}}\Model_Tag',
     'query' => array(
-        'model' => '{{namespace}}\Model_Tag',
         'order_by' => 'tag_label',
     ),
     'appdesk' => array(

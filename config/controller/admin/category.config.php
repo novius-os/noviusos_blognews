@@ -18,7 +18,6 @@ return array (
         'add an item in lang' => __('Add a new category in {lang}'),
     ),
     'tab' => array(
-        'iconUrl' => 'static/apps/{{application_name}}/img/16/post.png',
         'labels' => array(
             'insert' => __('Add a category'),
             'blankSlate' => __('Translate a category'),
