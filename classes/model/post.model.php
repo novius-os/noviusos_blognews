@@ -32,11 +32,11 @@ class Model_Post extends \Nos\Orm\Model
             'events' => array('before_save', 'after_save'),
             'virtual_name_property' => 'post_virtual_name',
         ),
-        'Nos\Orm_Behaviour_Translatable' => array(
+        'Nos\Orm_Behaviour_Contextable' => array(
             'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
-            'lang_property'      => 'post_lang',
-            'common_id_property' => 'post_lang_common_id',
-            'is_main_property' => 'post_lang_is_main',
+            'context_property'      => 'post_context',
+            'common_id_property' => 'post_context_common_id',
+            'is_main_property' => 'post_context_is_main',
             'invariant_fields'   => array(),
         ),
     );
@@ -198,7 +198,7 @@ class Model_Post extends \Nos\Orm\Model
 
         $query->where(array('post_published', true));
 
-        $query->where(array('post_lang', $params['lang']));
+        $query->where(array('post_context', $params['context']));
 
         if (!empty($params['author'])) {
             $query->where(array('post_author_id', $params['author']->user_id));

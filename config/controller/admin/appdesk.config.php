@@ -237,7 +237,7 @@ return array(
                         'action' => 'nosTabs',
                         'method' => 'add',
                         'tab' => array(
-                            'url' => 'admin/{{blognews.dir}}/post/insert_update?lang={{lang}}',
+                            'url' => 'admin/{{blognews.dir}}/post/insert_update?context={{context}}',
                             'label' => __('Add a post'),
                             'iconUrl' => 'static/apps/{{blognews.dir}}/img/{{blognews.icon_name}}-16.png'
                         ),
@@ -249,7 +249,7 @@ return array(
                         'action' => 'nosTabs',
                         'method' => 'add',
                         'tab' => array(
-                            'url' => 'admin/{{blognews.dir}}/category/insert_update?lang={{lang}}',
+                            'url' => 'admin/{{blognews.dir}}/category/insert_update?context={{context}}',
                             'label' => __('Add a category'),
                             'iconUrl' => 'static/apps/{{blognews.dir}}/img/{{blognews.icon_name}}-16.png'
                         ),
@@ -265,8 +265,8 @@ return array(
                         'headerText' => __('Title'),
                         'dataKey' => 'title'
                     ),
-                    'lang' => array(
-                        'lang' => true
+                    'context' => array(
+                        'context' => true
                     ),
                     'author' => array(
                         'headerText' => __('Author'),
@@ -301,7 +301,7 @@ return array(
                     'url' => 'admin/{{blognews.dir}}/inspector/category/list',
                     'inputName' => 'cat_id[]',
                     'label' => __('Categories'),
-                    'langChange' => true,
+                    'contextChange' => true,
                     'treeGrid' => array(
                         'treeUrl' => 'admin/{{blognews.dir}}/inspector/category/json',
                         'sortable' => true,

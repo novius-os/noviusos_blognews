@@ -37,11 +37,11 @@ class Model_Category extends \Nos\Orm\Model
             'events' => array('before_save', 'after_save'),
             'virtual_name_property' => 'cat_virtual_name',
         ),
-        'Nos\Orm_Behaviour_Translatable' => array(
+        'Nos\Orm_Behaviour_Contextable' => array(
             'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
-            'lang_property'      => 'cat_lang',
-            'common_id_property' => 'cat_lang_common_id',
-            'is_main_property' => 'cat_lang_is_main',
+            'context_property'      => 'cat_context',
+            'common_id_property' => 'cat_context_common_id',
+            'is_main_property' => 'cat_context_is_main',
             'invariant_fields'   => array('cat_parent_id', 'cat_sort'),
         ),
     );
