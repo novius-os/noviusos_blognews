@@ -1,5 +1,6 @@
 <?php
 $ret = array(
+    'namespace' => '{{namespace}}',
     'categories' => array(
         'enabled' => true,
         'show'    => true,
