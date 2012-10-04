@@ -30,7 +30,7 @@ return array(
             'column' => 'post_title',
             'headerText'    => __('Title')
         ),
-        'lang' => true,
+        'context' => true,
         'author' => array(
             'headerText'    => __('Author'),
             'search_relation' => 'author',
@@ -321,7 +321,7 @@ return array(
                                             'action' => 'nosTabs',
                                             'tab' => array(
                                                 'url' => 'admin/{{blognews.dir}}/category/insert_update/{{id}}',
-                                                'label' => 'Edit the "{{title}}" folder'
+                                                'label' => __('Edit this category'),
                                             ),
                                         ),
                                     ),

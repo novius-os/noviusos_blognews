@@ -29,7 +29,7 @@ $ret = array(
         'show'    => true,
         'front' => array(
             'format' => 'eu_full'
-        )
+        ),
     ),
     'application' => array(
         'actions' => array(),
@@ -46,8 +46,8 @@ $ret = array(
                 '{{namespace}}\Model_Tag'
             ),
             '{{namespace}}\Model_Tag.edit' => false,
-        )
-    )
+        ),
+    ),
 );
 
 

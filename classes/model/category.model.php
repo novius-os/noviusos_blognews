@@ -76,12 +76,6 @@ class Model_Category extends \Nos\Orm\Model
                         },
                 ),
             ),
-            'data_catchers' => array(
-                'blog_posts_rss_channel' => array(
-                    'data_catcher' => 'rss_channel',
-                    'title' => __('RSS Posts channel for this category'),
-                ),
-            ),
         );
     }
 
