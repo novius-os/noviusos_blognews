@@ -39,13 +39,7 @@ class Controller_Admin_Category extends \Nos\Controller_Admin_Crud
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge($this->config, \Config::get('noviusos_blognews::controller/admin/category'), $this->getConfiguration());
-
-        $this->config['controller_url'] = 'admin/'.$application_name.'/category';
-        $this->config['model'] = $class_category;
-        $this->config['fields']['cat_parent_id']['widget_options']['namespace'] = __NAMESPACE__;
-        $this->config['fields']['cat_parent_id']['widget_options']['application_name'] = $application_name;
-
+        $this->config                       = \Arr::merge($this->config,\Config::get('noviusos_blognews::controller/admin/category'), $this->getConfiguration());
         $this->config_build();
     }
 

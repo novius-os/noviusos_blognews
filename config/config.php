@@ -1,11 +1,6 @@
 <?php
-return array(
-    'icons' => array(
-        '64' => 'TO BE DEFINED',
-        '32' => 'TO BE DEFINED',
-        '16' => 'TO BE DEFINED'
-    ),
-    'application_name' => 'TO BE DEFINED',
+$ret = array(
+    'namespace' => '{{namespace}}',
     'categories' => array(
         'enabled' => true,
         'show'    => true,
@@ -34,6 +29,26 @@ return array(
         'show'    => true,
         'front' => array(
             'format' => 'eu_full'
-        )
-    )
+        ),
+    ),
+    'application' => array(
+        'actions' => array(),
+        'name' => _('Blog'),
+        'icons' => array(
+            'large' => '',
+            'medium' => '',
+            'small' => '',
+        ),
+        'actions' => array(
+            'crud' => array(
+                '{{namespace}}\Model_Post',
+                '{{namespace}}\Model_Category',
+                '{{namespace}}\Model_Tag'
+            ),
+            '{{namespace}}\Model_Tag.edit' => false,
+        ),
+    ),
 );
+
+
+return $ret;

@@ -2,6 +2,63 @@
 use Nos\I18n;
 
 return array(
+    'model' => '{{namespace}}\Model_Post',
+    'toolbarActions' => array(
+        'cache' => array(),
+        'Model_User.add' => false,
+    ),
+    'inspectors' => array(
+        'author',
+        'tag',
+        'category',
+        'date'
+    ),
+    'toolbar' => array(
+        'actions' => array(
+            'Nos\Model_User.add' => false,
+            '{{namespace}}\Model_Tag.add' => false,
+        )
+    ),
+    'query' => array(
+        'model' => '{{namespace}}\Model_Post',
+        'order_by' => array('post_created_at' => 'DESC'),
+        'limit' => 20,
+    ),
+    'search_text' => 'post_title',
+    'dataset' => array(
+        'title' => array(
+            'column' => 'post_title',
+            'headerText'    => __('Title')
+        ),
+        'context' => true,
+        'author' => array(
+            'headerText'    => __('Author'),
+            'search_relation' => 'author',
+            'search_column' => 'author.user_name',
+            'value' => function ($item) {
+                return $item->author->fullname();
+            },
+        ),
+        'publication_status' => true,
+        'post_created_at' => array(
+            'headerText'    => __('Date'),
+            'search_column' => 'post_created_at',
+            'dataType' => 'datetime',
+            'value' => function ($item) {
+                return \Date::create_from_string($item->post_created_at, 'mysql')->format('%m/%d/%Y %H:%M:%S'); //%m/%d/%Y %H:%i:%s
+            },
+        ),
+        'preview_url' => array(
+            'value' => function($item) {
+                return $item->preview_url();
+            },
+            'visible' => false
+        ),
+    ),
+);
+
+/*
+return array(
     'query' => array(
         'model' => 'Nos\BlogNews\Model_Post',
         'order_by' => array('post_created_at' => 'DESC'),
@@ -203,9 +260,6 @@ return array(
             'splittersVertical' => 250,
             'grid' => array(
                 'urlJson' => 'admin/{{blognews.dir}}/appdesk/json',
-                /**
-                 * Liste des colonnes du affich�es dans la grid. Les cl�s sont celles du dataset d�finies dans le fichier de config PHP
-                 */
                 'columns' => array(
                     'title' => array(
                         'headerText' => __('Title'),
@@ -237,9 +291,6 @@ return array(
                     ),
                 ),
             ),
-            /**
-             * Liste des inspecteurs autour de la grid
-             */
             'inspectors' => array(
                 'created_at' => array(
                     'vertical' => true,
@@ -273,7 +324,7 @@ return array(
                                             'action' => 'nosTabs',
                                             'tab' => array(
                                                 'url' => 'admin/{{blognews.dir}}/category/insert_update/{{id}}',
-                                                'label' => 'Edit the "{{title}}" folder'
+                                                'label' => __('Edit this category'),
                                             ),
                                         ),
                                     ),
@@ -347,3 +398,4 @@ return array(
         ),
     ),
 );
+*/

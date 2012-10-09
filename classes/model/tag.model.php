@@ -8,11 +8,7 @@ class Model_Tag extends \Nos\Orm\Model
 
     protected static $_many_many = array();
 
-    protected static $_behaviours = array(
-        'Nos\Orm_Behaviour_Urlenhancer' => array(
-            'enhancers' => array(),
-        ),
-    );
+    protected static $_behaviours = array();
 
     public static function _init()
     {
@@ -38,12 +34,6 @@ class Model_Tag extends \Nos\Orm\Model
 
                             return $urls;
                         },
-                ),
-            ),
-            'data_catchers' => array(
-                'blog_posts_rss_channel' => array(
-                    'data_catcher' => 'rss_channel',
-                    'title' => __('RSS Posts channel for this tag'),
                 ),
             ),
         );

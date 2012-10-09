@@ -1,7 +1,7 @@
 <?php
 return array (
-    'controller_url'  => 'admin/noviusos_blognews/cateogry',
-    'model' => 'Nos\\BlogNews\\Model_Category',
+    'controller_url'  => 'admin/{{application_name}}/category',
+    'model' => '{{namespace}}\\Model_Category',
     'messages' => array(
         'successfully added' => __('Category successfully added.'),
         'successfully saved' => __('Category successfully saved.'),
@@ -18,7 +18,6 @@ return array (
         'add an item in context' => __('Add a new category in {context}'),
     ),
     'tab' => array(
-        'iconUrl' => 'static/apps/noviusosdev_blognews/img/16/post.png',
         'labels' => array(
             'insert' => __('Add a category'),
             'blankSlate' => __('Translate a category'),
@@ -31,7 +30,7 @@ return array (
             'expander' => array(
                 'view' => 'nos::form/expander',
                 'params' => array(
-                    'title'   => 'Propriétés',
+                    'title'   => __('Properties'),
                     'nomargin' => true,
                     'options' => array(
                         'allowExpand' => false,
@@ -78,9 +77,9 @@ return array (
             'widget_options' => array(
                 'width'                 => '100%',
                 'height'                => '350px',
-                'namespace'             => 'overide_me',
+                'namespace'             => '{{namespace}}',
                 'sortable'              => true,
-                'application_name'      => 'overide_me'
+                'application_name'      => '{{application_name}}'
             ),
         ),
         'save' => array(

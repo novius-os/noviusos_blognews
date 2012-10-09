@@ -1,7 +1,7 @@
 <?php
 return array (
-    'controller_url'  => 'admin/noviusos_blognews/tag',
-    'model' => 'Nos\\BlogNews\\Model_Tag',
+    'controller_url'  => 'admin/{{application_name}}/tag',
+    'model' => '{{namespace}}\Model_Tag',
     'messages' => array(
         'successfully deleted' => __('The tag has successfully been deleted!'),
         'you are about to delete, confim' => __('You are about to delete the tag <span style="font-weight: bold;">":title"</span>. Are you sure you want to continue?'),

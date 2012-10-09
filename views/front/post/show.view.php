@@ -1,6 +1,8 @@
-<div class="blognews_post">
+<div class="blognews_post blognews_post_show">
+    <?= \View::forge('noviusos_blognews::front/post/stats', array('item' => $item)) ?>
+
     <?= \View::forge('noviusos_blognews::front/post/thumbnail', array('item' => $item)) ?>
-    <?= \View::forge('noviusos_blognews::front/post/title', array('item' => $item)) ?>
+    <?= \View::forge('noviusos_blognews::front/post/title', array('item' => $item, 'context' => 'show')) ?>
     <?= \View::forge('noviusos_blognews::front/post/publication_date', array('item' => $item)) ?>
 
     <?= \View::forge('noviusos_blognews::front/post/summary', array('item' => $item)) ?>
