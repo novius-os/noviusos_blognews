@@ -216,18 +216,21 @@ return array(
                     ),
                     'author' => array(
                         'headerText' => __('Author'),
-                        'dataKey' => 'author'
+                        'dataKey' => 'author',
+                        'multiContextHide' => true,
                     ),
                     'published' => array(
                         'headerText' => __('Status'),
-                        'dataKey' => 'publication_status'
+                        'dataKey' => 'publication_status',
+                        'multiContextHide' => true,
                     ),
                     'post_created_at' => array(
                         'headerText' => __('Date'),
                         'dataKey' => 'post_created_at',
                         'dataFormatString' => 'MM/dd/yyyy HH:mm:ss',
                         'showFilter' => false,
-                        'sortDirection' => 'descending'
+                        'sortDirection' => 'descending',
+                        'multiContextHide' => true,
                     ),
                     'actions' => array(
                         'actions' => array('edit', 'delete', 'visualise'),
