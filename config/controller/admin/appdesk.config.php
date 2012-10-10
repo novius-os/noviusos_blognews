@@ -231,7 +231,7 @@ return array(
                 'created_at' => array(
                     'vertical' => true,
                     'label' => __('Created date'),
-                    'url' => 'admin/noviusos_blognews/inspector/date/list',
+                    'url' => 'admin/{{blognews.dir}}/inspector/date/list',
                     'inputName' => 'created_at'
                 ),
                 'categories' => array(
