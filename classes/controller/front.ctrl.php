@@ -132,7 +132,7 @@ class Controller_Front extends Controller_Front_Application
             } elseif ($segments[0] == 'rss') {
                 $rss = \Nos\Tools_RSS::forge(array(
                         'link' => \Uri::base(false).$this->main_controller->getUrl(),
-                        'language' => $this->page_from->page_lang,
+                        'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
                     ));
 
                 $content = false;
@@ -181,7 +181,7 @@ class Controller_Front extends Controller_Front_Application
                         $post = $this->_get_post(array(
                             'where' => array(
                                 array('post_virtual_name', '=', $segments[2]),
-                                array('post_lang', '=', $this->page_from->page_lang),
+                                array('post_context', '=', $this->page_from->page_context),
                             ),
                             'related' => 'comments',
                             'order_by' => array('comments.comm_created_at' => 'DESC'),
@@ -301,7 +301,7 @@ class Controller_Front extends Controller_Front_Application
         $post = $this->_get_post(array(
             'where' => array(
                 array('post_virtual_name', '=', $item_virtual_name),
-                array('post_lang', '=', $this->page_from->page_lang),
+                array('post_context', '=', $this->page_from->page_context),
             ),
         ));
         if (empty($post)) {
