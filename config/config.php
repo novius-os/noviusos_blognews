@@ -1,6 +1,7 @@
 <?php
 $ret = array(
     'namespace' => '{{namespace}}',
+    'application_name' => '{{application_name}}',
     'categories' => array(
         'enabled' => true,
         'show'    => true,
