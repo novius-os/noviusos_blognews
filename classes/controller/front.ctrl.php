@@ -421,14 +421,7 @@ class Controller_Front extends Controller_Front_Application
         $content = $post->get_default_nuggets();
         $item = array();
         $item['title'] = isset($content[\Nos\DataCatcher::TYPE_TITLE]) ? $content[\Nos\DataCatcher::TYPE_TITLE] : $post->post_title;
-        if (isset($content[\Nos\DataCatcher::TYPE_URL])) {
-            // Nugget contains <page_id::item_slug>
-            list($page_id, $itemPath) = explode('::', $content[\Nos\DataCatcher::TYPE_URL]);
-            $urlPath = \Nos\Tools_Enhancer::url_page($page_id);
-            $item['link'] = \Uri::base(false).$urlPath.$itemPath;
-        } else {
-            $item['link'] = \Uri::base(false).$post->url();
-        }
+        $item['link'] = \Uri::base(false).$post->url_canonical();
         if (isset($content[\Nos\DataCatcher::TYPE_IMAGE])) {
             $item['img'] = \Uri::base(false).$content[\Nos\DataCatcher::TYPE_IMAGE];
         }
@@ -448,16 +441,7 @@ class Controller_Front extends Controller_Front_Application
         }
         $item = array();
         $item['title'] = __('Post comments:').' '.$post->post_title;
-        $content = $post->get_default_nuggets();
-        if (isset($content[\Nos\DataCatcher::TYPE_URL])) {
-            // Nugget contains <page_id::item_slug>
-            list($page_id, $itemPath) = explode('::', $content[\Nos\DataCatcher::TYPE_URL]);
-            $urlPath = \Nos\Tools_Enhancer::url_page($page_id);
-            $item['link'] = \Uri::base(false).$urlPath.$itemPath;
-        } else {
-            $item['link'] = \Uri::base(false).$post->url();
-        }
-        $item['link'] .= '#comment'.$comment->comm_id;
+        $item['link'] = \Uri::base(false).$post->url_canonical().'#comment'.$comment->comm_id;
         $item['description'] = $comment->comm_content;
         $item['pubDate'] = $comment->comm_created_at;
         $item['author'] = $comment->comm_author;
