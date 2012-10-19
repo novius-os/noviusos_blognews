@@ -32,7 +32,7 @@ class Model_Post extends \Nos\Orm\Model
             'events' => array('before_save', 'after_save'),
             'virtual_name_property' => 'post_virtual_name',
         ),
-        'Nos\Orm_Behaviour_Contextable' => array(
+        'Nos\Orm_Behaviour_ContextableAndTwinnable' => array(
             'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
             'context_property'      => 'post_context',
             'common_id_property' => 'post_context_common_id',
