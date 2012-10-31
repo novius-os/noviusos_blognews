@@ -71,6 +71,8 @@ class Widget_Category_Selector extends \Nos\Widget_Selector
             $disabled = array();
         }
 
+        $lang = \Arr::get($this->widget_options, 'lang', $this->lang);
+
         return $this->template(static::widget(array(
             'input_name' => $this->name,
             'selected' => $selected,
@@ -79,7 +81,7 @@ class Widget_Category_Selector extends \Nos\Widget_Selector
             'sortable' => isset($this->widget_options['sortable']) ? $this->widget_options['sortable'] : 0,
             'application_name' => $this->widget_options['application_name'],
             'treeOptions' => array(
-                'lang' => \Arr::get($this->widget_options, 'lang', $this->lang),
+                'lang' => $lang == null ? '' : $lang,
             ),
             'height' => \Arr::get($this->widget_options, 'height', '150px'),
             'width' => \Arr::get($this->widget_options, 'width', null),
