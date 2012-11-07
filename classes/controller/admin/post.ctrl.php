@@ -64,9 +64,9 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         $this->config_build();
     }
 
-    protected function form_item()
+    protected function from_item()
     {
-        parent::form_item();
+        parent::from_item();
         if ($this->item->is_new()) {
             $this->item->author = \Session::user();
             if ($this->item_from) {
