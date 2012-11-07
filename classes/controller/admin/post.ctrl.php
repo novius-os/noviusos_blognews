@@ -71,6 +71,13 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         $this->item->author = \Session::user();
         if ($this->item_from) {
             $this->item->tags = $this->item_from->tags;
+
+            foreach ($this->item_from->categories as $category_from) {
+                $category = $category_from->find_context($this->item->post_context);
+                if (!empty($category)) {
+                    $this->item->categories[$category->cat_id] = $category;
+                }
+            }
         }
     }
 
