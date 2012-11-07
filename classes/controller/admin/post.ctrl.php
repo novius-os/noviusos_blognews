@@ -64,14 +64,13 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         $this->config_build();
     }
 
-    protected function from_item()
+    protected function init_item()
     {
-        parent::from_item();
-        if ($this->item->is_new()) {
-            $this->item->author = \Session::user();
-            if ($this->item_from) {
-                $this->item->tags = $this->item_from->tags;
-            }
+        parent::init_item();
+
+        $this->item->author = \Session::user();
+        if ($this->item_from) {
+            $this->item->tags = $this->item_from->tags;
         }
     }
 
