@@ -37,7 +37,7 @@ class Model_Category extends \Nos\Orm\Model
             'events' => array('before_save', 'after_save'),
             'virtual_name_property' => 'cat_virtual_name',
         ),
-        'Nos\Orm_Behaviour_ContextableAndTwinnable' => array(
+        'Nos\Orm_Behaviour_Twinnable' => array(
             'events' => array('before_insert', 'after_insert', 'before_save', 'after_delete', 'change_parent'),
             'context_property'      => 'cat_context',
             'common_id_property' => 'cat_context_common_id',
