@@ -3,7 +3,7 @@
     <div class="blognews_list">
 <?php
 foreach ($posts as $post) {
-    echo \View::forge('noviusos_blognews::front/post/item', array('item' => $post));
+    echo \View::forge('noviusos_blognews::front/post/item', array('item' => $post), false);
 }
 ?>
     </div>

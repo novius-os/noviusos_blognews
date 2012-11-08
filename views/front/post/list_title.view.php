@@ -10,5 +10,5 @@ if ($type == 'category') {
     $link  = $item->url();
 }
 if ($title !== null) {
-    echo '<h1><a href="'.$link.'">'.$title.'</a></h1>';
+    echo '<h1><a href="'.$link.'">'.e($title).'</a></h1>';
 }
