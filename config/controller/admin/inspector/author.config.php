@@ -9,7 +9,7 @@
  */
 
 return array(
-    'model' => 'Nos\Model_User',
+    'model' => '\Nos\User\Model_User',
     'query' => array(
         'order_by' => \DB::expr('CONCAT(COALESCE(user_firstname, ""), user_name)'),
     ),

@@ -129,7 +129,7 @@ class Model_Post extends \Nos\Orm\Model
 
         static::$_belongs_to['author'] = array(
             'key_from' => static::get_prefix().'author_id',
-            'model_to' => 'Nos\Model_User',
+            'model_to' => 'Nos\User\Model_User',
             'key_to' => 'user_id',
             'cascade_save' => false,
             'cascade_delete' => false,
