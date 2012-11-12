@@ -195,6 +195,14 @@ class Model_Post extends \Nos\Orm\Model
             $query->related(array('categories'));
             $query->where(array('categories.cat_id', $params['category']->cat_id));
         }
+        if (!empty($params['categories'])) {
+            $query->related(array('categories'));
+            $cat_ids = array();
+            foreach ($params['categories'] as $category) {
+                $cat_ids[] = $category->cat_id;
+            }
+            $query->where(array('categories.cat_id', 'IN', $cat_ids));
+        }
         if (!empty($params['order_by'])) {
             $query->order_by($params['order_by']);
         }
@@ -212,11 +220,11 @@ class Model_Post extends \Nos\Orm\Model
     {
         $query = static::get_query($params);
         $posts = $query->get();
-        $keys = array_keys((array) $posts);
 
         // Re-fetch with a 2nd request to get all the relations (not only the filtered ones)
         // @todo : to take a look later, see if the orm can't be fixed
-        if (!empty($post) && (!empty($params['tag']) || !empty($params['category']))) {
+        if (!empty($posts) && (!empty($params['tag']) || !empty($params['category']) || !empty($params['categories']))) {
+            $keys = array_keys((array) $posts);
             $posts = static::query(array(
                 'where' => array(
                     array('post_id', 'IN', $keys),
