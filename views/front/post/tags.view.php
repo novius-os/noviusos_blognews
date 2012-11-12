@@ -11,7 +11,7 @@ if ($app_config['tags']['enabled'] && $app_config['tags']['show']) {
         $tags_str = implode(', ', array_map(function($href, $title) {
             return '<a href="'.$href.'">'.e($title).'</a>';
         }, array_keys($tags), array_values($tags)));
-        echo e(Str::tr(__('Tags: :tags')), array('tags' => $tags_str));
+        echo Str::tr(e(__('Tags: :tags')), array('tags' => $tags_str));
     }
     ?>
     </div>

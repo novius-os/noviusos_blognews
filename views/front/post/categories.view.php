@@ -11,7 +11,7 @@ if ($app_config['categories']['enabled'] && $app_config['categories']['show']) {
         $categories_str = implode(', ', array_map(function($href, $title) {
             return '<a href="'.$href.'">'.e($title).'</a>';
         }, array_keys($categories), array_values($categories)));
-        echo e(Str::tr(__('Categories: :categories')), array('categories' => $categories_str));
+        echo Str::tr(e(__('Categories: :categories')), array('categories' => $categories_str));
     }
     ?>
     </div>

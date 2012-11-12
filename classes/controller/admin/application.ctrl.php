@@ -23,13 +23,15 @@ class Controller_Admin_Application extends \Nos\Controller
         $params['application_name'] = $application_name;
 
         if ($this->app_config['categories']['enabled']) {
+            $cat_id = \Input::get('cat_id', null);
             $params['widget'] = Widget_Category_Selector::widget(
                 array(
                     'width'                     => '260px',
                     'height'                    => '200px',
                     'input_name'                => 'cat_id',
+                    'selected'                  => !empty($cat_id) ? array('id' => $cat_id) : null,
                     'treeOptions'               => array(
-                        'context'                  => 'fr_FR'
+                        'context'               => \Input::get('nosContext', false) ?: \Nos\Tools_Context::default_context(),
                     ),
                     'namespace'                 => \Inflector::get_namespace(get_called_class()),
                     'application_name'          => $application_name,
@@ -52,11 +54,10 @@ class Controller_Admin_Application extends \Nos\Controller
 
         $post = $this->class_post;
         $cat = $this->class_cat;
-        //TODO : pass the context that calls the wysiwyg preview
-        $params['context']   = 'fr_FR';
+        $params['context'] = \Input::post('nosContext', false) ?: \Nos\Tools_Context::default_context();
         $params['cat_id'] = \Input::post('cat_id', null);
-        $params['limit']  = \Input::post('item_per_page', null);
-        $params['datas']  = $post::get_all($params);
+        $params['limit'] = \Input::post('item_per_page', null);
+        $params['datas'] = $post::get_all($params);
         if (isset($params['cat_id'])) {
             $params['category']        = strtr(__('Category: {{category}}'), array(
                 '{{category}}' => $cat::find($params['cat_id'])->cat_title,

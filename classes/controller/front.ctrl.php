@@ -224,6 +224,10 @@ class Controller_Front extends Controller_Front_Application
 
         $this->init_pagination(1);
 
+        \View::set_global('enhancer_args', array_map(function() {
+            return null;
+        }, $args));
+
         return $this->display_list_main($args);
     }
 
@@ -389,7 +393,7 @@ class Controller_Front extends Controller_Front_Application
         if (isset($this->page_from->page_context)) {
             $params['context'] = $this->page_from->page_context;
         } else {
-            $params['context'] = 'FR_fr';
+            $params['context'] = \Nos\Tools_Context::default_context();
         }
 
         // Apply pagination
@@ -406,6 +410,15 @@ class Controller_Front extends Controller_Front_Application
 
         $params['limit'] = $this->config['item_per_page'];
 
+        if (isset($params['cat_id'])) {
+            $category_class = static::$category_class;
+            if (!empty($params['category']) && $params['category']->cat_id != $params['cat_id']) {
+                $params['categories'] = array($params['category'], $category_class::find($params['cat_id']));
+                unset($params['category']);
+            } else {
+                $params['category'] = $category_class::find($params['cat_id']);
+            }
+        }
         if (isset($this->config['order_by'])) {
             $params['order_by'] = $this->config['order_by'];
         }
