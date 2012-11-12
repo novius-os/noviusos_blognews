@@ -220,6 +220,10 @@ class Controller_Front extends Controller_Front_Application
 
         $this->init_pagination(1);
 
+        \View::set_global('enhancer_args', array_map(function() {
+            return null;
+        }, $args));
+
         return $this->display_list_main($args);
     }
 
