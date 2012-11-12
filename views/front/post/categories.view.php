@@ -16,7 +16,7 @@
                 array_values($categories)
             )
         );
-        echo e(Str::tr(__('Categories: :categories')), array('categories' => $categories_str));
+        echo Str::tr(e(__('Categories: :categories')), array('categories' => $categories_str));
     }
     ?>
     </div>

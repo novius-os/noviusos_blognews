@@ -18,7 +18,7 @@ if ($app_config['tags']['enabled'] && $app_config['tags']['show']) {
                 array_values($tags)
             )
         );
-        echo e(Str::tr(__('Tags: :tags')), array('tags' => $tags_str));
+        echo Str::tr(e(__('Tags: :tags')), array('tags' => $tags_str));
     }
     ?>
     </div>
