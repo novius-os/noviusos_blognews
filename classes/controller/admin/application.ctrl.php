@@ -29,7 +29,7 @@ class Controller_Admin_Application extends \Nos\Controller
                     'height'                    => '200px',
                     'input_name'                => 'cat_id',
                     'treeOptions'               => array(
-                        'lang'                  => 'fr_FR'
+                        'lang'                  => \Input::get('nosLang', false) ?: key(\Config::get('locales')),
                     ),
                     'namespace'                 => \Inflector::get_namespace(get_called_class()),
                     'application_name'          => $application_name,
