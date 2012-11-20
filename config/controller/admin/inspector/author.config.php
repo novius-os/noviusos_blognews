@@ -19,12 +19,5 @@ return array(
     'appdesk' => array(
         'label' => __('Authors'),
     ),
-    'dataset' => array(
-        'title' => array(
-            'value'         => function($item) {
-                return $item->fullname();
-            },
-            'headerText'    => __('Author')
-        ),
-    ),
+    'data_mapping' => array('fullname')
 );

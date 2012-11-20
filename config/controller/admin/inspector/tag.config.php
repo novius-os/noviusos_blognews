@@ -10,10 +10,4 @@ return array(
     'input' => array(
         'key'   => 'tags.tag_id',
     ),
-    'dataset' => array(
-        'title' => array(
-            'column' => 'tag_label',
-            'headerText' => __('Tag')
-        ),
-    ),
 );
