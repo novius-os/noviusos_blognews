@@ -27,7 +27,7 @@ class Model_Category extends \Nos\Orm\Model
             'children_relation' => 'children',
         ),
         'Nos\Orm_Behaviour_Sortable' => array(
-            'events' => array('after_sort', 'before_insert'),
+            'events' => array('before_insert', 'before_save', 'after_save'),
             'sort_property' => 'cat_sort',
         ),
         'Nos\Orm_Behaviour_Urlenhancer' => array(
@@ -42,7 +42,7 @@ class Model_Category extends \Nos\Orm\Model
             'lang_property'      => 'cat_lang',
             'common_id_property' => 'cat_lang_common_id',
             'is_main_property' => 'cat_lang_is_main',
-            'invariant_fields'   => array('cat_parent_id', 'cat_sort'),
+            'invariant_fields'   => array(),
         ),
     );
 
