@@ -34,5 +34,3 @@ function forge($self, $className, $args = array())
 
     return $class::forge($args['data'], $args['new'], $args['view']);
 }
-
-
