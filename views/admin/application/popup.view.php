@@ -18,11 +18,11 @@
                     <div>
                         <p><label for="item_per_page"><?= __('Item per page:') ?></label> <input type="text" name="item_per_page" id="item_per_page" value="<?= \Fuel\Core\Input::get('item_per_page', 10) ?>" /></p>
 <?php
-if (isset($widget)) {
+if (isset($renderer)) {
     ?>
                         <p>
                             <label for="cat_id"><?= __('Category:') ?></label>
-                            <?= $widget;?>
+                            <?= $renderer;?>
                         </p>
     <?php
 }

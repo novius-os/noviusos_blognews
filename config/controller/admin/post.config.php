@@ -108,7 +108,7 @@ $datas = array(
         ),
         'post_virtual_name' => array(
             'label' => __('URL: '),
-            'widget' => 'Nos\Widget_Virtualname',
+            'renderer' => 'Nos\Renderer_Virtualname',
             'validation' => array(
                 'required',
                 'min_length' => array(2),
@@ -116,13 +116,13 @@ $datas = array(
         ),
         'author->user_fullname' => array(
             'label' => __('Author: '),
-            'widget' => 'Nos\Widget_Text',
+            'renderer' => 'Nos\Renderer_Text',
             'editable' => false,
             'template' => '<p>{label} {field}</p>'
         ),
         'wysiwygs->content->wysiwyg_text' => array(
             'label' => __('Content'),
-            'widget' => 'Nos\Widget_Wysiwyg',
+            'renderer' => 'Nos\Renderer_Wysiwyg',
             'template' => '{field}',
             'form' => array(
                 'style' => 'width: 100%; height: 500px;',
@@ -130,7 +130,7 @@ $datas = array(
         ),
         'medias->thumbnail->medil_media_id' => array(
             'label' => '',
-            'widget' => 'Nos\Widget_Media',
+            'renderer' => 'Nos\Renderer_Media',
             'form' => array(
                 'title' => 'Thumbnail',
             ),
@@ -151,7 +151,7 @@ $datas = array(
         ),
         'post_created_at_date' => array(
             'label' => __('Created on:'),
-            'widget' => 'Nos\Widget_Date_Picker',
+            'renderer' => 'Nos\Renderer_Date_Picker',
             'template' => '<p>{label}<br/>{field}',
             'dont_save' => true,
             'populate' =>
@@ -166,7 +166,7 @@ $datas = array(
         ),
         'post_created_at_time' => array(
             'label' => __('Created time:'),
-            'widget' => 'Nos\Widget_Time_Picker',
+            'renderer' => 'Nos\Renderer_Time_Picker',
             'dont_save' => true,
             'template' => ' {field}</p>',
             'populate' =>
@@ -189,16 +189,16 @@ $datas = array(
         ),
         'tags' => array(
             'label' => __('Tags'),
-            'widget' => 'Nos\Widget_Tag',
-            'widget_options' => array(
+            'renderer' => 'Nos\Renderer_Tag',
+            'renderer_options' => array(
                 'model'         => '{{namespace}}\\Model_Tag',
                 'label_column'  => 'tag_label',
                 'relation_name' => 'tags'
             ),
         ),
         'categories' => array(
-            'widget' => 'Nos\BlogNews\Widget_Category_Selector',
-            'widget_options' => array(
+            'renderer' => 'Nos\BlogNews\Renderer_Category_Selector',
+            'renderer_options' => array(
                 'width' => '250px',
                 'height' => '250px',
                 'namespace' => '{{namespace}}',

@@ -73,7 +73,7 @@ return array (
         ),
         'cat_virtual_name' => array(
             'label' => __('URL: '),
-            'widget' => 'Nos\Widget_Virtualname',
+            'renderer' => 'Nos\Renderer_Virtualname',
             'validation' => array(
                 'required',
                 'min_length' => array(2),
@@ -82,8 +82,8 @@ return array (
         ),
         'cat_parent_id' => array(
             'label' => __('Location: '),
-            'widget' => 'Nos\BlogNews\Widget_Category_Selector',
-            'widget_options' => array(
+            'renderer' => 'Nos\BlogNews\Renderer_Category_Selector',
+            'renderer_options' => array(
                 'width'                 => '100%',
                 'height'                => '350px',
                 'namespace'             => '{{namespace}}',

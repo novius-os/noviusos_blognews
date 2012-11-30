@@ -33,7 +33,7 @@ class Controller_Admin_Application extends \Nos\Controller
 
         if ($this->app_config['categories']['enabled']) {
             $cat_id = \Input::get('cat_id', null);
-            $params['widget'] = Widget_Category_Selector::widget(
+            $params['renderer'] = Renderer_Category_Selector::renderer(
                 array(
                     'width'                     => '260px',
                     'height'                    => '200px',
