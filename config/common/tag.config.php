@@ -16,5 +16,6 @@ return array(
     ),
     'actions' => array(
         '{{namespace}}\Model_Tag.edit' => false,
+        '{{namespace}}\Model_Tag.visualise' => false,
     )
 );

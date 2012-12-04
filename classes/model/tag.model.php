@@ -8,7 +8,11 @@ class Model_Tag extends \Nos\Orm\Model
 
     protected static $_many_many = array();
 
-    protected static $_behaviours = array();
+    protected static $_behaviours = array(
+        'Nos\Orm_Behaviour_Urlenhancer' => array(
+            'enhancers' => array(),
+        ),
+    );
 
     public static function _init()
     {
