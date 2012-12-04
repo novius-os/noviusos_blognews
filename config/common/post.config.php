@@ -22,7 +22,11 @@ return array(
                 return $item->author->fullname();
             },
         ),
-        'publication_status' => true,
+        'published' => array(
+            'title' => __('Status'),
+            'dataKey' => 'publication_status',
+            'multiContextHide' => true,
+        ),
         'post_created_at' => array(
             'title'    => __('Date'),
             'value' => function ($item) {
