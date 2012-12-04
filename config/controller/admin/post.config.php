@@ -11,21 +11,7 @@
 $datas = array(
     'controller_url'  => 'admin/{{application_name}}/post',
     'model' => '{{namespace}}\Model_Post',
-    'messages' => array(
-        'successfully added' => __('Post successfully added.'),
-        'successfully saved' => __('Post successfully saved.'),
-        'successfully deleted' => __('The post has successfully been deleted!'),
-        'you are about to delete, confim' => __('You are about to delete the post <span style="font-weight: bold;">":title"</span>. Are you sure you want to continue?'),
-        'you are about to delete' => __('You are about to delete the post <span style="font-weight: bold;">":title"</span>.'),
-        'exists in multiple context' => __('This post exists in <strong>{count} contexts</strong>.'),
-        'delete in the following contexts' => __('Delete this post in the following contexts:'),
-        'item deleted' => __('This post has been deleted.'),
-        'not found' => __('Post not found'),
-        'error added in context' => __('This post cannot be added {context}.'),
-        'item inexistent in context yet' => __('This post has not been added in {context} yet.'),
-        'add an item in context' => __('Add a new post in {context}'),
-        'delete an item' => __('Delete a post'),
-    ),
+    'i18n_file' => 'noviusos_blognews::post',
     'tab' => array(
         'iconUrl' => 'static/apps/{{application_name}}/img/16/post.png',
         'labels' => array(
@@ -215,7 +201,8 @@ $datas = array(
                     $item->categories;//fetch et 'cree' la relation
                     unset($item->categories);
 
-                    $category_class = \Config::load_and_get('noviusos_blognews::config.namespace').'\\Model_Category';
+                    $config = \Config::load('noviusos_blognews::config');
+                    $category_class = \Arr::get($config, 'namespace').'\\Model_Category';
                     if (!empty($data['categories'])) {
                         foreach ($data['categories'] as $cat_id) {
                             if (ctype_digit($cat_id) ) {

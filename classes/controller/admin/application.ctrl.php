@@ -10,10 +10,14 @@
 
 namespace Nos\BlogNews;
 
-// gère popup de config des enhancers et previews
-// ATTENTION : du fait du namespace, ce controlleur doit être étendu dans news et blog pour pouvoir fonctioner
+// Handles the enhancer configuration popup & preview
+// WARNING : Because of the namespace, this controllers has to be extended in Blog & News
 class Controller_Admin_Application extends \Nos\Controller
 {
+    public static function _init()
+    {
+        \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+    }
 
     protected $class_cat;
 
@@ -23,6 +27,7 @@ class Controller_Admin_Application extends \Nos\Controller
         $this->class_post = namespacize($this, 'Model_Post');
 
         parent::before();
+        \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
     }
 
     public function action_popup()

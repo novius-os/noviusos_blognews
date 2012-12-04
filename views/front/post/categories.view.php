@@ -1,5 +1,6 @@
 <?php
 if ($app_config['categories']['enabled'] && $app_config['categories']['show']) {
+    \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
     ?>
     <div class="blognews_categories">
     <?php

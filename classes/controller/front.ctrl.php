@@ -43,6 +43,8 @@ class Controller_Front extends Controller_Front_Application
     public function before()
     {
         parent::before();
+
+        \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
         $this->app_config = \Arr::merge($this->app_config, static::getGlobalConfiguration());
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique

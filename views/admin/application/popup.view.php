@@ -7,6 +7,9 @@
  *             http://www.gnu.org/licenses/agpl-3.0.html
  * @link http://www.novius-os.org
  */
+
+\Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+
 ?>
 <div id="<?= $id = uniqid('temp_') ?>">
     <form method="POST" action="admin/<?= $application_name ?>/application/popup_save">

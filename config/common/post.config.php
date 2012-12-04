@@ -8,6 +8,8 @@
  * @link http://www.novius-os.org
  */
 
+\Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+
 return array(
     'data_mapping' => array(
         'post_title' => array(

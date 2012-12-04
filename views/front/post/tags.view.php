@@ -1,5 +1,6 @@
 <?php
 if ($app_config['tags']['enabled'] && $app_config['tags']['show']) {
+    \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
     ?>
     <div class="blognews_tags">
     <?php
