@@ -52,6 +52,7 @@ class Model_Category extends \Nos\Orm\Model
 
     public static function _init()
     {
+        \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
         static::$_behaviours['Nos\Orm_Behaviour_Sharable'] = array(
             'data' => array(
                 \Nos\DataCatcher::TYPE_TITLE => array(

@@ -40,6 +40,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         static::$ns_folder = strtolower($provider).'_'.strtolower($app);
 
         parent::before();
+        \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
         list($application_name) = \Config::configFile(get_called_class());

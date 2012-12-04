@@ -1,6 +1,8 @@
 <?php
 $title = null;
 
+\Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+
 if ($type == 'tag') {
     $title = Str::tr(__('Tag: :tag'), array('tag' => $item->tag_label));
     $link  = $item->url();

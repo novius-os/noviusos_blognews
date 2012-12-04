@@ -11,21 +11,7 @@
 return array (
     'controller_url'  => 'admin/{{application_name}}/category',
     'model' => '{{namespace}}\\Model_Category',
-    'messages' => array(
-        'successfully added' => __('Category successfully added.'),
-        'successfully saved' => __('Category successfully saved.'),
-        'successfully deleted' => __('The category has successfully been deleted!'),
-        'you are about to delete, confim' => __('You are about to delete the category <span style="font-weight: bold;">":title"</span>. Are you sure you want to continue?'),
-        'you are about to delete' => __('You are about to delete the category <span style="font-weight: bold;">":title"</span>.'),
-        'exists in multiple context' => __('This category exists in <strong>{count} contexts</strong>.'),
-        'delete in the following contexts' => __('Delete this category in the following contexts:'),
-        'item deleted' => __('This category has been deleted.'),
-        'not found' => __('category not found'),
-        'error added in context not parent' => __('This category cannot be added {context} because its {parent} is not available in this context yet.'),
-        'error added in context' => __('This category cannot be added {context}.'),
-        'item inexistent in context yet' => __('This category has not been added in {context} yet.'),
-        'add an item in context' => __('Add a new category in {context}'),
-    ),
+    'i18n_file' => 'noviusos_blognews::category',
     'tab' => array(
         'labels' => array(
             'insert' => __('Add a category'),

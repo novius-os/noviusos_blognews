@@ -1,5 +1,7 @@
 <div id="<?= $uniqid = uniqid('id_') ?>" class="fieldset standalone">
     <?php
+    \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+
     echo '<p>', __('Please confirm the suppression below.'), '</p>';
     /*
     if ($posts_count == 0) {

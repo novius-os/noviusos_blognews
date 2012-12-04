@@ -8,7 +8,6 @@
  * @link http://www.novius-os.org
  */
 
-use Nos\I18n;
 
 return array(
     'model' => '{{namespace}}\Model_Post',
