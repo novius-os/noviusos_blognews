@@ -43,9 +43,11 @@ return array(
             },
         ),
     ),
-    'actions_order' => array(
-        '{{namespace}}\Model_Post.edit',
-        '{{namespace}}\Model_Post.visualise',
-        '{{namespace}}\Model_Post.delete',
-    )
+    'actions' => array(
+        'order' => array(
+            '{{namespace}}\Model_Post.edit',
+            '{{namespace}}\Model_Post.visualise',
+            '{{namespace}}\Model_Post.delete',
+        ),
+    ),
 );
