@@ -114,7 +114,7 @@ class Renderer_Category_Selector extends \Nos\Renderer_Selector
             ),
             'columns' => array(
                 array(
-                    'dataKey' => 'title',
+                    'dataKey' => 'cat_title',
                 )
             ),
             'treeOptions' => array(

@@ -12,7 +12,7 @@ namespace Nos\BlogNews;
 
 // Handles the enhancer configuration popup & preview
 // WARNING : Because of the namespace, this controllers has to be extended in Blog & News
-class Controller_Admin_Application extends \Nos\Controller
+class Controller_Admin_Application extends \Nos\Controller_Admin_Enhancer
 {
     public static function _init()
     {
@@ -38,7 +38,8 @@ class Controller_Admin_Application extends \Nos\Controller
 
         if ($this->app_config['categories']['enabled']) {
             $cat_id = \Input::get('cat_id', null);
-            $params['renderer'] = Renderer_Category_Selector::renderer(
+
+            $this->config['popup']['params']['renderer'] = Renderer_Category_Selector::renderer(
                 array(
                     'width'                     => '260px',
                     'height'                    => '200px',
@@ -54,35 +55,6 @@ class Controller_Admin_Application extends \Nos\Controller
             );
         }
 
-        return \View::forge('noviusos_blognews::admin/application/popup', $params, false);
-    }
-
-    public function action_popup_save()
-    {
-        return $this->action_preview();
-    }
-
-    public function action_preview()
-    {
-        $params = $_POST;
-
-        $post = $this->class_post;
-        $cat = $this->class_cat;
-        $params['context'] = \Input::post('nosContext', false) ?: \Nos\Tools_Context::default_context();
-        $params['cat_id'] = \Input::post('cat_id', null);
-        $params['limit'] = \Input::post('item_per_page', null);
-        $params['datas'] = $post::get_all($params);
-        if (isset($params['cat_id'])) {
-            $params['category']        = strtr(__('Category: {{category}}'), array(
-                '{{category}}' => $cat::find($params['cat_id'])->cat_title,
-            ));
-        } else {
-            $params['category']        = '';
-        }
-        $body = array(
-            'config'        => \Format::forge()->to_json($_POST),
-            'preview'       => \View::forge('noviusos_blognews::admin/application/preview', $params, false)->render(),
-        );
-        \Response::json($body);
+        return parent::action_popup();
     }
 }
