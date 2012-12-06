@@ -45,6 +45,28 @@ return array(
             },
         ),
     ),
+    'i18n' => array(
+        // Crud
+        'successfully added' => __('Post successfully added.'),
+        'successfully saved' => __('Post successfully saved.'),
+        'successfully deleted' => __('The post has successfully been deleted!'),
+
+        // General errors
+        'item deleted' => __('This post has been deleted.'),
+        'not found' => __('Post not found'),
+
+        // Blank slate
+        'error added in context' => __('This post cannot be added {context}.'),
+        'item inexistent in context yet' => __('This post has not been added in {context} yet.'),
+        'add an item in context' => __('Add a new post in {context}'),
+
+        // Deletion popup
+        'delete an item' => __('Delete a post'),
+        'you are about to delete, confim' => __('You are about to delete the post <span style="font-weight: bold;">":title"</span>. Are you sure you want to continue?'),
+        'you are about to delete' => __('You are about to delete the post <span style="font-weight: bold;">":title"</span>.'),
+        'exists in multiple context' => __('This post exists in <strong>{count} contexts</strong>.'),
+        'delete in the following contexts' => __('Delete this post in the following contexts:'),
+    ),
     'actions' => array(
         'order' => array(
             '{{namespace}}\Model_Post.edit',

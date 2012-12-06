@@ -13,11 +13,11 @@
 return array(
     'data_mapping' => array(
         'tag_label' => array(
-            'headerText' => __('Tag')
+            'headerText' => __('Tag'),
         ),
     ),
     'actions' => array(
         '{{namespace}}\Model_Tag.edit' => false,
         '{{namespace}}\Model_Tag.visualise' => false,
-    )
+    ),
 );
