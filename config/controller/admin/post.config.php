@@ -201,7 +201,7 @@ $datas = array(
                     $item->categories;//fetch et 'cree' la relation
                     unset($item->categories);
 
-                    $config = \Config::load('noviusos_blognews::config');
+                    $config = \Config::load('noviusos_blognews::config', true);
                     $category_class = \Arr::get($config, 'namespace').'\\Model_Category';
                     if (!empty($data['categories'])) {
                         foreach ($data['categories'] as $cat_id) {
