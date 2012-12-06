@@ -12,8 +12,6 @@ namespace Nos\BlogNews;
 
 use Nos\Controller_Front_Application;
 use \Nos\Comments\Model_Comment;
-
-use Fuel\Core\Inflector;
 use View;
 
 class Controller_Front extends Controller_Front_Application
