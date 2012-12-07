@@ -185,7 +185,6 @@ $datas = array(
         'categories' => array(
             'renderer' => 'Nos\BlogNews\Renderer_Category_Selector',
             'renderer_options' => array(
-                'width' => '250px',
                 'height' => '250px',
                 'namespace' => '{{namespace}}',
                 'application_name' => '{{application_name}}',
