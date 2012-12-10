@@ -393,7 +393,7 @@ class Controller_Front extends Controller_Front_Application
         if (isset($this->page_from->page_context)) {
             $params['context'] = $this->page_from->page_context;
         } else {
-            $params['context'] = \Nos\Tools_Context::default_context();
+            $params['context'] = \Nos\Tools_Context::defaultContext();
         }
 
         // Apply pagination

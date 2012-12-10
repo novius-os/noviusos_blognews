@@ -46,7 +46,7 @@ class Controller_Admin_Application extends \Nos\Controller_Admin_Enhancer
                     'input_name'                => 'cat_id',
                     'selected'                  => !empty($cat_id) ? array('id' => $cat_id) : null,
                     'treeOptions'               => array(
-                        'context'               => \Input::get('nosContext', false) ?: \Nos\Tools_Context::default_context(),
+                        'context'               => \Input::get('nosContext', false) ?: \Nos\Tools_Context::defaultContext(),
                     ),
                     'namespace'                 => \Inflector::get_namespace(get_called_class()),
                     'application_name'          => $application_name,
