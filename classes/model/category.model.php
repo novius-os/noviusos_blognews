@@ -30,7 +30,7 @@ class Model_Category extends \Nos\Orm\Model
 
     protected static $_behaviours = array(
         'Nos\Orm_Behaviour_Tree' => array(
-            'events' => array('before_query', 'after_delete'),
+            'events' => array('before_query', 'before_delete'),
             'parent_relation' => 'parent',
             'children_relation' => 'children',
         ),
