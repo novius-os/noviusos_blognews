@@ -18,8 +18,8 @@ return array(
         'context' => true,
         'author->user_name' => array(
             'title'         => __('Author'),
-            'value' => function ($item) {
-                return $item->author->fullname();
+            'value' =>  function($item) {
+                return !empty($item->author) ? $item->author->fullname() : $item->post_author_alias;
             },
         ),
         'published' => array(

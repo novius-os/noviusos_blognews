@@ -93,7 +93,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
     protected function fields($fields)
     {
         $fields = parent::fields($fields);
-        \Arr::set($fields, 'author->user_fullname.form.value', $this->item->author->fullname());
+        \Arr::set($fields, 'author->user_fullname.form.value', !empty($this->item->author) ? $this->item->author->fullname() : '');
 
         return $fields;
     }
