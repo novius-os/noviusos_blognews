@@ -119,7 +119,8 @@ $datas = array(
                 'label' => __('Author: '),
                 'widget' => 'Nos\Widget_Text',
                 'editable' => false,
-                'template' => '<p>{label} {field}</p>'
+                'template' => '<p>{label} {field}</p>',
+                'dont_populate' => true,
             ),
             'wysiwygs->content->wysiwyg_text' => array(
                 'label' => __('Content'),

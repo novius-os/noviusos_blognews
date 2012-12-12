@@ -23,7 +23,7 @@ return array(
             'search_relation' => 'author',
             'search_column'   => 'author.user_name',
             'value' =>  function($item) {
-                return $item->author->fullname();
+                return !empty($item->author) ? $item->author->fullname() : $item->post_author_alias;
             },
         ),
         'post_created_at' => array(

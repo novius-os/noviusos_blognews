@@ -419,7 +419,7 @@ class Controller_Front extends Controller_Front_Application
         }
         $item['description'] = isset($content[\Nos\DataCatcher::TYPE_TEXT]) ? $content[\Nos\DataCatcher::TYPE_TEXT] : $post->post_summary;
         $item['pubDate'] = $post->post_created_at;
-        $item['author'] = $post->author->fullname() ?: $post->post_author;
+        $item['author'] = !empty($post->author) ? $post->author->fullname() : $post->post_author_alias;
 
         return $item;
     }
