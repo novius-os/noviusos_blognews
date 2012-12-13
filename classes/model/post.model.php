@@ -134,10 +134,8 @@ class Model_Post extends \Nos\Orm\Model
             'model_to'       => $tag_class,
         );
 
-        //var_dump(static::$_many_many);
-
         static::$_belongs_to['author'] = array(
-            'key_from' => static::get_prefix().'author_id',
+            'key_from' => static::prefix().'author_id',
             'model_to' => 'Nos\User\Model_User',
             'key_to' => 'user_id',
             'cascade_save' => false,
