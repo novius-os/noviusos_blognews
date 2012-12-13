@@ -14,10 +14,4 @@ return array(
             'view' => 'noviusos_blognews::admin/application/popup',
         ),
     ),
-    'preview' => array(
-        'params' => array(
-            'icon' => 'static/apps/{{application_name}}/img/{{icon}}-64.png',
-            'title' => 'Blog / News',
-        ),
-    ),
 );
