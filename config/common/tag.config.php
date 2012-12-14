@@ -13,7 +13,7 @@
 return array(
     'data_mapping' => array(
         'tag_label' => array(
-            'headerText' => __('Tag'),
+            'title' => __('Tag'),
         ),
     ),
     'actions' => array(
