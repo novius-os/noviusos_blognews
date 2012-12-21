@@ -18,24 +18,47 @@ return array(
     ),
     'i18n' => array(
         // Crud
-        'successfully added' => __('Done! The category has been added.'),
-        'successfully deleted' => __('The category has been deleted.'),
+        'notification item added' => __('Done! The category has been added.'),
+        'notification item deleted' => __('The category has been deleted.'),
 
         // General errors
-        'item deleted' => __('This category doesn’t exist any more. It has been deleted.'),
-        'not found' => __('We cannot find this category.'),
+        'notification item does not exist anymore' => __('This category doesn’t exist any more. It has been deleted.'),
+        'notification item not found' => __('We cannot find this category.'),
 
         // Blank slate
-        'error added in context not parent' => __('We’re afraid this category cannot be added in {{context}} because its <a>parent</a> is not available in this context yet.'), #wtf two strings needed here (this context / this language)
+        'translate error parent not available in context' => __('We’re afraid this page cannot be added in {{context}} because its <a>parent</a> is not available in this context yet.'),
+        'translate error parent not available in language' => __('We’re afraid this page cannot be added in {{language}} because its <a>parent</a> is not available in this language yet.'),
 
         // Deletion popup
-        'delete an item' => __('Deleting the category ‘{{title}}’'),
-        'you are about to delete, confim' => __('Last chance, there’s no undo. Do you really want to delete this category?'),
-        'exists in multiple context' => __('This category exists in <strong>{{count}} contexts</strong>.'),
-        'delete in the following contexts' => __('Delete this category in the following contexts:'),
-        'item has 1 sub-item' => __('This category has <strong>1 sub-category</strong>.'),
-        'item has multiple sub-items' => __('This category has <strong>{{count}} sub-category</strong>.'),
-        'yes delete sub-items' => __('Yes, I want to delete this category and all of its {{count}} sub-category.'),
-        'confirm deletion wrong_confirmation' => __('We cannot delete this category as the number of sub-items you’ve entered is wrong. Please amend it.'),
+        'deleting item title' => __('Deleting the category ‘{{title}}’'),
+        'deleting confirmation' => __('Last chance, there’s no undo. Do you really want to delete this category?'),
+
+        # Delete action's labels
+        'deleting button 1 item' => __('Delete this category'),
+        'deleting button N items' => __('Delete these {{count}} categories'),
+
+        '1 item' => __('1 category'),
+        'N items' => __('{{count}} categories'),
+
+        # Keep only if the model has the behaviour Contextable
+        'deleting with N contexts' => __('This category exists in <strong>{{context_count}} contexts</strong>.'),
+        'deleting with N languages' => __('This category exists in <strong>{{language_count}} languages</strong>.'),
+
+        # Keep only if the model has the behaviours Contextable + Tree
+        'deleting with N contexts and N children' => __('This category exists in <strong>{{context_count}} contexts</strong> and has <strong>{{children_count}} sub-categories</strong>.'),
+        'deleting with N contexts and 1 child' => __('This category exists in <strong>{{context_count}} contexts</strong> and has <strong>one sub-category</strong>.'),
+        'deleting with N languages and N children' => __('This category exists in <strong>{{language_count}} languages</strong> and has <strong>{{children_count}} sub-categories</strong>.'),
+        'deleting with N languages and 1 child' => __('This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.'),
+
+        # Keep only if the model has the behaviour Tree
+        'deleting with 1 child' => __('This page has <strong>1 sub-category</strong>.'),
+        'deleting with N children' => __('This page has <strong>{{children_count}} sub-categories</strong>.'),
+
+        'deleting following contexts' => __('Delete this category in the following contexts:'),
+        'deleting following languages' => __('Delete this category in the following languages:'),
+
+        # Keep only if the model has the behaviour Tree
+        'deleting with children following contexts' => __('Delete this category and all its sub-categories in the following contexts:'),
+        'deleting with children following languages' => __('Delete this category and all its sub-categories in the following languages:'),
     ),
 );

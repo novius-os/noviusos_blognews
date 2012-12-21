@@ -16,6 +16,22 @@ return array(
             'title' => __('Tag'),
         ),
     ),
+    'title_property' => 'tag_label',
+    'i18n' => array(
+        // Crud
+        'notification item deleted' => __('The tag has been deleted.'),
+
+        // General errors
+        'notification item does not exist anymore' => __('This tag doesn’t exist any more. It has been deleted.'),
+        'notification item not found' => __('We cannot find this tag.'),
+
+        // Deletion popup
+        'deleting item title' => __('Deleting the tag ‘{{title}}’'),
+        'deleting confirmation' => __('Last chance, there’s no undo. Do you really want to delete this tag?'),
+
+        # Delete action's labels
+        'deleting button 1 item' => __('Delete this tag'),
+    ),
     'actions' => array(
         '{{namespace}}\Model_Tag.edit' => false,
         '{{namespace}}\Model_Tag.visualise' => false,
