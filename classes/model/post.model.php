@@ -219,22 +219,34 @@ class Model_Post extends \Nos\Orm\Model
     public static function get_all($params)
     {
         $query = static::get_query($params);
-        $posts = $query->get();
+        $posts = static::get_all_from_query($query);
 
         // Re-fetch with a 2nd request to get all the relations (not only the filtered ones)
         // @todo : to take a look later, see if the orm can't be fixed
         if (!empty($posts) && (!empty($params['tag']) || !empty($params['category']) || !empty($params['categories']))) {
-            $keys = array_keys((array) $posts);
-            $posts = static::query(array(
-                'where' => array(
-                    array('post_id', 'IN', $keys),
-                ),
-                'order_by' => $params['order_by'],
-                'related' => array('author', 'tags', 'categories'),
-            ))->get();
+            $posts = static::fetch_relations($posts, $params['order_by']);
         }
-        static::count_multiple_comments($posts);
 
+        return $posts;
+    }
+
+    public static function get_all_from_query($query)
+    {
+        $posts = $query->get();
+        static::count_multiple_comments($posts);
+        return $posts;
+    }
+
+    public static function fetch_relations($posts, $order_by)
+    {
+        $keys = array_keys((array) $posts);
+        $posts = static::query(array(
+            'where' => array(
+                array('post_id', 'IN', $keys),
+            ),
+            'order_by' => $order_by,
+            'related' => array('author', 'tags', 'categories'),
+        ))->get();
         return $posts;
     }
 
