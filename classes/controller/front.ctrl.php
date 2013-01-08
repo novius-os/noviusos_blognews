@@ -424,7 +424,19 @@ class Controller_Front extends Controller_Front_Application
         }
 
         // Get objects
-        $posts = $post_class::get_all($params);
+        $query = $post_class::get_query($params);
+
+        if (isset($this->config['query_callback'])) {
+            $this->config['query_callback']($query, $params, $this);
+        }
+
+        $posts = $post_class::get_all_from_query($query);
+
+        // Re-fetch with a 2nd request to get all the relations (not only the filtered ones)
+        // @todo : to take a look later, see if the orm can't be fixed
+        if (!empty($posts) && (!empty($params['tag']) || !empty($params['category']) || !empty($params['categories']))) {
+            $posts = $post_class::fetch_relations($posts, $params['order_by']);
+        }
 
         return $posts;
     }
