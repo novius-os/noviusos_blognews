@@ -14,9 +14,7 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
 {
 
     /**
-     * nom de la classe avec ns pour le modèle Model_Post
-     * (on le déduit du ns qui instancie le modèle)
-     *     ex, dans l'app News, renvoie Nos\BlogNews\News\Model_Post
+     * post class name (auto-filled in before function from current namespace)
      * @var string
      */
     protected static $class_post;
@@ -28,10 +26,6 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
      */
     protected static $ns_folder;
 
-    /**
-     * méthode magique appelée à l'initialisation du controlleur.
-     * renseigne nos variables statiques
-     */
     public function before()
     {
 
@@ -96,5 +90,17 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
         \Arr::set($fields, 'author->user_fullname.form.value', !empty($this->item->author) ? $this->item->author->fullname() : '');
 
         return $fields;
+    }
+
+    // Added this small hack in order to save the input date when adding an element.
+    // @todo: should be removed when switching to novius-os 0.3
+    public function save($item, $data)
+    {
+        if ($this->is_new) {
+            $item->post_created_at = $data['post_created_at'];
+            $item->save();
+        }
+
+        return parent::save($item, $data);
     }
 }
