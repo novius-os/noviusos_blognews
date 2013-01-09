@@ -22,9 +22,9 @@ return array(
                 return !empty($item->author) ? $item->author->fullname() : $item->post_author_alias;
             },
         ),
-        'published' => array(
+        'publication_status' => array(
             'title' => __('Status'),
-            'dataKey' => 'publication_status',
+            'column' => 'published',
             'multiContextHide' => true,
         ),
         'post_created_at' => array(
