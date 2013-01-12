@@ -184,12 +184,13 @@ $datas = array(
             ),
         ),
         'categories' => array(
-            'renderer' => 'Nos\BlogNews\Renderer_Category_Selector',
+            'renderer' => 'Nos\BlogNews\Renderer_Selector',
             'renderer_options' => array(
-                'height' => '250px',
-                'namespace' => '{{namespace}}',
-                'application_name' => '{{application_name}}',
-                'multiple' => '1',
+                'height'                => '250px',
+                'inspector'             => 'admin/{{application_name}}/inspector/category',
+                'model'                 => '{{namespace}}\\Model_Category',
+                'multiple'              => '1',
+                'main_column'           => 'cat_title',
             ),
             'label' => __(''),
             'form' => array(
@@ -201,8 +202,10 @@ $datas = array(
                     $item->categories;//fetch et 'cree' la relation
                     unset($item->categories);
 
-                    $config = \Config::load('noviusos_blognews::config', true);
-                    $category_class = \Arr::get($config, 'namespace').'\\Model_Category';
+                    $class = get_class($item);
+                    $namespace = substr($class, 0, strrpos($class, '\\'));
+
+                    $category_class = $namespace.'\\Model_Category';
                     if (!empty($data['categories'])) {
                         foreach ($data['categories'] as $cat_id) {
                             if (ctype_digit($cat_id) ) {

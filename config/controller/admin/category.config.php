@@ -68,13 +68,14 @@ return array (
         ),
         'cat_parent_id' => array(
             'label' => __('Location: '),
-            'renderer' => 'Nos\BlogNews\Renderer_Category_Selector',
+            'renderer' => 'Nos\BlogNews\Renderer_Selector',
             'renderer_options' => array(
                 'width'                 => '100%',
                 'height'                => '350px',
-                'namespace'             => '{{namespace}}',
+                'inspector'             => 'admin/{{application_name}}/inspector/category',
+                'model'                 => '{{namespace}}\\Model_Category',
                 'sortable'              => true,
-                'application_name'      => '{{application_name}}'
+                'main_column'           => 'cat_title',
             ),
         ),
         'save' => array(
