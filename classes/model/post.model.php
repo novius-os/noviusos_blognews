@@ -142,10 +142,9 @@ class Model_Post extends \Nos\Orm\Model
             'cascade_delete' => false,
         );
 
-        list(,,$app,) = explode('\\', $class);
-        $app = strtolower($app);
-        \Config::load('noviusos_'.$app.'::config', true);
-        $withCom = \Config::get('noviusos_'.$app.'::config.comments.enabled');
+        list($app) = \Config::configFile($class);
+        \Config::load($app.'::config', true);
+        $withCom = \Config::get($app.'::config.comments.enabled');
         if ($withCom) {
             static::$_has_many['comments'] = array(
                 'key_from' => 'post_id',
@@ -273,10 +272,9 @@ class Model_Post extends \Nos\Orm\Model
     public static function count_multiple_comments($items)
     {
         $class = get_called_class();
-        list(,,$app,) = explode('\\', $class);
-        $app = strtolower($app);
-        \Config::load('noviusos_'.$app.'::config', true);
-        $withCom = \Config::get('noviusos_'.$app.'::config.comments.enabled');
+        list($app) = \Config::configFile($class);
+        \Config::load($app.'::config', true);
+        $withCom = \Config::get($app.'::config.comments.enabled');
         if (!$withCom || count($items) == 0) {
             return $items;
         }
