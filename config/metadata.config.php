@@ -16,8 +16,8 @@ return array(
     ),
     'namespace' => 'Nos\BlogNews',
     'icons' => array(
-        16 => 'TO BE DEFINED',
-        32 => 'TO BE DEFINED',
-        64 => 'TO BE DEFINED'
+        16 => 'static/novius-os/admin/novius-os/img/16/application.png',
+        32 => 'static/novius-os/admin/novius-os/img/32/application.png',
+        64 => 'static/novius-os/admin/novius-os/img/64/application.png'
     ),
 );
