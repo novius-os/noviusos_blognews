@@ -31,11 +31,10 @@ return array(
 
         // Deletion popup
         'deleting item title' => __('Deleting the category ‘{{title}}’'),
-        'deleting confirmation' => __('Last chance, there’s no undo. Do you really want to delete this category?'),
 
         # Delete action's labels
-        'deleting button 1 item' => __('Delete this category'),
-        'deleting button N items' => __('Delete these {{count}} categories'),
+        'deleting button 1 item' => __('Yes, delete this category'),
+        'deleting button N items' => __('Yes, delete these {{count}} categories'),
 
         '1 item' => __('1 category'),
         'N items' => __('{{count}} categories'),
@@ -53,12 +52,5 @@ return array(
         # Keep only if the model has the behaviour Tree
         'deleting with 1 child' => __('This category has <strong>1 sub-category</strong>.'),
         'deleting with N children' => __('This category has <strong>{{children_count}} sub-categories</strong>.'),
-
-        'deleting following contexts' => __('Delete this category in the following contexts:'),
-        'deleting following languages' => __('Delete this category in the following languages:'),
-
-        # Keep only if the model has the behaviour Tree
-        'deleting with children following contexts' => __('Delete this category and all its sub-categories in the following contexts:'),
-        'deleting with children following languages' => __('Delete this category and all its sub-categories in the following languages:'),
     ),
 );
