@@ -42,7 +42,6 @@ class Renderer_Selector extends \Nos\Renderer_Selector
     {
         if (isset($this->renderer_options) && isset($this->renderer_options['multiple'])&& $this->renderer_options['multiple']) {
 
-
             //it is necessary to construct the "selected values" array with keys written like "namespace\model|id"
             // because it must be considered as JS Object when transformed to json (see modeltree_checkbox)
             // and this is the syntax used in this renderer.
@@ -67,8 +66,8 @@ class Renderer_Selector extends \Nos\Renderer_Selector
                 }
             }
         } else {
-            $id = $this->value;
-            $selected = array('id'=>$id);
+            $id = (string) (int) $this->value;
+            $selected = array('id' => $id);
             $disabled = array();
         }
 
@@ -80,6 +79,7 @@ class Renderer_Selector extends \Nos\Renderer_Selector
             'input_name' => $this->name,
             'selected' => $selected,
             'disabled' => $disabled,
+            'model'  => $this->renderer_options['model'],
             'inspector'  => $this->renderer_options['inspector'],
             'multiple' => isset($this->renderer_options['multiple']) ? $this->renderer_options['multiple'] : 0,
             'sortable' => isset($this->renderer_options['sortable']) ? $this->renderer_options['sortable'] : 0,
@@ -104,10 +104,13 @@ class Renderer_Selector extends \Nos\Renderer_Selector
     public static function renderer($options = array(), $attributes = array())
     {
         $view = 'inspector/modeltree_radio';
-        $defaultSelected = null;
+        $defaultSelected = array(
+            'id' => 0,
+            'model' => $options['model'],
+        );
         if (isset($options['multiple']) && $options['multiple']) {
             $view = 'inspector/modeltree_checkbox';
-            $defaultSelected = array();
+            $defaultSelected = array($defaultSelected);
         }
 
         $options = \Arr::merge(array(

@@ -13,4 +13,7 @@ return array(
     'input' => array(
         'key' => 'categories.cat_id'
     ),
+    'root_node' => array(
+        'cat_title' => __('Root'),
+    ),
 );
