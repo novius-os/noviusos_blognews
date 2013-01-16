@@ -18,7 +18,7 @@ return array(
     ),
     'i18n' => array(
         // Crud
-        'notification item added' => __('Done! The category has been added.'),
+        'notification item added' => __('There you go, the category has been added.'),
         'notification item deleted' => __('The category has been deleted.'),
 
         // General errors
@@ -51,8 +51,8 @@ return array(
         'deleting with N languages and 1 child' => __('This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.'),
 
         # Keep only if the model has the behaviour Tree
-        'deleting with 1 child' => __('This page has <strong>1 sub-category</strong>.'),
-        'deleting with N children' => __('This page has <strong>{{children_count}} sub-categories</strong>.'),
+        'deleting with 1 child' => __('This category has <strong>1 sub-category</strong>.'),
+        'deleting with N children' => __('This category has <strong>{{children_count}} sub-categories</strong>.'),
 
         'deleting following contexts' => __('Delete this category in the following contexts:'),
         'deleting following languages' => __('Delete this category in the following languages:'),

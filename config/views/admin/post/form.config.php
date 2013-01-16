@@ -33,7 +33,7 @@ $datas = array(
 
     'menu' => array(
         // user_fullname is not a real field in the database
-        __('Meta') => array('field_template' => '{field}', 'fields' => array('author->user_fullname', 'post_author_alias', 'post_created_at_date', 'post_created_at_time', 'post_read')),
+        __('Properties') => array('field_template' => '{field}', 'fields' => array('author->user_fullname', 'post_author_alias', 'post_created_at_date', 'post_created_at_time', 'post_read')),
         __('URL (post address)') => array('post_virtual_name'),
         __('Tags') => array('tags'),
         __('Categories') => array('categories'),

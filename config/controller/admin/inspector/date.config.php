@@ -15,6 +15,6 @@ return array(
         'key' => 'post_created_at',
     ),
     'appdesk' => array(
-        'label'     => __('Created date'),
+        'label'     => __('Created on'),
     ),
 );

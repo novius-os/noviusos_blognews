@@ -48,7 +48,7 @@ return array (
     ),
     'fields' => array(
         'cat_title' => array (
-            'label' => __('category'),
+            'label' => __('Title'),
             'form' => array(
                 'type' => 'text',
             ),

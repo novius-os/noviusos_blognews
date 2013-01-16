@@ -141,21 +141,21 @@ class Controller_Front extends Controller_Front_Application
                         $posts = $this->_get_post_list();
                         $rss->set(array(
                                 'title' => __('Posts list'),
-                                'description' => __('Posts list'),
+                                'description' => __('The full list of blog posts.'),
                             ));
                     } elseif ($segments[2] === 'category' && !empty($segments[3])) {
                         $category = $this->_get_category($segments[3]);
                         $posts = $this->_get_post_list(array('category' => $category));
                         $rss->set(array(
-                                'title' => __('Category posts list:').' '.$category->cat_title,
-                                'description' => __('Category posts list:').' '.$category->cat_title,
+                                'title' = > strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)),
+                                'description' = > strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title)),
                             ));
                     } elseif ($segments[2] === 'tag' && !empty($segments[3])) {
                         $tag = $this->_get_tag($segments[3]);
                         $posts = $this->_get_post_list(array('tag' => $tag));
                         $rss->set(array(
-                                'title' => __('Tag posts list:').' '.$tag->tag_label,
-                                'description' => __('Tag posts list:').' '.$tag->tag_label,
+                                'title' = > strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)),
+                                'description' = > strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label)),
                             ));
                     } else {
                         throw new \Nos\NotFoundException();
@@ -171,7 +171,7 @@ class Controller_Front extends Controller_Front_Application
                     if (empty($segments[2])) {
                         $rss->set(array(
                                 'title' => __('Comments list'),
-                                'description' => __('Comments list'),
+                                'description' => __('The full list of comments.'),
                             ));
 
                         $comments = \Nos\Comments\Model_Comment::find('all', array(
@@ -191,8 +191,8 @@ class Controller_Front extends Controller_Front_Application
                         }
 
                         $rss->set(array(
-                                'title' => __('Post comments list:').' '.$post->post_title,
-                                'description' => __('Post comments list:').' '.$post->post_title,
+                                'title' = > strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)),
+                                'description' = > strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title)),
                             ));
 
                         $comments = $post->comments;
@@ -267,7 +267,7 @@ class Controller_Front extends Controller_Front_Application
         $tag = $this->_get_tag($tag);
         $posts = $this->_get_post_list(array('tag' => $tag));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(__('Tag posts list:').' '.$tag->tag_label).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -283,7 +283,7 @@ class Controller_Front extends Controller_Front_Application
         $category = $this->_get_category($category);
         $posts = $this->_get_post_list(array('category' => $category));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(__('Category posts list:').' '.$category->cat_title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -312,7 +312,7 @@ class Controller_Front extends Controller_Front_Application
             throw new \Nos\NotFoundException();
         }
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(__('Post comments list:').' '.$post->post_title).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title))).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
 
         $page = $this->main_controller->getPage();
         $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
@@ -465,7 +465,7 @@ class Controller_Front extends Controller_Front_Application
             return null;
         }
         $item = array();
-        $item['title'] = __('Post comments:').' '.$post->post_title;
+        $item['title'] = strtr(__('Comment to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title));
         $item['link'] = \Uri::base(false).$post->url_canonical().'#comment'.$comment->comm_id;
         $item['description'] = $comment->comm_content;
         $item['pubDate'] = $comment->comm_created_at;
