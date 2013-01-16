@@ -10,7 +10,7 @@
 
 namespace Nos\BlogNews;
 
-class Renderer_Category_Selector extends \Nos\Renderer_Selector
+class Renderer_Selector extends \Nos\Renderer_Selector
 {
     public $context = null;
     /**
@@ -21,10 +21,10 @@ class Renderer_Category_Selector extends \Nos\Renderer_Selector
 
     public function before_construct(&$attributes, &$rules)
     {
-        $attributes['class'] = (isset($attributes['class']) ? $attributes['class'] : '').' category-selector';
+        $attributes['class'] = (isset($attributes['class']) ? $attributes['class'] : '').' selector';
 
         if (empty($attributes['id'])) {
-            $attributes['id'] = uniqid('category_');
+            $attributes['id'] = uniqid('selector_');
         }
 
         if (isset($attributes['renderer_options']['instance'])) {
@@ -54,32 +54,36 @@ class Renderer_Category_Selector extends \Nos\Renderer_Selector
                 unset($this->renderer_options['parents']);
             }
             foreach ($ids as $id => $value) {
-                $selected[$this->renderer_options['namespace'].'Model_Category|'.$id] = array(
+                $selected[$this->renderer_options['model'].'|'.$id] = array(
                     'id' => $id,
-                    'model' => $this->renderer_options['namespace'].'Model_Category',
+                    'model' => $this->renderer_options['model'],
                 );
                 if (in_array($id, $pre_selected)) {
-                    $disabled[$this->renderer_options['namespace'].'Model_Category|'.$id] = array(
+                    $disabled[$this->renderer_options['model'].'|'.$id] = array(
                         'id' => $id,
-                        'model' => $this->renderer_options['namespace'].'Model_Category',
+                        'model' => $this->renderer_options['model'],
                     );
                 }
             }
         } else {
-            $id = $this->value;
-            $selected = array('id'=>$id);
+            $id = (string) (int) $this->value;
+            $selected = array('id' => $id);
             $disabled = array();
         }
 
         $context = \Arr::get($this->renderer_options, 'context', $this->context);
 
+
+
         return $this->template(static::renderer(array(
             'input_name' => $this->name,
             'selected' => $selected,
             'disabled' => $disabled,
+            'model'  => $this->renderer_options['model'],
+            'inspector'  => $this->renderer_options['inspector'],
             'multiple' => isset($this->renderer_options['multiple']) ? $this->renderer_options['multiple'] : 0,
             'sortable' => isset($this->renderer_options['sortable']) ? $this->renderer_options['sortable'] : 0,
-            'application_name' => $this->renderer_options['application_name'],
+            'main_column' => $this->renderer_options['main_column'],
             'treeOptions' => array(
                 'context' => $context == null ? '' : $context,
             ),
@@ -100,21 +104,24 @@ class Renderer_Category_Selector extends \Nos\Renderer_Selector
     public static function renderer($options = array(), $attributes = array())
     {
         $view = 'inspector/modeltree_radio';
-        $defaultSelected = null;
+        $defaultSelected = array(
+            'id' => 0,
+            'model' => $options['model'],
+        );
         if (isset($options['multiple']) && $options['multiple']) {
             $view = 'inspector/modeltree_checkbox';
-            $defaultSelected = array();
+            $defaultSelected = array($defaultSelected);
         }
 
         $options = \Arr::merge(array(
-            'urlJson' => 'admin/'.$options['application_name'].'/inspector/category/json',
+            'urlJson' => $options['inspector'].'/json',
             'input_name' => null,
             'selected' => $defaultSelected,
             'disabled' => array(
             ),
             'columns' => array(
                 array(
-                    'dataKey' => 'cat_title',
+                    'dataKey' => $options['main_column'],
                 )
             ),
             'treeOptions' => array(
@@ -124,7 +131,7 @@ class Renderer_Category_Selector extends \Nos\Renderer_Selector
             'width' => null,
         ), $options);
 
-        return (string) \Request::forge($options['application_name'].'/admin/inspector/category/list')->execute(
+        return (string) \Request::forge($options['inspector'].'/list')->execute(
             array(
                 $view,
                 array(

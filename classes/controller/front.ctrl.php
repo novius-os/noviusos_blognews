@@ -82,7 +82,7 @@ class Controller_Front extends Controller_Front_Application
 
         $this->page_from = $this->main_controller->getPage();
 
-        $this->config['item_per_page'] = (int) $args['item_per_page'];
+        $this->config['item_per_page'] = (int) isset($args['item_per_page']) ? $args['item_per_page'] : $this->config['item_per_page'];
 
         \View::set_global('enhancer_args', $args);
 
@@ -234,15 +234,17 @@ class Controller_Front extends Controller_Front_Application
     public function action_home($args = array())
     {
         $this->page_from = $this->main_controller->getPage();
-        $this->config['item_per_page'] = (int) $args['item_per_page'];
+        $this->config['item_per_page'] = (int) isset($args['item_per_page']) ? $args['item_per_page'] : $this->config['item_per_page'];
 
         return $this->display_list_main($args);
     }
 
     protected function init_pagination($page)
     {
-        $this->current_page = $page;
-        $this->pagination = new \Nos\Pagination();
+        if ($this->config['item_per_page']) {
+            $this->current_page = $page;
+            $this->pagination = new \Nos\Pagination();
+        }
     }
 
     public function display_list_main($args)
@@ -408,7 +410,9 @@ class Controller_Front extends Controller_Front_Application
         }
         $params['offset'] = $this->pagination ? (int) $this->pagination->offset : 0;
 
-        $params['limit'] = $this->config['item_per_page'];
+        if ($this->config['item_per_page']) {
+            $params['limit'] = $this->config['item_per_page'];
+        }
 
         if (isset($params['cat_id'])) {
             $category_class = static::$category_class;

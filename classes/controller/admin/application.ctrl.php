@@ -39,7 +39,7 @@ class Controller_Admin_Application extends \Nos\Controller_Admin_Enhancer
         if ($this->app_config['categories']['enabled']) {
             $cat_id = \Input::get('cat_id', null);
 
-            $this->config['popup']['params']['renderer'] = Renderer_Category_Selector::renderer(
+            $this->config['popup']['params']['renderer'] = Renderer_Selector::renderer(
                 array(
                     'width'                     => '260px',
                     'height'                    => '200px',
@@ -48,9 +48,10 @@ class Controller_Admin_Application extends \Nos\Controller_Admin_Enhancer
                     'treeOptions'               => array(
                         'context'               => \Input::get('nosContext', false) ?: \Nos\Tools_Context::defaultContext(),
                     ),
-                    'namespace'                 => \Inflector::get_namespace(get_called_class()),
-                    'application_name'          => $application_name,
                     'multiple'                  => '0',
+                    'inspector'             => 'admin/'.$application_name.'/inspector/category',
+                    'model'                 => \Inflector::get_namespace(get_called_class()).'\\Model_Category',
+                    'main_column'           => 'cat_title',
                 )
             );
         }
