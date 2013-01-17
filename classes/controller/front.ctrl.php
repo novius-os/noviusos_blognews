@@ -147,15 +147,15 @@ class Controller_Front extends Controller_Front_Application
                         $category = $this->_get_category($segments[3]);
                         $posts = $this->_get_post_list(array('category' => $category));
                         $rss->set(array(
-                                'title' = > strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)),
-                                'description' = > strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title)),
+                                'title' => strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)),
+                                'description' => strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title)),
                             ));
                     } elseif ($segments[2] === 'tag' && !empty($segments[3])) {
                         $tag = $this->_get_tag($segments[3]);
                         $posts = $this->_get_post_list(array('tag' => $tag));
                         $rss->set(array(
-                                'title' = > strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)),
-                                'description' = > strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label)),
+                                'title' => strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)),
+                                'description' => strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label)),
                             ));
                     } else {
                         throw new \Nos\NotFoundException();
@@ -191,8 +191,8 @@ class Controller_Front extends Controller_Front_Application
                         }
 
                         $rss->set(array(
-                                'title' = > strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)),
-                                'description' = > strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title)),
+                                'title' => strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)),
+                                'description' => strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title)),
                             ));
 
                         $comments = $post->comments;
