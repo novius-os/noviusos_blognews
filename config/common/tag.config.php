@@ -13,7 +13,7 @@
 return array(
     'data_mapping' => array(
         'tag_label' => array(
-            'title' => __('Tag'),
+            'title' => __('Tags'),
         ),
     ),
     'title_property' => 'tag_label',

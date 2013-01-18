@@ -21,5 +21,9 @@ return array(
     'appdesk' => array(
         'label' => __('Authors'),
     ),
-    'data_mapping' => array('fullname')
+    'data_mapping' => array(
+        'fullname'=> array(
+            'title' => __('Authors')
+        )
+    )
 );

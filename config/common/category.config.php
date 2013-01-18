@@ -13,7 +13,7 @@
 return array(
     'data_mapping' => array(
         'cat_title' => array(
-            'title' => __('Category'),
+            'title' => __('Categories'),
         ),
     ),
     'i18n' => array(
