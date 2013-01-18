@@ -44,6 +44,19 @@ return array(
                 return $item->preview_url();
             },
         ),
+        'thumbnail' => array(
+            'value' => function ($item) {
+                foreach ($item->medias as $media) {
+                    return $media->get_public_path_resized(64, 64);
+                }
+                return false;
+            },
+        ),
+        'thumbnailAlternate' => array(
+            'value' => function ($item) {
+                return 'static/novius-os/admin/vendor/jquery/jquery-ui-input-file-thumb/css/images/apn.png';
+            }
+        ),
     ),
     'i18n' => array(
     ),
@@ -54,4 +67,5 @@ return array(
             '{{namespace}}\Model_Post.delete',
         ),
     ),
+    'thumbnails' => true,
 );
