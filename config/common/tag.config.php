@@ -27,10 +27,9 @@ return array(
 
         // Deletion popup
         'deleting item title' => __('Deleting the tag ‘{{title}}’'),
-        'deleting confirmation' => __('Last chance, there’s no undo. Do you really want to delete this tag?'),
 
         # Delete action's labels
-        'deleting button 1 item' => __('Delete this tag'),
+        'deleting button 1 item' => __('Yes, delete this tag'),
     ),
     'actions' => array(
         '{{namespace}}\Model_Tag.edit' => false,

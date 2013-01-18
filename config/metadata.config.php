@@ -9,12 +9,13 @@
  */
 
 return array(
-    'name'    => 'Blog / News (required for Blog or News)',
+    'name'    => 'BlogNews (required for both Blog and News stories)',
     'version' => '0.2',
     'provider' => array(
         'name' => 'Novius Dev',
     ),
     'namespace' => 'Nos\BlogNews',
+    'i18n_file' => 'noviusos_blognews::metadata',
     'icons' => array(
         16 => 'static/novius-os/admin/novius-os/img/16/application.png',
         32 => 'static/novius-os/admin/novius-os/img/32/application.png',
