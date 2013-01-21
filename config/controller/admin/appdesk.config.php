@@ -22,8 +22,10 @@ return array(
     ),
     'query' => array(
         'model' => '{{namespace}}\Model_Post',
+        'related' => array('linked_medias'),
         'order_by' => array('post_created_at' => 'DESC'),
         'limit' => 20,
     ),
     'search_text' => 'post_title',
+    'thumbnails' => true,
 );
