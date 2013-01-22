@@ -14,4 +14,16 @@ return array(
             'view' => 'noviusos_blognews::admin/application/popup',
         ),
     ),
+    'category_selector_options' => array(
+        'width'                     => '260px',
+        'height'                    => '200px',
+        'input_name'                => 'cat_id',
+        'treeOptions'               => array(
+            'context'               => \Input::get('nosContext', false) ?: \Nos\Tools_Context::defaultContext(),
+        ),
+        'multiple'              => '1',
+        'inspector'             => 'admin/{{application_name}}/inspector/category',
+        'model'                 => '{{namespace}}\\Model_Category',
+        'main_column'           => 'cat_title',
+    )
 );
