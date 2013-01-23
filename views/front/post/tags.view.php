@@ -8,6 +8,8 @@
  * @link http://www.novius-os.org
  */
 
+\Nos\I18n::current_dictionary('noviusos_blognews::common');
+
 if ($app_config['tags']['enabled'] && $app_config['tags']['show']) {
     \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
     ?>

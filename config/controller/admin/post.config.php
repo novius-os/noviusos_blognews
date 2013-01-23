@@ -8,6 +8,8 @@
  * @link http://www.novius-os.org
  */
 
+\Nos\I18n::current_dictionary('noviusos_blognews::common');
+
 $datas = array(
     'controller_url'  => 'admin/{{application_name}}/post',
     'model' => '{{namespace}}\Model_Post',
