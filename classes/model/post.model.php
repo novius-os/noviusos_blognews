@@ -231,6 +231,7 @@ class Model_Post extends \Nos\Orm\Model
     public static function get_all($params)
     {
         $query = static::get_query($params);
+
         $posts = static::get_all_from_query($query);
 
         // Re-fetch with a 2nd request to get all the relations (not only the filtered ones)

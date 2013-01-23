@@ -13,60 +13,6 @@ namespace Nos\BlogNews;
 class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
 {
 
-    /**
-     * post class name (auto-filled in before function from current namespace)
-     * @var string
-     */
-    protected static $class_post;
-
-    /**
-     * répertoire/path admin pour le controlleur appelant
-     *     ex, dans l'app News, noviusos_news
-     * @var string
-     */
-    protected static $ns_folder;
-
-    public function before()
-    {
-
-        static::$class_post = $class_post = namespacize($this, 'Model_Post');
-        list($provider,$generic,$app) = explode('\\', $class_post);
-        static::$ns_folder = strtolower($provider).'_'.strtolower($app);
-
-        parent::before();
-        \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
-
-        // @todo voir l'extension des modules -> refactoring a faire au niveau generique
-        list($application_name) = \Config::configFile(get_called_class());
-        \Config::load('noviusos_blognews::controller/admin/post', true);
-
-        // We are manually merging configuration since we are not using the extend functionnality as intended.
-        // In novius-os, if many application are extending one application, all configuration file on equivalent
-        // paths are merged. Extend application tweek and add some functionnality to the existing application.
-        // This is not what we want here since this is an headless application used by other application.
-        // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge($this->config, \Config::get('noviusos_blognews::controller/admin/post'), \Config::loadConfiguration($application_name, 'controller/admin/post'));
-
-        //$this->config['controller_url'] = 'admin/'.$application_name.'/post';
-        //$this->config['model'] = $class_post;
-        //$this->config['fields'] = $this->config['fields'](\Inflector::get_namespace(get_class($this)), $application_name);
-
-        if (!$this->app_config['summary']['enabled']) {
-            unset($this->config['layout']['subtitle']);
-        }
-        if (!$this->app_config['tags']['enabled']) {
-            unset($this->config['layout']['menu'][__('Tags')]);
-        }
-        if (!$this->app_config['categories']['enabled']) {
-            unset($this->config['layout']['menu'][__('Categories')]);
-        }
-        if (!$this->app_config['authors']['enabled']) {
-            $this->config['layout']['menu'][__('Properties')] = array('field_template' => '{field}', 'fields' => array('post_created_at_date', 'post_created_at_time', 'post_read'));
-        }
-
-        $this->config_build();
-    }
-
     protected function init_item()
     {
         parent::init_item();

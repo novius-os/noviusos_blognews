@@ -8,7 +8,10 @@
  * @link http://www.novius-os.org
  */
 
-$datas = array(
+$current_application = \Nos\Application::getCurrent();
+$app_config = \Config::load($current_application.'::config', true);
+
+$config = array(
     'controller_url'  => 'admin/{{application_name}}/post',
     'model' => '{{namespace}}\Model_Post',
     'i18n_file' => 'noviusos_blognews::post',
@@ -54,8 +57,8 @@ $datas = array(
             // user_fullname is not a real field in the database
             __('Properties') => array('field_template' => '{field}', 'fields' => array('author->user_fullname', 'post_author_alias', 'post_created_at_date', 'post_created_at_time', 'post_read')),
             __('URL (post address)') => array('post_virtual_name'),
-            __('Tags') => array('tags'),
             __('Categories') => array('categories'),
+            __('Tags') => array('tags'),
         ),
     ),
     'fields' => array(
@@ -167,12 +170,27 @@ $datas = array(
                 }
         ),
         'post_read' => array(
-            'label' => __('Read'),
-            'template' => '<p>{label} {field} times</p>',
-            'form' => array(
-                'type' => 'text',
-                'size' => '4',
-            ),
+            'label' => __(''),
+            'renderer' => 'Nos\Renderer_Text',
+            'template' => '<p>{field}</p>',
+            'populate' =>
+            function($item)
+            {
+                $texts = array(
+                    0       => __('Never read'),
+                    1       => __('Read once'),
+                    'more'  => __('Read {{nb}} times')
+                );
+                if ($item->is_new()) {
+                    $item->post_read = 0;
+                }
+                return strtr(
+                    $texts[$item->post_read > 1 ? 'more' : $item->post_read],
+                    array(
+                        '{{nb}}' => $item->post_read
+                    )
+                );
+            },
         ),
         'tags' => array(
             'label' => __('Tags'),
@@ -228,4 +246,25 @@ $datas = array(
     )
 );
 
-return $datas;
+if (!$app_config['summary']['enabled']) {
+    unset($config['layout']['subtitle']);
+    unset($config['fields']['post_summary']);
+}
+if (!$app_config['tags']['enabled']) {
+    unset($config['layout']['menu'][__('Tags')]);
+    unset($config['fields']['tags']);
+
+}
+if (!$app_config['categories']['enabled']) {
+    unset($config['layout']['menu'][__('Categories')]);
+    unset($config['fields']['categories']);
+}
+if (!$app_config['authors']['enabled']) {
+    $config['layout']['menu'][__('Properties')]['fields'] = array_filter($config['layout']['menu'][__('Properties')]['fields'], function($item) {
+        return !in_array($item, array('author->user_fullname', 'post_author_alias'));
+    });
+    unset($config['fields']['author->user_fullname']);
+    unset($config['fields']['post_author_alias']);
+}
+
+return $config;

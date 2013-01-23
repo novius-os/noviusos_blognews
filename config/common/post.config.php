@@ -8,9 +8,12 @@
  * @link http://www.novius-os.org
  */
 
+$current_application = \Nos\Application::getCurrent();
+$app_config = \Config::load($current_application.'::config', true);
+
 \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
 
-return array(
+$config = array(
     'data_mapping' => array(
         'post_title' => array(
             'title'    => __('Title'),
@@ -69,3 +72,9 @@ return array(
     ),
     'thumbnails' => true,
 );
+
+if (!$app_config['authors']['enabled']) {
+    unset($config['data_mapping']['author->user_name']);
+}
+
+return $config;
