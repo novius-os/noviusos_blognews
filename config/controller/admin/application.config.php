@@ -21,7 +21,7 @@ return array(
         'treeOptions'               => array(
             'context'               => \Input::get('nosContext', false) ?: \Nos\Tools_Context::defaultContext(),
         ),
-        'multiple'              => '1',
+        'multiple'              => '0',
         'inspector'             => 'admin/{{application_name}}/inspector/category',
         'model'                 => '{{namespace}}\\Model_Category',
         'main_column'           => 'cat_title',
