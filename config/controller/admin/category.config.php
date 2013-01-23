@@ -8,6 +8,8 @@
  * @link http://www.novius-os.org
  */
 
+\Nos\I18n::current_dictionary('noviusos_blognews::common');
+
 return array (
     'controller_url'  => 'admin/{{application_name}}/category',
     'model' => '{{namespace}}\\Model_Category',
@@ -58,7 +60,7 @@ return array (
             ),
         ),
         'cat_virtual_name' => array(
-            'label' => __('URL: '),
+            'label' => __('URL:'),
             'renderer' => 'Nos\Renderer_Virtualname',
             'validation' => array(
                 'required',
@@ -67,7 +69,7 @@ return array (
             'template' => "\t\t<tr><th class=\"{error_class}\">{label}{required}</th><td class=\"{error_class}\">{field} {use_title_checkbox} {error_msg}</td></tr>\n"
         ),
         'cat_parent_id' => array(
-            'label' => __('Location: '),
+            'label' => __('Location:'),
             'renderer' => 'Nos\BlogNews\Renderer_Selector',
             'renderer_options' => array(
                 'width'                 => '100%',
@@ -83,6 +85,7 @@ return array (
             'form' => array(
                 'type' => 'submit',
                 'tag' => 'button',
+                // Note to translator: This is a submit button
                 'value' => __('Save'),
                 'class' => 'primary',
                 'data-icon' => 'check',

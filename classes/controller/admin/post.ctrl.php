@@ -12,6 +12,11 @@ namespace Nos\BlogNews;
 
 class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
 {
+    public function prepare_i18n()
+    {
+        parent::prepare_i18n();
+        \Nos\I18n::current_dictionary('noviusos_blognews::common');
+    }
 
     protected function init_item()
     {

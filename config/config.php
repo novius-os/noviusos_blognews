@@ -43,7 +43,7 @@ $ret = array(
     ),
     'application' => array(
         'actions' => array(),
-        'name' => _('Blog'),
+        'name' => __('Blog'),
         'icons' => array(
             'large' => '',
             'medium' => '',

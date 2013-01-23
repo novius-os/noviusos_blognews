@@ -11,6 +11,8 @@
 $current_application = \Nos\Application::getCurrent();
 $app_config = \Config::load($current_application.'::config', true);
 
+\Nos\I18n::current_dictionary('noviusos_blognews::common');
+
 $config = array(
     'controller_url'  => 'admin/{{application_name}}/post',
     'model' => '{{namespace}}\Model_Post',
@@ -90,13 +92,13 @@ $config = array(
             ),
         ),
         'post_author_alias' => array(
-            'label' => __('Alias: '),
+            'label' => __('Change the author’s name (alias):'),
             'form' => array(
                 'type' => 'text',
             ),
         ),
         'post_virtual_name' => array(
-            'label' => __('URL: '),
+            'label' => __('URL:'),
             'renderer' => 'Nos\Renderer_Virtualname',
             'validation' => array(
                 'required',
@@ -104,7 +106,7 @@ $config = array(
             ),
         ),
         'author->user_fullname' => array(
-            'label' => __('Author: '),
+            'label' => __('Author:'),
             'renderer' => 'Nos\Renderer_Text',
             'editable' => false,
             'template' => '<p>{label} {field}</p>',
@@ -155,7 +157,7 @@ $config = array(
                 }
         ),
         'post_created_at_time' => array(
-            'label' => __('Created time:'),
+            'label' => __('Time:'),
             'renderer' => 'Nos\Renderer_Time_Picker',
             'dont_save' => true,
             'template' => ' {field}</p>',
@@ -238,6 +240,7 @@ $config = array(
             'form' => array(
                 'type' => 'submit',
                 'tag' => 'button',
+                // Note to translator: This is a submit button
                 'value' => __('Save'),
                 'class' => 'primary',
                 'data-icon' => 'check',
