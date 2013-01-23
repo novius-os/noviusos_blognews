@@ -39,20 +39,22 @@ class Controller_Admin_Application extends \Nos\Controller_Admin_Enhancer
         if ($this->app_config['categories']['enabled']) {
             $cat_id = \Input::get('cat_id', null);
 
+            $category_selector_options                  = $this->config['category_selector_options'];
+
+            if (!isset($category_selector_options['selected'])) {
+                $category_selector_options['selected']      = !empty($cat_id) ? array('id' => $cat_id) : null;
+            }
+
+            if (!isset($category_selector_options['treeOptions'])) {
+                $category_selector_options['treeOptions'] = array();
+            }
+
+            if (!isset($category_selector_options['treeOptions']['context'])) {
+                $category_selector_options['treeOptions']['context'] = \Input::get('nosContext', false) ?: \Nos\Tools_Context::defaultContext();
+            }
+
             $this->config['popup']['params']['renderer'] = Renderer_Selector::renderer(
-                array(
-                    'width'                     => '260px',
-                    'height'                    => '200px',
-                    'input_name'                => 'cat_id',
-                    'selected'                  => !empty($cat_id) ? array('id' => $cat_id) : null,
-                    'treeOptions'               => array(
-                        'context'               => \Input::get('nosContext', false) ?: \Nos\Tools_Context::defaultContext(),
-                    ),
-                    'multiple'                  => '0',
-                    'inspector'             => 'admin/'.$application_name.'/inspector/category',
-                    'model'                 => \Inflector::get_namespace(get_called_class()).'\\Model_Category',
-                    'main_column'           => 'cat_title',
-                )
+                $this->config['category_selector_options']
             );
         }
 

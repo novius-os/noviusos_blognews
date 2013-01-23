@@ -416,12 +416,16 @@ class Controller_Front extends Controller_Front_Application
         }
 
         if (isset($params['cat_id'])) {
+            if (!is_array($params['cat_id'])) {
+                $params['cat_id'] = array($params['cat_id']);
+            }
             $category_class = static::$category_class;
-            if (!empty($params['category']) && $params['category']->cat_id != $params['cat_id']) {
-                $params['categories'] = array($params['category'], $category_class::find($params['cat_id']));
+            $pk = $category_class::primary_key();
+
+            $params['categories'] = $category_class::find('all', array('where' => array(array($pk[0], 'IN', $params['cat_id']))));
+            if (!empty($params['category']) && !in_array($params['category']->cat_id, $params['cat_id'])) {
+                $params['categories'][] = $params['category'];
                 unset($params['category']);
-            } else {
-                $params['category'] = $category_class::find($params['cat_id']);
             }
         }
         if (isset($this->config['order_by'])) {
