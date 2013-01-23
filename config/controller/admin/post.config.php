@@ -87,13 +87,13 @@ $datas = array(
             ),
         ),
         'post_author_alias' => array(
-            'label' => __('Alias: '),
+            'label' => __('Change the author’s name (alias):'),
             'form' => array(
                 'type' => 'text',
             ),
         ),
         'post_virtual_name' => array(
-            'label' => __('URL: '),
+            'label' => __('URL:'),
             'renderer' => 'Nos\Renderer_Virtualname',
             'validation' => array(
                 'required',
@@ -101,7 +101,7 @@ $datas = array(
             ),
         ),
         'author->user_fullname' => array(
-            'label' => __('Author: '),
+            'label' => __('Author:'),
             'renderer' => 'Nos\Renderer_Text',
             'editable' => false,
             'template' => '<p>{label} {field}</p>',
@@ -152,7 +152,7 @@ $datas = array(
                 }
         ),
         'post_created_at_time' => array(
-            'label' => __('Created time:'),
+            'label' => __('Time:'),
             'renderer' => 'Nos\Renderer_Time_Picker',
             'dont_save' => true,
             'template' => ' {field}</p>',
@@ -220,6 +220,7 @@ $datas = array(
             'form' => array(
                 'type' => 'submit',
                 'tag' => 'button',
+                // Note to translator: This is a submit button
                 'value' => __('Save'),
                 'class' => 'primary',
                 'data-icon' => 'check',

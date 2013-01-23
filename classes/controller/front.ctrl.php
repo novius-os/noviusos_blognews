@@ -67,6 +67,7 @@ class Controller_Front extends Controller_Front_Application
 
     public function after($response)
     {
+        // Note to translator: The following texts are related to RSS feeds
         $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(__('Posts list')).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
         $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(__('Comments list')).'" href="'.$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
 
