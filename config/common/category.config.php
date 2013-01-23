@@ -53,4 +53,7 @@ return array(
         'deleting with 1 child' => __('This category has <strong>1 sub-category</strong>.'),
         'deleting with N children' => __('This category has <strong>{{children_count}} sub-categories</strong>.'),
     ),
+    'actions' => array(
+        'visualise' => false,
+    ),
 );
