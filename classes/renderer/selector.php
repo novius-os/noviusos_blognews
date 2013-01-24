@@ -113,6 +113,19 @@ class Renderer_Selector extends \Nos\Renderer_Selector
             $defaultSelected = array($defaultSelected);
         }
 
+        $overloaded_selected = null;
+        if (isset($options['multiple']) && $options['multiple'] && is_array($options['selected']['id'])) {
+            $ids = $options['selected']['id'];
+            $model = $options['model'];
+            $overloaded_selected = array();
+            foreach ($ids as $id) {
+                $overloaded_selected[] = array(
+                    'id' => $id,
+                    'model' => $model,
+                );
+            }
+        }
+
         $options = \Arr::merge(array(
             'urlJson' => $options['inspector'].'/json',
             'input_name' => null,
@@ -130,6 +143,14 @@ class Renderer_Selector extends \Nos\Renderer_Selector
             'height' => '150px',
             'width' => null,
         ), $options);
+
+        if ($overloaded_selected !== null) {
+            $options['selected'] = $overloaded_selected;
+        }
+
+        if ($options['selected'] === null) {
+            $options['selected'] = array();
+        }
 
         return (string) \Request::forge($options['inspector'].'/list')->execute(
             array(

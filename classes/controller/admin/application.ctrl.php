@@ -54,7 +54,7 @@ class Controller_Admin_Application extends \Nos\Controller_Admin_Enhancer
             }
 
             $this->config['popup']['params']['renderer'] = Renderer_Selector::renderer(
-                $this->config['category_selector_options']
+                $category_selector_options
             );
         }
 
