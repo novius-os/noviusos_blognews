@@ -16,8 +16,8 @@ $ret = array(
         'show'    => true,
     ),
     'tags' => array(
-        'enabled' => false,
-        'show'    => false,
+        'enabled' => true,
+        'show'    => true,
     ),
     'authors' => array(
         'enabled' => true,

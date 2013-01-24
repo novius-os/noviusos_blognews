@@ -26,6 +26,8 @@ class Controller_Front extends Controller_Front_Application
 
     public $enhancerUrl_segments;
 
+    public $action;
+
     public static $tag_class;
     public static $post_class;
     public static $category_class;
@@ -89,9 +91,16 @@ class Controller_Front extends Controller_Front_Application
 
         $enhancer_url = $this->main_controller->getEnhancerUrl();
 
+        $this->action = 'home';
+
         if (!empty($enhancer_url)) {
             $this->enhancerUrl_segments = explode('/', $enhancer_url);
             $segments = $this->enhancerUrl_segments;
+
+            if (!empty($segments[1])) {
+                $this->action = $segments[0];
+            }
+            \View::set_global('blognews_action', $this->action);
 
             if (empty($segments[1])) {
                 return $this->display_item($args);
@@ -225,6 +234,7 @@ class Controller_Front extends Controller_Front_Application
 
         $this->init_pagination(1);
 
+        \View::set_global('blognews_action', $this->action);
         return $this->display_list_main($args);
     }
 
@@ -254,7 +264,7 @@ class Controller_Front extends Controller_Front_Application
                 'posts' => $posts,
                 'type' => 'main',
                 'item' => 'main',
-                'pagination' => $this->pagination
+                'pagination' => $this->pagination,
             ),
             false
         );
