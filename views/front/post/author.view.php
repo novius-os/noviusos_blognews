@@ -10,7 +10,7 @@
 
 \Nos\I18n::current_dictionary('noviusos_blognews::common');
 
-if ($app_config['authors']['enabled'] && $app_config['authors']['show']) {
+if ($blognews_config['authors']['enabled'] && $blognews_config['authors']['show']) {
     \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
     ?>
     <div class="blognews_author">

@@ -10,7 +10,7 @@
 
 \Nos\I18n::current_dictionary('noviusos_blognews::common');
 
-if ($app_config['comments']['enabled'] && $app_config['comments']['show_nb']) {
+if ($blognews_config['comments']['enabled'] && $blognews_config['comments']['show_nb']) {
     \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
     ?>
     <div class="blognews_nb_comments">

@@ -10,7 +10,7 @@
 
 \Nos\I18n::current_dictionary('noviusos_blognews::common');
 
-if ($app_config['categories']['enabled'] && $app_config['categories']['show']) {
+if ($blognews_config['categories']['enabled'] && $blognews_config['categories']['show']) {
     \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
     ?>
     <div class="blognews_categories">

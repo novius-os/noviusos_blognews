@@ -47,6 +47,9 @@ class Controller_Front extends Controller_Front_Application
         \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
         $this->app_config = \Arr::merge($this->app_config, static::getGlobalConfiguration());
 
+        \View::set_global('blognews_config', $this->app_config);
+        \View::set_global('app_config', $this->app_config); // @deprecated DON'T USE ANYMORE app_config BUT blognews_config
+
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
         list($application_name) = \Config::configFile(get_called_class());
         \Config::load('noviusos_blognews::controller/front', true);
