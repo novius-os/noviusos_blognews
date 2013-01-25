@@ -73,13 +73,13 @@ class Renderer_Selector extends \Nos\Renderer_Selector
 
         $context = \Arr::get($this->renderer_options, 'context', $this->context);
 
-
-
         return $this->template(static::renderer(array(
             'input_name' => $this->name,
             'selected' => $selected,
             'disabled' => $disabled,
             'model'  => $this->renderer_options['model'],
+            'reloadEvent' => \Inflector::get_namespace($this->renderer_options['model']).'Model_Post',
+            'contextChange' => true,
             'inspector'  => $this->renderer_options['inspector'],
             'multiple' => isset($this->renderer_options['multiple']) ? $this->renderer_options['multiple'] : 0,
             'sortable' => isset($this->renderer_options['sortable']) ? $this->renderer_options['sortable'] : 0,
