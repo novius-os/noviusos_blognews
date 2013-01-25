@@ -114,7 +114,7 @@ class Renderer_Selector extends \Nos\Renderer_Selector
         }
 
         $overloaded_selected = null;
-        if (isset($options['multiple']) && $options['multiple'] && is_array($options['selected']['id'])) {
+        if (isset($options['multiple']) && $options['multiple'] && isset($options['selected']['id']) && is_array($options['selected']['id'])) {
             $ids = $options['selected']['id'];
             $model = $options['model'];
             $overloaded_selected = array();
