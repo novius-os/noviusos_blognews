@@ -9,7 +9,7 @@
  */
 
 $current_application = \Nos\Application::getCurrent();
-$app_config = \Config::load($current_application.'::config', true);
+$app_config = \Config::application($current_application);
 
 $config = array(
     'model' => '{{namespace}}\Model_Post',

@@ -9,7 +9,7 @@
  */
 
 $current_application = \Nos\Application::getCurrent();
-$app_config = \Config::load($current_application.'::config', true);
+$app_config = \Config::application($current_application);
 
 \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
 
