@@ -89,6 +89,7 @@ $config = array(
             'form' => array(
                 'type' => 'textarea',
                 'rows' => '6',
+                'style' => 'display:block;'
             ),
         ),
         'post_author_alias' => array(
