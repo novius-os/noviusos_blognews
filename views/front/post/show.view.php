@@ -28,7 +28,7 @@ if ($blognews_config['comments']['enabled']) {
     <?php
     if ($blognews_config['comments']['show']) {
         ?>
-            <?= \View::forge('noviusos_comments::front/list', array('comments' => $item->comments), true) ?>
+            <?= \View::forge('noviusos_comments::front/list', array('from_item' => $item, 'comments' => $item->comments), true) ?>
         <?php
     }
     if ($blognews_config['comments']['can_post']) {
