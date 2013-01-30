@@ -464,7 +464,7 @@ class Controller_Front extends Controller_Front_Application
         $content = $post->get_default_nuggets();
         $item = array();
         $item['title'] = isset($content[\Nos\DataCatcher::TYPE_TITLE]) ? $content[\Nos\DataCatcher::TYPE_TITLE] : $post->post_title;
-        $item['link'] = \Uri::base(false).$post->url_canonical();
+        $item['link'] = $post->url_canonical();
         if (isset($content[\Nos\DataCatcher::TYPE_IMAGE])) {
             $item['img'] = \Uri::base(false).$content[\Nos\DataCatcher::TYPE_IMAGE];
         }
@@ -484,7 +484,7 @@ class Controller_Front extends Controller_Front_Application
         }
         $item = array();
         $item['title'] = strtr(__('Comment to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title));
-        $item['link'] = \Uri::base(false).$post->url_canonical().'#comment'.$comment->comm_id;
+        $item['link'] = $post->url_canonical().'#comment'.$comment->comm_id;
         $item['description'] = $comment->comm_content;
         $item['pubDate'] = $comment->comm_created_at;
         $item['author'] = $comment->comm_author;
