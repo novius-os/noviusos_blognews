@@ -1,65 +1,49 @@
 <?php
 
-// Generated on 23/01/2013 11:25:53
+// Generated on 29/01/2013 19:08:29
 
-// 75 out of 75 messages are translated (100%).
-// 297 out of 297 words are translated (100%).
+// 79 out of 79 messages are translated (100%).
+// 310 out of 310 words are translated (100%).
 
 return array(
-    #: classes/controller/front.ctrl.php:69
-    #: classes/controller/front.ctrl.php:141
+    #. Note to translator: The following texts are related to RSS feeds
+    #: classes/controller/front.ctrl.php:75
+    #: classes/controller/front.ctrl.php:154
     'Posts list' => 'Liste des billets',
 
-    #: classes/controller/front.ctrl.php:70
-    #: classes/controller/front.ctrl.php:171
+    #: classes/controller/front.ctrl.php:76
+    #: classes/controller/front.ctrl.php:184
     'Comments list' => 'Liste des commentaires',
 
-    #: classes/controller/front.ctrl.php:142
+    #: classes/controller/front.ctrl.php:155
     'The full list of blog posts.' => 'La liste complète des billets de blog.',
 
-    #: classes/controller/front.ctrl.php:148
-    #: classes/controller/front.ctrl.php:286
+    #: classes/controller/front.ctrl.php:161
+    #: classes/controller/front.ctrl.php:296
     '{{category}}: Posts list' => '{{category}}&nbsp; Liste des billets',
 
-    #: classes/controller/front.ctrl.php:149
+    #: classes/controller/front.ctrl.php:162
     'Blog posts listed under the ‘{{category}}’ category.' => 'Billets de blog appartenant à la catégorie «&nbsp;{{category}}&nbsp;»',
 
-    #: classes/controller/front.ctrl.php:155
-    #: classes/controller/front.ctrl.php:270
+    #: classes/controller/front.ctrl.php:168
+    #: classes/controller/front.ctrl.php:280
     '{{tag}}: Posts list' => '{{tag}}&nbsp; Liste des billets',
 
-    #: classes/controller/front.ctrl.php:156
+    #: classes/controller/front.ctrl.php:169
     'Blog posts listed under the ‘{{tag}}’ tag.' => 'Billets de blog portant le tag «&nbsp;{{tag}}&nbsp;»',
 
-    #: classes/controller/front.ctrl.php:172
+    #: classes/controller/front.ctrl.php:185
     'The full list of comments.' => 'La liste complète des commentaires.',
 
-    #: classes/controller/front.ctrl.php:192
-    #: classes/controller/front.ctrl.php:315
+    #: classes/controller/front.ctrl.php:205
+    #: classes/controller/front.ctrl.php:325
     '{{post}}: Comments list' => '{{post}}&nbsp; Liste des commentaires',
 
-    #: classes/controller/front.ctrl.php:193
+    #: classes/controller/front.ctrl.php:206
     'Comments to the post ‘{{post}}’.' => 'Commentaires du billlet «&nbsp;{{post}}&nbsp;».',
 
-    #: classes/controller/front.ctrl.php:470
+    #: classes/controller/front.ctrl.php:484
     'Comment to the post ‘{{post}}’.' => 'Commentaire du billlet «&nbsp;{{post}}&nbsp;».',
-
-    #: classes/controller/admin/post.ctrl.php:58
-    #: config/controller/admin/inspector/tag.config.php:19
-    #: config/controller/admin/post.config.php:57
-    #: config/controller/admin/post.config.php:178
-    #: config/common/tag.config.php:16
-    'Tags' => 'Tags',
-
-    #: classes/controller/admin/post.ctrl.php:61
-    #: config/controller/admin/post.config.php:58
-    #: config/common/category.config.php:16
-    'Categories' => 'Catégories',
-
-    #: classes/controller/admin/post.ctrl.php:64
-    #: config/controller/admin/post.config.php:55
-    #: config/controller/admin/category.config.php:28
-    'Properties' => 'Propriétés',
 
     #: classes/model/post.model.php:63
     'Use post title' => 'Reprendre le titre du billet',
@@ -73,16 +57,16 @@ return array(
     #: classes/model/tag.model.php:33
     'Use tag label' => 'Reprendre le tag',
 
-    #: views/front/comment/nb.view.php:18
+    #: views/front/comment/nb.view.php:20
     '{{nb}} comments' => '{{nb}} commentaires',
 
-    #: views/front/comment/nb.view.php:20
+    #: views/front/comment/nb.view.php:22
     '1 comment' => '1 commentaire',
 
-    #: views/front/comment/nb.view.php:23
+    #: views/front/comment/nb.view.php:25
     'No comments' => 'Pas de commentaire',
 
-    #: views/front/post/tags.view.php:24
+    #: views/front/post/tags.view.php:25
     'Tags: {{tags}}' => 'Tags&nbsp;: {{tags}}',
 
     #: views/front/post/list_title.view.php:16
@@ -91,78 +75,109 @@ return array(
     #: views/front/post/list_title.view.php:20
     'Category: {{category}}' => 'Catégorie&nbsp;: {{category}}',
 
-    #: views/front/post/author.view.php:15
+    #: views/front/post/author.view.php:17
     'Author: {{author}}' => 'Auteur&nbsp;: {{author}}',
 
-    #: views/front/post/categories.view.php:24
+    #: views/front/post/categories.view.php:26
     'Categories: {{categories}}' => 'Catégories&nbsp;: {{categories}}',
 
-    #: views/admin/application/popup.view.php:16
+    #: views/admin/application/popup.view.php:15
     'Posts per page:' => 'Billets par page&nbsp;:',
 
-    #: views/admin/application/popup.view.php:21
+    #: views/admin/application/popup.view.php:20
     'Category:' => 'Catégorie&nbsp;:',
 
-    #: views/admin/application/popup.view.php:27
+    #: views/admin/application/popup.view.php:24
+    'Leave blank to select all categories' => 'Pour tout sélectionner, ne rien sélectionner',
+
+    #: views/admin/application/popup.view.php:29
     'Clickable post titles' => 'Titres des billets cliquables',
 
     #: config/controller/admin/inspector/author.config.php:22
     #: config/controller/admin/inspector/author.config.php:26
     'Authors' => 'Auteurs',
 
+    #: config/controller/admin/inspector/tag.config.php:19
+    #: config/controller/admin/post.config.php:63
+    #: config/controller/admin/post.config.php:199
+    #: config/controller/admin/post.config.php:258
+    #: config/common/tag.config.php:16
+    'Tags' => 'Tags',
+
     #: config/controller/admin/inspector/date.config.php:18
     'Created on' => 'Créé le',
 
-    #: config/controller/admin/inspector/category.config.php:17
+    #: config/controller/admin/inspector/category.config.php:19
     'Root' => 'Racine',
 
-    #: config/controller/admin/post.config.php:18
+    #: config/controller/admin/post.config.php:23
     'Add a post' => 'Ajouter un billet',
 
-    #: config/controller/admin/post.config.php:19
+    #: config/controller/admin/post.config.php:24
     'Translate a post' => 'Traduire un billet',
 
-    #: config/controller/admin/post.config.php:36
-    #: config/controller/admin/post.config.php:111
+    #: config/controller/admin/post.config.php:41
+    #: config/controller/admin/post.config.php:117
     'Content' => 'Contenu',
 
-    #: config/controller/admin/post.config.php:56
+    #. user_fullname is not a real field in the database
+    #: config/controller/admin/post.config.php:60
+    #: config/controller/admin/post.config.php:267
+    #: config/controller/admin/category.config.php:30
+    'Properties' => 'Propriétés',
+
+    #: config/controller/admin/post.config.php:61
     'URL (post address)' => 'URL (adresse du billet)',
 
-    #: config/controller/admin/post.config.php:82
+    #: config/controller/admin/post.config.php:62
+    #: config/controller/admin/post.config.php:263
+    #: config/common/category.config.php:16
+    'Categories' => 'Catégories',
+
+    #: config/controller/admin/post.config.php:87
     'Summary' => 'Chapeau',
 
-    #: config/controller/admin/post.config.php:90
+    #: config/controller/admin/post.config.php:96
     'Change the author’s name (alias):' => 'Changer le nom de l’auteur (alias)&nbsp;:',
 
-    #: config/controller/admin/post.config.php:96
-    #: config/controller/admin/category.config.php:61
+    #: config/controller/admin/post.config.php:102
+    #: config/controller/admin/category.config.php:63
     'URL:' => 'URL&nbsp;:',
 
-    #: config/controller/admin/post.config.php:104
+    #: config/controller/admin/post.config.php:110
     'Author:' => 'Auteur&nbsp;:',
 
-    #: config/controller/admin/post.config.php:140
+    #: config/controller/admin/post.config.php:146
     'Created on:' => 'Créé le&nbsp;:',
 
-    #: config/controller/admin/post.config.php:155
+    #: config/controller/admin/post.config.php:161
     'Time:' => 'Heure&nbsp;:',
 
-    #: config/controller/admin/post.config.php:223
-    #: config/controller/admin/category.config.php:86
+    #: config/controller/admin/post.config.php:183
+    'Never read' => 'Pas encore lu',
+
+    #: config/controller/admin/post.config.php:184
+    'Read once' => 'Lu 1 fois',
+
+    #: config/controller/admin/post.config.php:185
+    'Read {{nb}} times' => 'Lu {{nb}} fois',
+
+    #. Note to translator: This is a submit button
+    #: config/controller/admin/post.config.php:245
+    #: config/controller/admin/category.config.php:89
     'Save' => 'Enregistrer',
 
-    #: config/controller/admin/category.config.php:17
+    #: config/controller/admin/category.config.php:19
     'Add a category' => 'Ajouter une catégorie',
 
-    #: config/controller/admin/category.config.php:18
+    #: config/controller/admin/category.config.php:20
     'Translate a category' => 'Traduire une catégorie',
 
-    #: config/controller/admin/category.config.php:51
-    #: config/common/post.config.php:16
+    #: config/controller/admin/category.config.php:53
+    #: config/common/post.config.php:19
     'Title' => 'Titre',
 
-    #: config/controller/admin/category.config.php:70
+    #: config/controller/admin/category.config.php:72
     'Location:' => 'Emplacement&nbsp;:',
 
     #: config/config.php:46
@@ -187,13 +202,13 @@ return array(
     #: config/common/tag.config.php:32
     'Yes, delete this tag' => 'Oui, supprimer ce tag',
 
-    #: config/common/post.config.php:20
+    #: config/common/post.config.php:23
     'Author' => 'Auteur',
 
-    #: config/common/post.config.php:26
+    #: config/common/post.config.php:29
     'Status' => 'Statut',
 
-    #: config/common/post.config.php:31
+    #: config/common/post.config.php:34
     'Date' => 'Date',
 
     #. Crud
