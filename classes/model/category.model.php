@@ -76,12 +76,7 @@ class Model_Category extends \Nos\Orm\Model
                     'options' =>
                         function($category)
                         {
-                            $urls = array();
-                            foreach ($category->urls() as $possible) {
-                                $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
-                            }
-
-                            return $urls;
+                            return $category->urls();
                         },
                 ),
             ),

@@ -41,12 +41,7 @@ class Model_Tag extends \Nos\Orm\Model
                     'options' =>
                         function($tag)
                         {
-                            $urls = array();
-                            foreach ($tag->urls() as $possible) {
-                                $urls[$possible['page_id'].'::'.$possible['itemUrl']] = $possible['url'];
-                            }
-
-                            return $urls;
+                            return $tag->urls();
                         },
                 ),
             ),
