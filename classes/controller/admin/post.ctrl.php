@@ -81,4 +81,16 @@ class Controller_Admin_Post extends \Nos\Controller_Admin_Crud
 
         return $fields;
     }
+
+    // Added this small hack in order to save the input date when adding an element.
+    // @todo: should be removed when switching to novius-os 0.3
+    public function save($item, $data)
+    {
+        if ($this->is_new) {
+            $item->post_created_at = $data['post_created_at'];
+            $item->save();
+        }
+
+        return parent::save($item, $data);
+    }
 }
