@@ -34,7 +34,14 @@ class Controller_Front extends Controller_Front_Application
 
     public static function _init()
     {
-        $namespace = \Inflector::get_namespace(get_called_class());
+        if (is_subclass_of(get_called_class(), 'Nos\\BlogNews\\Blog\\Controller_Front')) {
+            $namespace = 'Nos\\BlogNews\\Blog\\';
+        } else if (is_subclass_of(get_called_class(), 'Nos\\BlogNews\\News\\Controller_Front')) {
+            $namespace = 'Nos\\BlogNews\\News\\';
+        } else {
+            $namespace = \Inflector::get_namespace(get_called_class());
+        }
+
         static::$tag_class = $namespace.'Model_Tag';
         static::$post_class = $namespace.'Model_Post';
         static::$category_class = $namespace.'Model_Category';
