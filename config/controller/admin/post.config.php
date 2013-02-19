@@ -223,16 +223,12 @@ $config = array(
                     $item->categories;//fetch et 'cree' la relation
                     unset($item->categories);
 
-                    $class = get_class($item);
-                    $namespace = substr($class, 0, strrpos($class, '\\'));
-
-                    $category_class = $namespace.'\\Model_Category';
                     if (!empty($data['categories'])) {
-                        foreach ($data['categories'] as $cat_id) {
-                            if (ctype_digit($cat_id) ) {
-                                $item->categories[$cat_id] = $category_class::find($cat_id); // @todo: come back after...
-                            }
-                        }
+                        $class = get_class($item);
+                        $namespace = substr($class, 0, strrpos($class, '\\'));
+                        $category_class = $namespace.'\\Model_Category';
+
+                        $item->categories = $category_class::find('all', array('where' => array(array('cat_id', 'IN', (array) $data['categories']))));
                     }
                 },
         ),
