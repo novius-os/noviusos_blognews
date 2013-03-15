@@ -16,6 +16,22 @@ class Model_Post extends \Nos\Orm\Model
     protected static $_primary_key = array('news_id');
     protected static $_table_name = '';
 
+    protected static $_properties = array(
+        'post_id',
+        'post_title',
+        'post_summary',
+        'post_author_alias',
+        'post_author_id',
+        'post_created_at',
+        'post_updated_at',
+        'post_context',
+        'post_context_common_id',
+        'post_context_is_main',
+        'post_published',
+        'post_read',
+        'post_virtual_name',
+    );
+
     protected static $_observers = array(
         'Orm\Observer_CreatedAt' => array(
             'events' => array('before_insert'),

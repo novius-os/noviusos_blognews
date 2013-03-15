@@ -15,6 +15,19 @@ class Model_Category extends \Nos\Orm\Model
     protected static $_primary_key = array('category_id');
     protected static $_table_name = '';
 
+    protected static $_properties = array(
+        'cat_id',
+        'cat_title',
+        'cat_virtual_name',
+        'cat_context',
+        'cat_context_common_id',
+        'cat_context_is_main',
+        'cat_parent_id',
+        'cat_sort',
+        'cat_created_at',
+        'cat_updated_at',
+    );
+
     protected static $_observers = array(
         'Orm\Observer_CreatedAt' => array(
             'events' => array('before_insert'),
