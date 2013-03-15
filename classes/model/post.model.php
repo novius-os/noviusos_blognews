@@ -26,7 +26,10 @@ class Model_Post extends \Nos\Orm\Model
         'post_updated_at',
         'post_context',
         'post_context_common_id',
-        'post_context_is_main',
+        'post_context_is_main' => array(
+            'data_type' => 'int',
+            'default' => 0,
+        ),
         'post_published',
         'post_read',
         'post_virtual_name',

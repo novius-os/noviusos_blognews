@@ -21,7 +21,10 @@ class Model_Category extends \Nos\Orm\Model
         'cat_virtual_name',
         'cat_context',
         'cat_context_common_id',
-        'cat_context_is_main',
+        'cat_context_is_main' => array(
+            'data_type' => 'int',
+            'default' => 0,
+        ),
         'cat_parent_id',
         'cat_sort',
         'cat_created_at',
