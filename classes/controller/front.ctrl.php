@@ -106,6 +106,7 @@ class Controller_Front extends Controller_Front_Application
         if (!empty($enhancer_url)) {
             $this->enhancerUrl_segments = explode('/', $enhancer_url);
             $segments = $this->enhancerUrl_segments;
+            $extension = $this->main_controller->getExtension();
 
             if (!empty($segments[1])) {
                 $this->action = $segments[0];
@@ -149,13 +150,12 @@ class Controller_Front extends Controller_Front_Application
                 $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
 
                 return $this->display_list_category($args);
-            } elseif ($segments[0] == 'rss') {
+            } elseif ($segments[0] == 'rss' && $extension === 'rss') {
                 $rss = \Nos\Tools_RSS::forge(array(
                         'link' => \Uri::base(false).$this->main_controller->getUrl(),
                         'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
                     ));
 
-                $content = false;
                 if ($segments[1] === 'posts') {
                     if (empty($segments[2])) {
                         $posts = $this->_get_post_list();
@@ -185,7 +185,6 @@ class Controller_Front extends Controller_Front_Application
                         $items[] = static::_get_rss_post($post);
                     }
                     $rss->set_items($items);
-                    $content = $rss->build();
 
                 } elseif ($segments[1] === 'comments') {
                     if (empty($segments[2])) {
@@ -225,18 +224,12 @@ class Controller_Front extends Controller_Front_Application
                         }
                     }
                     $rss->set_items($items);
-                    $content = $rss->build();
-                }
-                \Response::forge(
-                    $content,
-                    200,
-                    array(
-                        'Content-Type' => 'application/xml',
-                    )
-                )->send(true);
-                \Event::shutdown();
-                exit();
 
+                }
+
+                $this->main_controller->setHeader('Content-Type', 'application/xml');
+                $this->main_controller->setCacheDuration(60 * 30);
+                return $this->main_controller->replaceTemplate($rss->build());
             }
 
             throw new \Nos\NotFoundException();
