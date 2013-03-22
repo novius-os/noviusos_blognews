@@ -151,7 +151,7 @@ class Controller_Front extends Controller_Front_Application
                 return $this->display_list_category($args);
             } elseif ($segments[0] == 'rss') {
                 $rss = \Nos\Tools_RSS::forge(array(
-                        'link' => \Uri::base(false).$this->main_controller->getUrl(),
+                        'link' => $this->main_controller->getUrl(),
                         'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
                     ));
 
