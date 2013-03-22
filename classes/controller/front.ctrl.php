@@ -150,7 +150,12 @@ class Controller_Front extends Controller_Front_Application
                 $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
 
                 return $this->display_list_category($args);
-            } elseif ($segments[0] == 'rss' && $extension === 'rss') {
+            } elseif ($segments[0] == 'rss') {
+                if ($extension !== 'rss') {
+                    \Response::redirect(substr($this->main_controller->getUrl(), 0, - strlen($extension)).'rss', 'location', 301);
+                    exit();
+                }
+
                 $rss = \Nos\Tools_RSS::forge(array(
                         'link' => \Uri::base(false).$this->main_controller->getUrl(),
                         'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
@@ -229,7 +234,7 @@ class Controller_Front extends Controller_Front_Application
 
                 $this->main_controller->setHeader('Content-Type', 'application/xml');
                 $this->main_controller->setCacheDuration(60 * 30);
-                return $this->main_controller->replaceTemplate($rss->build());
+                return $this->main_controller->sendContent($rss->build());
             }
 
             throw new \Nos\NotFoundException();
