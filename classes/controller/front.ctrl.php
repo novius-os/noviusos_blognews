@@ -67,7 +67,7 @@ class Controller_Front extends Controller_Front_Application
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::extendable_load($application_name, 'controller/front'));
+        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::loadConfiguration($application_name, 'controller/front'));
         $this->config['classes'] = array(
             'post' => static::$post_class,
             'tag' => static::$tag_class,

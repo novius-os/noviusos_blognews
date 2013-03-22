@@ -31,6 +31,8 @@ class Model_Post extends \Nos\Orm\Model
             'default' => 0,
         ),
         'post_published',
+        'post_publication_start',
+        'post_publication_end',
         'post_read',
         'post_virtual_name',
     );
@@ -50,7 +52,9 @@ class Model_Post extends \Nos\Orm\Model
 
     protected static $_behaviours = array(
         'Nos\Orm_Behaviour_Publishable' => array(
-            'publication_bool_property' => 'post_published',
+            'publication_state_property' => 'post_published',
+            'publication_start_property' => 'post_publication_start',
+            'publication_end_property' => 'post_publication_end',
         ),
         'Nos\Orm_Behaviour_Urlenhancer' => array(
             'enhancers' => array(),
@@ -200,7 +204,7 @@ class Model_Post extends \Nos\Orm\Model
         }
 
         if (!$preview) {
-            $options['where'][] = array('post_published', '=', true);
+            $options['where'][] = array('published', true);
         }
 
         return static::find('first', $options);
@@ -208,10 +212,11 @@ class Model_Post extends \Nos\Orm\Model
 
     public static function get_query($params)
     {
-        $query = static::query()
-            ->related(array('author'));
-
-        $query->where(array('post_published', true));
+        $query = static::query(array(
+            'where' => array(
+                array('published', true),
+            ),
+        ))->related(array('author'));
 
         $query->where(array('post_context', $params['context']));
 
