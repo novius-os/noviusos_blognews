@@ -233,7 +233,7 @@ class Controller_Front extends Controller_Front_Application
                 }
 
                 $this->main_controller->setHeader('Content-Type', 'application/xml');
-                $this->main_controller->setCacheDuration(60 * 30);
+                $this->main_controller->setCacheDuration($this->config['rss_cache_duration']);
                 return $this->main_controller->sendContent($rss->build());
             }
 
