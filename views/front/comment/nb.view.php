@@ -26,5 +26,4 @@ if ($blognews_config['comments']['enabled'] && $blognews_config['comments']['sho
     }
     ?>
     </div>
-    <?php
 }
