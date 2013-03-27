@@ -80,8 +80,8 @@ class Controller_Front extends Controller_Front_Application
     public function after($response)
     {
         // Note to translator: The following texts are related to RSS feeds
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(__('Posts list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(__('Comments list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(__('Posts list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts.rss">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(__('Comments list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments.rss">');
 
         $this->main_controller->addCss('static/apps/noviusos_blognews/css/blognews.css');
 
@@ -106,6 +106,7 @@ class Controller_Front extends Controller_Front_Application
         if (!empty($enhancer_url)) {
             $this->enhancerUrl_segments = explode('/', $enhancer_url);
             $segments = $this->enhancerUrl_segments;
+            $extension = $this->main_controller->getExtension();
 
             if (!empty($segments[1])) {
                 $this->action = $segments[0];
@@ -150,12 +151,16 @@ class Controller_Front extends Controller_Front_Application
 
                 return $this->display_list_category($args);
             } elseif ($segments[0] == 'rss') {
+                if ($extension !== 'rss') {
+                    \Response::redirect(substr($this->main_controller->getUrl(), 0, - strlen($extension)).'rss', 'location', 301);
+                    exit();
+                }
+
                 $rss = \Nos\Tools_RSS::forge(array(
                         'link' => $this->main_controller->getUrl(),
                         'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
                     ));
 
-                $content = false;
                 if ($segments[1] === 'posts') {
                     if (empty($segments[2])) {
                         $posts = $this->_get_post_list();
@@ -185,7 +190,6 @@ class Controller_Front extends Controller_Front_Application
                         $items[] = static::_get_rss_post($post);
                     }
                     $rss->set_items($items);
-                    $content = $rss->build();
 
                 } elseif ($segments[1] === 'comments') {
                     if (empty($segments[2])) {
@@ -225,18 +229,12 @@ class Controller_Front extends Controller_Front_Application
                         }
                     }
                     $rss->set_items($items);
-                    $content = $rss->build();
-                }
-                \Response::forge(
-                    $content,
-                    200,
-                    array(
-                        'Content-Type' => 'application/xml',
-                    )
-                )->send(true);
-                \Event::shutdown();
-                exit();
 
+                }
+
+                $this->main_controller->setHeader('Content-Type', 'application/xml');
+                $this->main_controller->setCacheDuration($this->config['rss_cache_duration']);
+                return $this->main_controller->sendContent($rss->build());
             }
 
             throw new \Nos\NotFoundException();
@@ -286,7 +284,7 @@ class Controller_Front extends Controller_Front_Application
         $tag = $this->_get_tag($tag);
         $posts = $this->_get_post_list(array('tag' => $tag));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.rss">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -302,7 +300,7 @@ class Controller_Front extends Controller_Front_Application
         $category = $this->_get_category($category);
         $posts = $this->_get_post_list(array('category' => $category));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.rss">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -331,7 +329,7 @@ class Controller_Front extends Controller_Front_Application
             throw new \Nos\NotFoundException();
         }
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.rss">');
 
         $page = $this->main_controller->getPage();
         $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
