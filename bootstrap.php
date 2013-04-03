@@ -42,4 +42,6 @@ function forge($self, $className, $args = array())
         'model_to' => 'Nos\BlogNews\Blog\Model_Post',
         'key_to'   => 'post_author_id',
     );
+
+    $config['behaviours']['Nos\Orm_Behaviour_Urlenhancer']['enhancers'][] = 'noviusos_blog';
 });
