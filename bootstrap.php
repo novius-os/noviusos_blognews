@@ -34,14 +34,3 @@ function forge($self, $className, $args = array())
 
     return $class::forge($args['data'], $args['new'], $args['view']);
 }
-
-//Ajout de la relation sur
-\Event::register_function('config|noviusos_user::model/user', function(&$config) {
-    $config['has_many']['posts'] = array(
-        'key_from' => 'user_id',
-        'model_to' => 'Nos\BlogNews\Blog\Model_Post',
-        'key_to'   => 'post_author_id',
-    );
-
-    $config['behaviours']['Nos\Orm_Behaviour_Urlenhancer']['enhancers'][] = 'noviusos_blog';
-});

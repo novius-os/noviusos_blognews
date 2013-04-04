@@ -47,8 +47,8 @@ class Controller_Front extends Controller_Front_Application
         static::$category_class = $namespace.'Model_Category';
         $class = $namespace.'Model_Post';
         static::$post_class = $class;
-        $relation = (array) $class::relations('author');
-        static::$author_class = $relation['model_to'];
+        $relation = $class::relations('author');
+        static::$author_class = $relation->model_to;
     }
 
     public function before()
@@ -318,7 +318,10 @@ class Controller_Front extends Controller_Front_Application
 
     public function display_list_author()
     {
-        list(, $id_author) = $this->enhancerUrl_segments;
+        list(, $parts_author) = $this->enhancerUrl_segments;
+        //id_author is made with 3 parts, only the last one is the id (the others are used for SEO)
+        $array_author = explode('_', $parts_author);
+        $id_author = array_pop($array_author);
         $author = $this->_get_author($id_author);
         $posts = $this->_get_post_list(array('author' => $author));
 
@@ -410,7 +413,6 @@ class Controller_Front extends Controller_Front_Application
             array(
                 'where' => array(
                     array('user_id', '=', $id,),
-                    array('cat_context', '=', $this->page_from->page_context),
                 )
             )
         );
@@ -547,7 +549,6 @@ class Controller_Front extends Controller_Front_Application
     {
         $model = get_class($item);
         $page = isset($params['page']) ? $params['page'] : 1;
-
         switch ($model) {
             case static::$post_class:
                 return urlencode($item->post_virtual_name).'.html';
@@ -562,7 +563,7 @@ class Controller_Front extends Controller_Front_Application
                 break;
 
             case static::$author_class:
-                return 'author/'.urlencode($item->user_id).($page > 1 ? '/'.$page : '').'.html';
+                return 'author/'.urlencode($item->user_name.'_'.$item->user_firstname.'_'.$item->user_id).($page > 1 ? '/'.$page : '').'.html';
                 break;
         }
 
