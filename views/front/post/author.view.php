@@ -14,7 +14,17 @@ if ($blognews_config['authors']['enabled'] && $blognews_config['authors']['show'
     \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
     ?>
     <div class="blognews_author">
-        <?= e(strtr(__('Author: {{author}}'), array('{{author}}' => !empty($item->author) ? $item->author->fullname() : $item->post_author_alias))) ?>
+    <?php
+        if (!empty($item->author)) {
+        ?>
+        <a href="<?= $item->author->url() ?>">
+            <?= e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->author->fullname()))) ?>
+        </a>
+        <?php
+        } else {
+            echo e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->post_author_alias)));
+        }
+    ?>
     </div>
     <?php
 }

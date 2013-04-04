@@ -31,6 +31,7 @@ class Controller_Front extends Controller_Front_Application
     public static $tag_class;
     public static $post_class;
     public static $category_class;
+    public static $author_class;
 
     public static function _init()
     {
@@ -43,8 +44,11 @@ class Controller_Front extends Controller_Front_Application
         }
 
         static::$tag_class = $namespace.'Model_Tag';
-        static::$post_class = $namespace.'Model_Post';
         static::$category_class = $namespace.'Model_Category';
+        $class = $namespace.'Model_Post';
+        static::$post_class = $class;
+        $relation = $class::relations('author');
+        static::$author_class = $relation->model_to;
     }
 
     public function before()
@@ -304,6 +308,25 @@ class Controller_Front extends Controller_Front_Application
         ), false);
     }
 
+    public function display_list_author()
+    {
+        list(, $parts_author) = $this->enhancerUrl_segments;
+        //id_author is made with 3 parts, only the last one is the id (the others are used for SEO)
+        $array_author = explode('_', $parts_author);
+        $id_author = array_pop($array_author);
+        $author = $this->_get_author($id_author);
+        $posts = $this->_get_post_list(array('author' => $author));
+
+        //TODO add Meta (see method above)
+
+        return View::forge('noviusos_blognews::front/post/list', array(
+            'posts'       => $posts,
+            'type'        => 'author',
+            'item'        => $author,
+            'pagination' => $this->pagination,
+        ), false);
+    }
+
     /**
      * Display a single item (outside a list context)
      *
@@ -371,6 +394,25 @@ class Controller_Front extends Controller_Front_Application
         }
 
         return $category;
+    }
+
+    protected function _get_author($id)
+    {
+        $author_class = static::$author_class;
+
+        $author = $author_class::find(
+            'first',
+            array(
+                'where' => array(
+                    array('user_id', '=', $id,),
+                )
+            )
+        );
+        if (empty($author)) {
+            throw new \Nos\NotFoundException();
+        }
+
+        return $author;
     }
 
     protected function _get_tag($tag)
@@ -511,6 +553,10 @@ class Controller_Front extends Controller_Front_Application
 
             case static::$category_class:
                 return 'category/'.urlencode($item->cat_virtual_name).($page > 1 ? '/'.$page : '').'.html';
+                break;
+
+            case static::$author_class:
+                return 'author/'.urlencode($item->user_name.'_'.$item->user_firstname.'_'.$item->user_id).($page > 1 ? '/'.$page : '').'.html';
                 break;
         }
 
