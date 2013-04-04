@@ -16,6 +16,27 @@ class Model_Post extends \Nos\Orm\Model
     protected static $_primary_key = array('news_id');
     protected static $_table_name = '';
 
+    protected static $_properties = array(
+        'post_id',
+        'post_title',
+        'post_summary',
+        'post_author_alias',
+        'post_author_id',
+        'post_created_at',
+        'post_updated_at',
+        'post_context',
+        'post_context_common_id',
+        'post_context_is_main' => array(
+            'data_type' => 'int',
+            'default' => 0,
+        ),
+        'post_published',
+        'post_publication_start',
+        'post_publication_end',
+        'post_read',
+        'post_virtual_name',
+    );
+
     protected static $_observers = array(
         'Orm\Observer_CreatedAt' => array(
             'events' => array('before_insert'),
@@ -31,7 +52,9 @@ class Model_Post extends \Nos\Orm\Model
 
     protected static $_behaviours = array(
         'Nos\Orm_Behaviour_Publishable' => array(
-            'publication_bool_property' => 'post_published',
+            'publication_state_property' => 'post_published',
+            'publication_start_property' => 'post_publication_start',
+            'publication_end_property' => 'post_publication_end',
         ),
         'Nos\Orm_Behaviour_Urlenhancer' => array(
             'enhancers' => array(),
@@ -181,7 +204,7 @@ class Model_Post extends \Nos\Orm\Model
         }
 
         if (!$preview) {
-            $options['where'][] = array('post_published', '=', true);
+            $options['where'][] = array('published', true);
         }
 
         return static::find('first', $options);
@@ -189,10 +212,11 @@ class Model_Post extends \Nos\Orm\Model
 
     public static function get_query($params)
     {
-        $query = static::query()
-            ->related(array('author'));
-
-        $query->where(array('post_published', true));
+        $query = static::query(array(
+            'where' => array(
+                array('published', true),
+            ),
+        ))->related(array('author'));
 
         $query->where(array('post_context', $params['context']));
 

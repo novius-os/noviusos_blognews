@@ -71,7 +71,7 @@ class Controller_Front extends Controller_Front_Application
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::extendable_load($application_name, 'controller/front'));
+        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::loadConfiguration($application_name, 'controller/front'));
         $this->config['classes'] = array(
             'post' => static::$post_class,
             'tag' => static::$tag_class,
@@ -159,7 +159,6 @@ class Controller_Front extends Controller_Front_Application
                         'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
                     ));
 
-                $content = false;
                 if ($segments[1] === 'posts') {
                     if (empty($segments[2])) {
                         $posts = $this->_get_post_list();
@@ -189,7 +188,6 @@ class Controller_Front extends Controller_Front_Application
                         $items[] = static::_get_rss_post($post);
                     }
                     $rss->set_items($items);
-                    $content = $rss->build();
 
                 } elseif ($segments[1] === 'comments') {
                     if (empty($segments[2])) {
@@ -229,18 +227,12 @@ class Controller_Front extends Controller_Front_Application
                         }
                     }
                     $rss->set_items($items);
-                    $content = $rss->build();
-                }
-                \Response::forge(
-                    $content,
-                    200,
-                    array(
-                        'Content-Type' => 'application/xml',
-                    )
-                )->send(true);
-                \Event::shutdown();
-                exit();
 
+                }
+
+                $this->main_controller->setHeader('Content-Type', 'application/xml');
+                $this->main_controller->setCacheDuration($this->config['rss_cache_duration']);
+                return $this->main_controller->sendContent($rss->build());
             }
 
             throw new \Nos\NotFoundException();
@@ -549,6 +541,7 @@ class Controller_Front extends Controller_Front_Application
     {
         $model = get_class($item);
         $page = isset($params['page']) ? $params['page'] : 1;
+
         switch ($model) {
             case static::$post_class:
                 return urlencode($item->post_virtual_name).'.html';
