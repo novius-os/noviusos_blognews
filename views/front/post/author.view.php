@@ -15,15 +15,15 @@ if ($blognews_config['authors']['enabled'] && $blognews_config['authors']['show'
     ?>
     <div class="blognews_author">
     <?php
-        if (!empty($item->author)) {
+    if (!empty($item->author)) {
         ?>
         <a href="<?= $item->author->url() ?>">
             <?= e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->author->fullname()))) ?>
         </a>
         <?php
-        } else {
-            echo e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->post_author_alias)));
-        }
+    } else {
+        echo e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->post_author_alias)));
+    }
     ?>
     </div>
     <?php
