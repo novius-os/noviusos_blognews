@@ -11,7 +11,7 @@
 if ($blognews_config['summary']['enabled'] && $blognews_config['summary']['show']) {
     ?>
     <div class="blognews_summary">
-        <?= nl2br(e($item->post_summary)) ?>
+        <p><?= nl2br(e($item->post_summary)) ?></p>
     </div>
     <?php
 }
