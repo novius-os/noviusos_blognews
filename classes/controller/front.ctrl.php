@@ -180,6 +180,13 @@ class Controller_Front extends Controller_Front_Application
                                 'title' => static::_html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
                                 'description' => static::_html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
                             ));
+                    } elseif ($segments[2] === 'author' && !empty($segments[3])) {
+                        $author = $this->_get_author($segments[3]);
+                        $posts = $this->_get_post_list(array('author' => $author));
+                        $rss->set(array(
+                            'title' => static::_html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname()))),
+                            'description' => static::_html_entity_decode(strtr(__('Blog posts written by {{author}}.'), array('{{author}}' => $author->fullname()))),
+                        ));
                     } else {
                         throw new \Nos\NotFoundException();
                     }
@@ -317,7 +324,7 @@ class Controller_Front extends Controller_Front_Application
         $author = $this->_get_author($id_author);
         $posts = $this->_get_post_list(array('author' => $author));
 
-        //TODO add Meta (see method above)
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname())))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/author/'.urlencode($id_author).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
