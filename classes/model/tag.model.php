@@ -15,9 +15,18 @@ class Model_Tag extends \Nos\Orm\Model
     protected static $_primary_key = array('tag_id');
     protected static $_table_name = '';
 
+    protected static $_title_property = 'tag_label';
     protected static $_properties = array(
-        'tag_id',
-        'tag_label',
+        'tag_id' => array(
+            'default' => null,
+            'data_type' => 'int unsigned',
+            'null' => false,
+        ),
+        'tag_label' => array(
+            'default' => null,
+            'data_type' => 'varchar',
+            'null' => false,
+        ),
     );
 
     protected static $_many_many = array();

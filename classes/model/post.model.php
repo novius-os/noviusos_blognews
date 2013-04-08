@@ -16,25 +16,85 @@ class Model_Post extends \Nos\Orm\Model
     protected static $_primary_key = array('news_id');
     protected static $_table_name = '';
 
+    protected static $_title_property = 'post_title';
     protected static $_properties = array(
-        'post_id',
-        'post_title',
-        'post_summary',
-        'post_author_alias',
-        'post_author_id',
-        'post_created_at',
-        'post_updated_at',
-        'post_context',
-        'post_context_common_id',
-        'post_context_is_main' => array(
-            'data_type' => 'int',
-            'default' => 0,
+        'post_id' => array(
+            'default' => null,
+            'data_type' => 'int unsigned',
+            'null' => false,
         ),
-        'post_published',
-        'post_publication_start',
-        'post_publication_end',
-        'post_read',
-        'post_virtual_name',
+        'post_title' => array(
+            'default' => null,
+            'data_type' => 'varchar',
+            'null' => false,
+        ),
+        'post_summary' => array(
+            'default' => null,
+            'data_type' => 'text',
+            'null' => false,
+        ),
+        'post_author_alias' => array(
+            'default' => null,
+            'data_type' => 'varchar',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
+        'post_author_id' => array(
+            'default' => null,
+            'data_type' => 'int unsigned',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
+        'post_created_at' => array(
+            'data_type' => 'timestamp',
+            'null' => false,
+        ),
+        'post_updated_at' => array(
+            'data_type' => 'timestamp',
+            'null' => false,
+        ),
+        'post_context' => array(
+            'default' => null,
+            'data_type' => 'varchar',
+            'null' => false,
+        ),
+        'post_context_common_id' => array(
+            'default' => null,
+            'data_type' => 'int',
+            'null' => false,
+        ),
+        'post_context_is_main' => array(
+            'default' => 0,
+            'data_type' => 'tinyint',
+            'null' => false,
+        ),
+        'post_published' => array(
+            'default' => null,
+            'data_type' => 'tinyint',
+            'null' => false,
+        ),
+        'post_publication_start' => array(
+            'default' => null,
+            'data_type' => 'datetime',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
+        'post_publication_end' => array(
+            'default' => null,
+            'data_type' => 'datetime',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
+        'post_read' => array(
+            'default' => null,
+            'data_type' => 'int unsigned',
+            'null' => false,
+        ),
+        'post_virtual_name' => array(
+            'default' => null,
+            'data_type' => 'varchar',
+            'null' => false,
+        ),
     );
 
     protected static $_observers = array(

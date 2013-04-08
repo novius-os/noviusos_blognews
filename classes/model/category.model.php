@@ -15,20 +15,58 @@ class Model_Category extends \Nos\Orm\Model
     protected static $_primary_key = array('category_id');
     protected static $_table_name = '';
 
+    protected static $_title_property = 'cat_title';
     protected static $_properties = array(
-        'cat_id',
-        'cat_title',
-        'cat_virtual_name',
-        'cat_context',
-        'cat_context_common_id',
-        'cat_context_is_main' => array(
+        'cat_id' => array(
+            'default' => null,
             'data_type' => 'int',
-            'default' => 0,
+            'null' => false,
         ),
-        'cat_parent_id',
-        'cat_sort',
-        'cat_created_at',
-        'cat_updated_at',
+        'cat_title' => array(
+            'default' => null,
+            'data_type' => 'varchar',
+            'null' => false,
+        ),
+        'cat_virtual_name' => array(
+            'default' => null,
+            'data_type' => 'varchar',
+            'null' => false,
+        ),
+        'cat_context' => array(
+            'default' => null,
+            'data_type' => 'varchar',
+            'null' => false,
+        ),
+        'cat_context_common_id' => array(
+            'default' => null,
+            'data_type' => 'int',
+            'null' => false,
+        ),
+        'cat_context_is_main' => array(
+            'default' => 0,
+            'data_type' => 'tinyint',
+            'null' => false,
+        ),
+        'cat_parent_id' => array(
+            'default' => null,
+            'data_type' => 'int',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
+        'cat_sort' => array(
+            'default' => null,
+            'data_type' => 'float',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
+        'cat_created_at' => array(
+            'data_type' => 'timestamp',
+            'null' => false,
+        ),
+        'cat_updated_at' => array(
+            'data_type' => 'timestamp',
+            'null' => false,
+        ),
     );
 
     protected static $_observers = array(
