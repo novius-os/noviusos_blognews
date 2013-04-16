@@ -8,10 +8,8 @@
  * @link http://www.novius-os.org
  */
 
-\Nos\I18n::current_dictionary('noviusos_blognews::common');
-
 if ($blognews_config['categories']['enabled'] && $blognews_config['categories']['show']) {
-    \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+    \Nos\I18n::current_dictionary(array('noviusos_blognews::front'));
     ?>
     <div class="blognews_categories">
     <?php
