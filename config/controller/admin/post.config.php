@@ -74,7 +74,7 @@ $config = array(
             // les mécanismes internes lèvent une exception)
         ),
         'post_title' => array(
-            'label' => 'Titre',
+            'label' => __('Title'),
             'form' => array(
                 'type' => 'text',
             ),
