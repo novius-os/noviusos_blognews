@@ -13,7 +13,7 @@ echo $pagination->create_links(
 
         if ($type == 'main') {
             $url = \Nos\Nos::main_controller()->getPageUrl();
-            $url_without_suffix = str_replace('.html', '', $url);
+            $url_without_suffix = str_replace('.html', '/', $url);
             return $page == 1 ? $url : $url_without_suffix.'page/'.$page.'.html';
         } else {
             return $item->url(array('page' => $page));
