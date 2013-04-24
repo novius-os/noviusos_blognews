@@ -1,61 +1,122 @@
 <?php
 
-// Generated on 09/04/2013 16:13:10
+// Generated on 24/04/2013 17:47:52
 
-// 79 out of 79 messages are translated (100%).
-// 310 out of 310 words are translated (100%).
+// 81 out of 81 messages are translated (100%).
+// 318 out of 318 words are translated (100%).
 
 return array(
     #. Note to translator: The following texts are related to RSS feeds
-    #: classes/controller/front.ctrl.php:82
-    #: classes/controller/front.ctrl.php:161
+    #: classes/controller/front.ctrl.php:86
+    #: classes/controller/front.ctrl.php:164
     'Posts list' => '投稿一覧',
 
-    #: classes/controller/front.ctrl.php:83
-    #: classes/controller/front.ctrl.php:191
+    #: classes/controller/front.ctrl.php:87
+    #: classes/controller/front.ctrl.php:200
     'Comments list' => 'コメント一覧',
 
-    #: classes/controller/front.ctrl.php:162
+    #: classes/controller/front.ctrl.php:165
     'The full list of blog posts.' => '全てのブログ投稿の一覧',
 
-    #: classes/controller/front.ctrl.php:168
-    #: classes/controller/front.ctrl.php:303
+    #: classes/controller/front.ctrl.php:171
+    #: classes/controller/front.ctrl.php:306
     '{{category}}: Posts list' => '{{category}}: 投稿一覧',
 
-    #: classes/controller/front.ctrl.php:169
+    #: classes/controller/front.ctrl.php:172
     'Blog posts listed under the ‘{{category}}’ category.' => '‘{{category}}’ カテゴリのブログ投稿の一覧です。',
 
-    #: classes/controller/front.ctrl.php:175
-    #: classes/controller/front.ctrl.php:287
+    #: classes/controller/front.ctrl.php:178
+    #: classes/controller/front.ctrl.php:290
     '{{tag}}: Posts list' => '{{tag}}: 投稿一覧',
 
-    #: classes/controller/front.ctrl.php:176
+    #: classes/controller/front.ctrl.php:179
     'Blog posts listed under the ‘{{tag}}’ tag.' => '‘{{tag}}’ タグのブログ投稿の一覧です。',
 
-    #: classes/controller/front.ctrl.php:192
+    #: classes/controller/front.ctrl.php:185
+    #: classes/controller/front.ctrl.php:325
+    '{{author}}: Posts list' => '{{author}}: 投稿一覧',
+
+    #: classes/controller/front.ctrl.php:186
+    'Blog posts written by {{author}}.' => '{{author}}が書いた投稿です。',
+
+    #: classes/controller/front.ctrl.php:201
     'The full list of comments.' => '全てのコメントの一覧です。',
 
-    #: classes/controller/front.ctrl.php:212
-    #: classes/controller/front.ctrl.php:332
+    #: classes/controller/front.ctrl.php:221
+    #: classes/controller/front.ctrl.php:354
     '{{post}}: Comments list' => '{{post}}: コメント一覧',
 
-    #: classes/controller/front.ctrl.php:213
+    #: classes/controller/front.ctrl.php:222
     'Comments to the post ‘{{post}}’.' => '投稿 ‘{{post}}’ へのコメント',
 
-    #: classes/controller/front.ctrl.php:491
+    #: classes/controller/front.ctrl.php:532
     'Comment to the post ‘{{post}}’.' => '投稿 ‘{{post}}’ へのコメント',
 
-    #: classes/model/category.model.php:68
-    'Use category title' => 'カテゴリータイトルを使用する',
-
-    #: classes/model/tag.model.php:33
-    'Use tag label' => 'タグラベルを使用する',
-
-    #: classes/model/post.model.php:63
+    #: classes/model/post.model.php:146
     'Use post title' => '投稿タイトルを使用する',
 
-    #: classes/model/post.model.php:97
+    #: classes/model/post.model.php:180
     'Use post summary' => '投稿サマリを使用する',
+
+    #: classes/model/category.model.php:122
+    'Use category title' => 'カテゴリータイトルを使用する',
+
+    #: classes/model/tag.model.php:47
+    'Use tag label' => 'タグラベルを使用する',
+
+    #: views/front/comment/nb.view.php:20
+    '{{nb}} comments' => '{{nb}} 件のコメント',
+
+    #: views/front/comment/nb.view.php:22
+    '1 comment' => '1 件のコメント',
+
+    #: views/front/comment/nb.view.php:25
+    'No comments' => 'コメント無し',
+
+    #: views/front/post/tags.view.php:25
+    'Tags: {{tags}}' => 'タグ: {{tags}}',
+
+    #: views/front/post/list_title.view.php:16
+    'Tag: {{tag}}' => 'タグ: {{tag}}',
+
+    #: views/front/post/list_title.view.php:20
+    'Category: {{category}}' => 'カテゴリー: {{category}}',
+
+    #: views/front/post/author.view.php:21
+    #: views/front/post/author.view.php:25
+    'Author: {{author}}' => '著者: {{author}}',
+
+    #: views/front/post/categories.view.php:26
+    'Categories: {{categories}}' => 'カテゴリー: {{categories}}',
+
+    #: views/admin/application/popup.view.php:15
+    'Posts per page:' => '1ページの投稿数:',
+
+    #: views/admin/application/popup.view.php:20
+    'Category:' => 'カテゴリー:',
+
+    #: views/admin/application/popup.view.php:24
+    'Leave blank to select all categories' => '空欄にしておくと、全てのカテゴリーを選択します',
+
+    #: views/admin/application/popup.view.php:29
+    'Clickable post titles' => 'クリック可能な投稿タイトル',
+
+    #: config/controller/admin/inspector/author.config.php:22
+    #: config/controller/admin/inspector/author.config.php:26
+    'Authors' => '著者',
+
+    #: config/controller/admin/inspector/tag.config.php:19
+    #: config/controller/admin/post.config.php:63
+    #: config/controller/admin/post.config.php:199
+    #: config/controller/admin/post.config.php:254
+    #: config/common/tag.config.php:16
+    'Tags' => 'タグ',
+
+    #: config/controller/admin/inspector/date.config.php:18
+    'Created on' => '作成日',
+
+    #: config/controller/admin/inspector/category.config.php:19
+    'Root' => 'ルート',
 
     #: config/controller/admin/post.config.php:23
     'Add a post' => '投稿を追加',
@@ -69,7 +130,7 @@ return array(
 
     #. user_fullname is not a real field in the database
     #: config/controller/admin/post.config.php:60
-    #: config/controller/admin/post.config.php:267
+    #: config/controller/admin/post.config.php:263
     #: config/controller/admin/category.config.php:30
     'Properties' => 'プロパティ',
 
@@ -77,16 +138,14 @@ return array(
     'URL (post address)' => 'URL (投稿アドレス)',
 
     #: config/controller/admin/post.config.php:62
-    #: config/controller/admin/post.config.php:263
+    #: config/controller/admin/post.config.php:259
     #: config/common/category.config.php:16
     'Categories' => 'カテゴリー',
 
-    #: config/controller/admin/post.config.php:63
-    #: config/controller/admin/post.config.php:199
-    #: config/controller/admin/post.config.php:258
-    #: config/controller/admin/inspector/tag.config.php:19
-    #: config/common/tag.config.php:16
-    'Tags' => 'タグ',
+    #: config/controller/admin/post.config.php:77
+    #: config/controller/admin/category.config.php:53
+    #: config/common/post.config.php:19
+    'Title' => 'タイトル',
 
     #: config/controller/admin/post.config.php:87
     'Summary' => 'サマリ',
@@ -117,7 +176,7 @@ return array(
     'Read {{nb}} times' => '{{nb}}回読まれました',
 
     #. Note to translator: This is a submit button
-    #: config/controller/admin/post.config.php:245
+    #: config/controller/admin/post.config.php:241
     #: config/controller/admin/category.config.php:89
     'Save' => '保存',
 
@@ -127,34 +186,11 @@ return array(
     #: config/controller/admin/category.config.php:20
     'Translate a category' => 'カテゴリーを翻訳',
 
-    #: config/controller/admin/category.config.php:53
-    #: config/common/post.config.php:19
-    'Title' => 'タイトル',
-
     #: config/controller/admin/category.config.php:72
     'Location:' => '位置:',
 
-    #: config/controller/admin/inspector/author.config.php:22
-    #: config/controller/admin/inspector/author.config.php:26
-    'Authors' => '著者',
-
-    #: config/controller/admin/inspector/category.config.php:19
-    'Root' => 'ルート',
-
-    #: config/controller/admin/inspector/date.config.php:18
-    'Created on' => '作成日',
-
     #: config/config.php:46
     'Blog' => 'ブログ',
-
-    #: config/common/post.config.php:23
-    'Author' => '著者',
-
-    #: config/common/post.config.php:29
-    'Status' => '公開状態',
-
-    #: config/common/post.config.php:34
-    'Date' => '日付',
 
     #. Crud
     #: config/common/tag.config.php:22
@@ -174,6 +210,15 @@ return array(
     #. Delete action's labels
     #: config/common/tag.config.php:32
     'Yes, delete this tag' => 'はい、このタグを削除します',
+
+    #: config/common/post.config.php:23
+    'Author' => '著者',
+
+    #: config/common/post.config.php:29
+    'Status' => '公開状態',
+
+    #: config/common/post.config.php:34
+    'Date' => '日付',
 
     #. Crud
     #: config/common/category.config.php:21
@@ -239,41 +284,5 @@ return array(
 
     #: config/common/category.config.php:54
     'This category has <strong>{{children_count}} sub-categories</strong>.' => 'このカテゴリーには<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
-
-    #: views/admin/application/popup.view.php:15
-    'Posts per page:' => '1ページの投稿数:',
-
-    #: views/admin/application/popup.view.php:20
-    'Category:' => 'カテゴリー:',
-
-    #: views/admin/application/popup.view.php:24
-    'Leave blank to select all categories' => '空欄にしておくと、全てのカテゴリーを選択します',
-
-    #: views/admin/application/popup.view.php:29
-    'Clickable post titles' => 'クリック可能な投稿タイトル',
-
-    #: views/front/post/list_title.view.php:16
-    'Tag: {{tag}}' => 'タグ: {{tag}}',
-
-    #: views/front/post/list_title.view.php:20
-    'Category: {{category}}' => 'カテゴリー: {{category}}',
-
-    #: views/front/post/author.view.php:17
-    'Author: {{author}}' => '著者: {{author}}',
-
-    #: views/front/post/categories.view.php:26
-    'Categories: {{categories}}' => 'カテゴリー: {{categories}}',
-
-    #: views/front/post/tags.view.php:25
-    'Tags: {{tags}}' => 'タグ: {{tags}}',
-
-    #: views/front/comment/nb.view.php:20
-    '{{nb}} comments' => '{{nb}} 件のコメント',
-
-    #: views/front/comment/nb.view.php:22
-    '1 comment' => '1 件のコメント',
-
-    #: views/front/comment/nb.view.php:25
-    'No comments' => 'コメント無し',
 
 );
