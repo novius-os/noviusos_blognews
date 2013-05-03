@@ -57,7 +57,7 @@ $config = array(
 
         'menu' => array(
             // user_fullname is not a real field in the database
-            __('Properties') => array('field_template' => '{field}', 'fields' => array('author->user_fullname', 'post_author_alias', 'post_created_at_date', 'post_created_at_time', 'post_read')),
+            __('Properties') => array('field_template' => '{field}', 'fields' => array('author->user_fullname', 'post_author_alias', 'post_created_at', 'post_read')),
             __('URL (post address)') => array('post_virtual_name'),
             __('Categories') => array('categories'),
             __('Tags') => array('tags'),
@@ -129,48 +129,8 @@ $config = array(
             ),
         ),
         'post_created_at' => array(
-            'form' => array(
-                'type' => 'text',
-            ),
-            'populate' =>
-                function($item)
-                {
-                    if (\Input::method() == 'POST') {
-                        return \Input::post('post_created_at_date').' '.\Input::post('post_created_at_time').':00';
-                    }
-
-                    return $item->post_created_at;
-                }
-        ),
-        'post_created_at_date' => array(
             'label' => __('Created on:'),
-            'renderer' => 'Nos\Renderer_Date_Picker',
-            'template' => '<p>{label}<br/>{field}',
-            'dont_save' => true,
-            'populate' =>
-                function($item)
-                {
-                    if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00') {
-                        return \Date::create_from_string($item->post_created_at, 'mysql')->format('%Y-%m-%d');
-                    } else {
-                        return \Date::forge()->format('%Y-%m-%d');
-                    }
-                }
-        ),
-        'post_created_at_time' => array(
-            'label' => __('Time:'),
-            'renderer' => 'Nos\Renderer_Time_Picker',
-            'dont_save' => true,
-            'template' => ' {field}</p>',
-            'populate' =>
-                function($item)
-                {
-                    if ($item->post_created_at && $item->post_created_at!='0000-00-00 00:00:00') {
-                        return \Date::create_from_string($item->post_created_at, 'mysql')->format('%H:%M');
-                    } else {
-                        return \Date::forge()->format('%H:%M');
-                    }
-                }
+            'renderer' => 'Nos\Renderer_Datetime_Picker',
         ),
         'post_read' => array(
             'label' => __(''),
@@ -266,5 +226,6 @@ if (!$app_config['authors']['enabled']) {
     unset($config['fields']['author->user_fullname']);
     unset($config['fields']['post_author_alias']);
 }
+
 
 return $config;
