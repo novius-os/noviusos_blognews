@@ -10,7 +10,7 @@
 
 $title = null;
 
-\Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+\Nos\I18n::current_dictionary(array('noviusos_blognews::front'));
 
 if ($type == 'tag') {
     $title = strtr(__('Tag: {{tag}}'), array('{{tag}}' => $item->tag_label));

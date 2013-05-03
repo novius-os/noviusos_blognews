@@ -42,11 +42,6 @@ $config = array(
                 },
             'dataType' => 'datetime',
         ),
-        'preview_url' => array(
-            'value' => function($item) {
-                return $item->preview_url();
-            },
-        ),
         'thumbnail' => array(
             'value' => function ($item) {
                 foreach ($item->medias as $media) {

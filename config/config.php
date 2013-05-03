@@ -41,6 +41,20 @@ $ret = array(
             'format' => 'eu_full'
         ),
     ),
+    'thumbnail' => array(
+        'front' => array(
+            'list' => array(
+                'link_to_item' => true,
+                'max_width' => 120,
+                //'max_height' => 0, // 0 means same as max_width
+            ),
+            'item' => array(
+                'link_to_fullsize' => true,
+                'max_width' => 200,
+                //'max_height' => 0, // 0 means same as max_width
+            ),
+        ),
+    ),
     'application' => array(
         'actions' => array(),
         'name' => __('Blog'),

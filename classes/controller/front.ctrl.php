@@ -55,7 +55,7 @@ class Controller_Front extends Controller_Front_Application
     {
         parent::before();
 
-        \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+        \Nos\I18n::current_dictionary(array('noviusos_blognews::front'));
         $this->app_config = \Arr::merge($this->app_config, static::getGlobalConfiguration());
 
         \View::set_global('blognews_config', $this->app_config);
