@@ -581,7 +581,7 @@ class Controller_Front extends Controller_Front_Application
             ) {
                 $post_class = static::$post_class;
                 $comm = new Model_Comment();
-                $comm->comm_from_table = $post_class::get_table_name();
+                $comm->comm_foreign_model = $post_class;
                 $comm->comm_email = \Input::post('comm_email');
                 $comm->comm_author = \Input::post('comm_author');
                 $comm->comm_content = \Input::post('comm_content');
