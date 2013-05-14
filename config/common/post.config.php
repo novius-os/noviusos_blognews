@@ -28,6 +28,7 @@ $config = array(
         'publication_status' => array(
             'title' => __('Status'),
             'column' => 'published',
+            'isSafeHtml' => true,
             'multiContextHide' => true,
         ),
         'post_created_at' => array(
