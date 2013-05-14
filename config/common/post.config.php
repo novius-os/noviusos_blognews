@@ -61,37 +61,15 @@ $config = array(
     ),
     'actions' => array(
         'list' => array(
-            '{{namespace}}\Model_Post.comments' => array(
-                'label' => __('Comments'),
-                'icon' => 'mail-closed',
-                'targets' => array(
-                    'grid' => true,
-                    'toolbar-edit' => true,
-                ),
-                'action' => array(
-                    'action' => 'nosTabs',
-                    'tab' => array(
-                        'url' => 'admin/noviusos_comments/comment/appdesk?model={{_model}}&id={{_id}}',
-                        'label' => __('Comments to ‘{{title}}’'),
-                    ),
-                ),
+            'comments' => array(
                 'primary' => true,
-                'visible' => function($params) {
-                    return !isset($params['item']) || !$params['item']->is_new();
-                },
-                'disabled' =>
-                function($item) {
-                    return ($item->is_new() || !\Nos\Comments\Model_Comment::count(array(
-                        'where' => array(array('comm_foreign_model' => get_class($item), 'comm_foreign_id' => $item->id)),
-                    ))) ? _('This post has no comments.') : false;
-                }
             ),
         ),
         'order' => array(
-            '{{namespace}}\Model_Post.edit',
-            '{{namespace}}\Model_Post.visualise',
-            '{{namespace}}\Model_Post.comments',
-            '{{namespace}}\Model_Post.delete',
+            'edit',
+            'visualise',
+            'comments',
+            'delete',
         ),
     ),
     'thumbnails' => true,
