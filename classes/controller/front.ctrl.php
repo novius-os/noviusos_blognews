@@ -219,22 +219,17 @@ class Controller_Front extends Controller_Front_Application
                             throw new \Nos\NotFoundException();
                         }
 
-                        $rss->set(array(
+                        $rss->set(
+                            array(
                                 'title' => static::_html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title))),
                                 'description' => static::_html_entity_decode(strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title))),
-                            ));
+                            )
+                        );
 
                         $comments = $post->comments;
                     }
-                    $items = array();
-                    foreach ($comments as $comment) {
-                        $item = static::_get_rss_comment($comment);
-                        if (!empty($item)) {
-                            $items[] = $item;
-                        }
-                    }
-                    $rss->set_items($items);
 
+                    \Nos\Comments\API::addCommentsToRss($rss, $comments);
                 }
 
                 $this->main_controller->setHeader('Content-Type', 'application/xml');
@@ -358,18 +353,10 @@ class Controller_Front extends Controller_Front_Application
         $page = $this->main_controller->getPage();
         $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
         $page->page_title = $post->post_title;
-        $add_comment_success = 'none';
-        if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
-            if ($this->app_config['comments']['use_recaptcha']) {
-                \Package::load('fuel-recatpcha', APPPATH.'packages/fuel-recaptcha/');
-            }
-            $add_comment_success = $this->_add_comment($post);
-        }
 
         return View::forge(
             $this->config['views']['item'],
             array(
-                'add_comment_success' => $add_comment_success,
                 'item' => $post,
             ),
             false
@@ -523,22 +510,6 @@ class Controller_Front extends Controller_Front_Application
         return $item;
     }
 
-    protected static function _get_rss_comment($comment)
-    {
-        $post_class = static::$post_class;
-        $post = $post_class::find($comment->comm_foreign_id);
-        if (empty($post)) {
-            return null;
-        }
-        $item = array();
-        $item['title'] = strtr(__('Comment to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title));
-        $item['link'] = $post->url_canonical().'#comment'.$comment->comm_id;
-        $item['description'] = $comment->comm_content;
-        $item['pubDate'] = $comment->comm_created_at;
-        $item['author'] = $comment->comm_author;
-
-        return $item;
-    }
     protected function url_stats($item)
     {
         return $this->main_controller->getEnhancedUrlPath().'stats/'.urlencode($item->post_id).'.html';
@@ -568,43 +539,6 @@ class Controller_Front extends Controller_Front_Application
         }
 
         return false;
-    }
-
-    protected function _add_comment($post)
-    {
-        if (\Input::post('todo') == 'add_comment' && \Input::post('ismm') == '327') {
-            if (!$this->app_config['comments']['use_recaptcha'] || \ReCaptcha\ReCaptcha::instance()->check_answer(
-                \Input::real_ip(),
-                \Input::post('recaptcha_challenge_field'),
-                \Input::post('recaptcha_response_field')
-            )
-            ) {
-                $post_class = static::$post_class;
-                $comm = new Model_Comment();
-                $comm->comm_foreign_model = $post_class;
-                $comm->comm_email = \Input::post('comm_email');
-                $comm->comm_author = \Input::post('comm_author');
-                $comm->comm_content = \Input::post('comm_content');
-                $date = new \Fuel\Core\Date();
-                $comm->comm_created_at = \Date::forge()->format('mysql');
-                $comm->comm_foreign_id = $post->post_id;
-                $comm->comm_state = $this->config['comment_default_state'];
-                $comm->comm_ip = \Input::ip();
-
-                \Event::trigger_function('noviusos_blognews|front->_add_comment', array(&$comm, &$post));
-
-                $comm->save();
-
-                \Cookie::set('comm_email', \Input::post('comm_email'));
-                \Cookie::set('comm_author', \Input::post('comm_author'));
-
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        return 'none'; // @todo: see if we can't return null
     }
 
     protected static function _html_entity_decode($text)

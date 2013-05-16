@@ -31,7 +31,7 @@ $ret = array(
         'enabled'       => true,
         'show'          => true,
         'show_nb'       => true,
-        'use_recaptcha' => false,
+        'use_recaptcha' => true,
         'can_post'      => true
     ),
     'publication_date' => array(
