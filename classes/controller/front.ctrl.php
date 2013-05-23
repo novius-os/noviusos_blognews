@@ -171,21 +171,21 @@ class Controller_Front extends Controller_Front_Application
                         $posts = $this->_get_post_list(array('category' => $category));
                         $rss->set(array(
                                 'title' => static::_html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
-                                'description' => static::_html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
+                                'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
                             ));
                     } elseif ($segments[2] === 'tag' && !empty($segments[3])) {
                         $tag = $this->_get_tag($segments[3]);
                         $posts = $this->_get_post_list(array('tag' => $tag));
                         $rss->set(array(
-                                'title' => static::_html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
-                                'description' => static::_html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
+                                'title' => \Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
+                                'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
                             ));
                     } elseif ($segments[2] === 'author' && !empty($segments[3])) {
                         $author = $this->_get_author($segments[3]);
                         $posts = $this->_get_post_list(array('author' => $author));
                         $rss->set(array(
-                            'title' => static::_html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname()))),
-                            'description' => static::_html_entity_decode(strtr(__('Blog posts written by {{author}}.'), array('{{author}}' => $author->fullname()))),
+                            'title' => \Security::html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname()))),
+                            'description' => \Security::html_entity_decode(strtr(__('Blog posts written by {{author}}.'), array('{{author}}' => $author->fullname()))),
                         ));
                     } else {
                         throw new \Nos\NotFoundException();
@@ -197,17 +197,9 @@ class Controller_Front extends Controller_Front_Application
                     $rss->set_items($items);
 
                 } elseif ($segments[1] === 'comments') {
-                    if (empty($segments[2])) {
-                        $rss->set(array(
-                                'title' => static::_html_entity_decode(__('Comments list')),
-                                'description' => static::_html_entity_decode(__('The full list of comments.')),
-                            ));
-
-                        $comments = \Nos\Comments\Model_Comment::find('all', array(
-                            'order_by' => array('comm_created_at' => 'DESC'),
-                        ));
-                    } else {
-                        $post = $this->_get_post(array(
+                    $api_request = array();
+                    if (!empty($segments[2])) {
+                        $api_request['item'] = $this->_get_post(array(
                             'where' => array(
                                 array('post_virtual_name', '=', $segments[2]),
                                 array('post_context', '=', $this->page_from->page_context),
@@ -215,21 +207,9 @@ class Controller_Front extends Controller_Front_Application
                             'related' => 'comments',
                             'order_by' => array('comments.comm_created_at' => 'DESC'),
                         ));
-                        if (empty($post)) {
-                            throw new \Nos\NotFoundException();
-                        }
-
-                        $rss->set(
-                            array(
-                                'title' => static::_html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title))),
-                                'description' => static::_html_entity_decode(strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title))),
-                            )
-                        );
-
-                        $comments = $post->comments;
                     }
 
-                    \Nos\Comments\API::addCommentsToRss($rss, $comments);
+                    \Nos\Comments\API::getRss($rss, $api_request);
                 }
 
                 $this->main_controller->setHeader('Content-Type', 'application/xml');
@@ -284,7 +264,7 @@ class Controller_Front extends Controller_Front_Application
         $tag = $this->_get_tag($tag);
         $posts = $this->_get_post_list(array('tag' => $tag));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -300,7 +280,7 @@ class Controller_Front extends Controller_Front_Application
         $category = $this->_get_category($category);
         $posts = $this->_get_post_list(array('category' => $category));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -319,7 +299,7 @@ class Controller_Front extends Controller_Front_Application
         $author = $this->_get_author($id_author);
         $posts = $this->_get_post_list(array('author' => $author));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname())))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/author/'.urlencode($id_author).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname())))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/author/'.urlencode($id_author).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -348,11 +328,18 @@ class Controller_Front extends Controller_Front_Application
             throw new \Nos\NotFoundException();
         }
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
 
         $page = $this->main_controller->getPage();
         $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
         $page->page_title = $post->post_title;
+
+        if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
+            if (\Input::post('action') == 'addComment') {
+                $api = new \Nos\Comments\API(get_class($post));
+                $api->addComment(\Input::post());
+            }
+        }
 
         return View::forge(
             $this->config['views']['item'],
@@ -539,10 +526,5 @@ class Controller_Front extends Controller_Front_Application
         }
 
         return false;
-    }
-
-    protected static function _html_entity_decode($text)
-    {
-        return html_entity_decode($text, ENT_COMPAT, 'UTF-8');
     }
 }
