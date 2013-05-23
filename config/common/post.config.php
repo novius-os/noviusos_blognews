@@ -65,12 +65,6 @@ $config = array(
                 'primary' => true,
             ),
         ),
-        'order' => array(
-            'edit',
-            'visualise',
-            'comments',
-            'delete',
-        ),
     ),
     'thumbnails' => true,
 );
@@ -81,10 +75,10 @@ if (!$app_config['authors']['enabled']) {
 
 if (!$app_config['comments']['enabled']) {
     unset($config['actions']['list']['comments']);
-    $pos = array_search('comments', $config['actions']['order']);
+    /*$pos = array_search('comments', $config['actions']['order']);
     if ($pos !== false) {
         unset($config['actions']['order'][$pos]);
-    }
+    }*/
 }
 
 return $config;
