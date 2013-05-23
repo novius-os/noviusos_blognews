@@ -67,6 +67,18 @@ class Model_Category extends \Nos\Orm\Model
             'data_type' => 'timestamp',
             'null' => false,
         ),
+        'cat_created_by_id' => array(
+            'default' => null,
+            'data_type' => 'int unsigned',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
+        'cat_updated_by_id' => array(
+            'default' => null,
+            'data_type' => 'int unsigned',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
     );
 
     protected static $_observers = array(
@@ -77,7 +89,11 @@ class Model_Category extends \Nos\Orm\Model
         'Orm\Observer_UpdatedAt' => array(
             'mysql_timestamp' => true,
             'property'=>'cat_updated_at'
-        )
+        ),
+        'Nos\Orm_Behaviour_Author' => array(
+            'created_by_property' => 'cat_created_by_id',
+            'updated_by_property' => 'cat_updated_by_id',
+        ),
     );
 
     protected static $_behaviours = array(
