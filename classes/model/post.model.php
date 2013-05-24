@@ -95,6 +95,12 @@ class Model_Post extends \Nos\Orm\Model
             'data_type' => 'varchar',
             'null' => false,
         ),
+        'post_updated_by_id' => array(
+            'default' => null,
+            'data_type' => 'int unsigned',
+            'null' => true,
+            'convert_empty_to_null' => true,
+        ),
     );
 
     protected static $_observers = array(
@@ -105,7 +111,11 @@ class Model_Post extends \Nos\Orm\Model
         'Orm\Observer_UpdatedAt' => array(
             'mysql_timestamp' => true,
             'property'=>'post_updated_at'
-        )
+        ),
+        'Nos\Orm_Behaviour_Author' => array(
+            'created_by_property' => 'post_author_id',
+            'updated_by_property' => 'post_updated_by_id',
+        ),
     );
 
     protected static $_behaviours = array(
