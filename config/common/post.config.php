@@ -65,12 +65,6 @@ $config = array(
                 'primary' => true,
             ),
         ),
-        'order' => array(
-            'edit',
-            'visualise',
-            'comments',
-            'delete',
-        ),
     ),
     'thumbnails' => true,
     'api' => array(
@@ -82,6 +76,14 @@ $config = array(
 
 if (!$app_config['authors']['enabled']) {
     unset($config['data_mapping']['author->user_name']);
+}
+
+if (!$app_config['comments']['enabled']) {
+    unset($config['actions']['list']['comments']);
+    /*$pos = array_search('comments', $config['actions']['order']);
+    if ($pos !== false) {
+        unset($config['actions']['order'][$pos]);
+    }*/
 }
 
 return $config;
