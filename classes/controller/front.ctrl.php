@@ -11,7 +11,6 @@
 namespace Nos\BlogNews;
 
 use Nos\Controller_Front_Application;
-use \Nos\Comments\Model_Comment;
 use View;
 
 class Controller_Front extends Controller_Front_Application
@@ -84,8 +83,8 @@ class Controller_Front extends Controller_Front_Application
     public function after($response)
     {
         // Note to translator: The following texts are related to RSS feeds
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(__('Posts list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(__('Comments list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(__('Posts list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(__('Comments list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
 
         $this->main_controller->addCss('static/apps/noviusos_blognews/css/blognews.css');
 
@@ -163,14 +162,14 @@ class Controller_Front extends Controller_Front_Application
                     if (empty($segments[2])) {
                         $posts = $this->_get_post_list();
                         $rss->set(array(
-                                'title' => static::_html_entity_decode(__('Posts list')),
-                                'description' => static::_html_entity_decode(__('The full list of blog posts.')),
+                                'title' => \Security::html_entity_decode(__('Posts list')),
+                                'description' => \Security::html_entity_decode(__('The full list of blog posts.')),
                             ));
                     } elseif ($segments[2] === 'category' && !empty($segments[3])) {
                         $category = $this->_get_category($segments[3]);
                         $posts = $this->_get_post_list(array('category' => $category));
                         $rss->set(array(
-                                'title' => static::_html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
+                                'title' => \Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
                                 'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
                             ));
                     } elseif ($segments[2] === 'tag' && !empty($segments[3])) {
