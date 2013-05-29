@@ -154,9 +154,9 @@ class Controller_Front extends Controller_Front_Application
                 return $this->display_list_category($args);
             } elseif ($segments[0] == 'rss') {
                 $rss = \Nos\Tools_RSS::forge(array(
-                        'link' => $this->main_controller->getUrl(),
-                        'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
-                    ));
+                    'link' => $this->main_controller->getUrl(),
+                    'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
+                ));
 
                 if ($segments[1] === 'posts') {
                     if (empty($segments[2])) {
@@ -197,18 +197,30 @@ class Controller_Front extends Controller_Front_Application
 
                 } elseif ($segments[1] === 'comments') {
                     $api_request = array();
+                    $api_request['model'] = static::$post_class;
                     if (!empty($segments[2])) {
                         $api_request['item'] = $this->_get_post(array(
                             'where' => array(
                                 array('post_virtual_name', '=', $segments[2]),
                                 array('post_context', '=', $this->page_from->page_context),
                             ),
-                            'related' => 'comments',
-                            'order_by' => array('comments.comm_created_at' => 'DESC'),
                         ));
                     }
 
-                    \Nos\Comments\API::getRss($rss, $api_request);
+                    $api = new \Nos\Comments\API(static::$post_class);
+                    $rss = $api->getRss($api_request);
+
+                    if (isset($api_request['item'])) {
+                        $rss->set(array(
+                            'title' => \Security::html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $api_request['item']->title_item()))),
+                            'description' => \Security::html_entity_decode(strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $api_request['item']->title_item()))),
+                        ));
+                    } else {
+                        $rss->set(array(
+                            'title' => \Security::html_entity_decode(__('Comments list')),
+                            'description' => \Security::html_entity_decode(__('The full list of comments.')),
+                        ));
+                    }
                 }
 
                 $this->main_controller->setHeader('Content-Type', 'application/xml');
@@ -337,6 +349,7 @@ class Controller_Front extends Controller_Front_Application
             if (\Input::post('action') == 'addComment') {
                 $api = new \Nos\Comments\API(get_class($post));
                 $api->addComment(\Input::post());
+                \Response::redirect($this->main_controller->getUrl().'#comment_form');
             }
         }
 
