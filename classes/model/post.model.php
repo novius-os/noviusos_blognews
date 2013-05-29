@@ -289,11 +289,16 @@ class Model_Post extends \Nos\Orm\Model
 
     public static function get_query($params)
     {
-        $query = static::query(array(
+        if (!isset($params['query_options'])) {
+            $params['query_options'] = array();
+        }
+        $default_query_options = array(
             'where' => array(
                 array('published', true),
             ),
-        ))->related(array('author'));
+        );
+        $params['query_options'] = \Arr::merge($default_query_options, $params['query_options']);
+        $query = static::query($params['query_options'])->related(array('author'));
 
         $query->where(array('post_context', $params['context']));
 
