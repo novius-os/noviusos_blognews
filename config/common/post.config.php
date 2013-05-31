@@ -69,11 +69,11 @@ $config = array(
     'thumbnails' => true,
 );
 
-if (!$app_config['authors']['enabled']) {
+if (empty($app_config['authors']['enabled'])) {
     unset($config['data_mapping']['author->user_name']);
 }
 
-if (!$app_config['comments']['enabled']) {
+if (empty($app_config['comments']['enabled'])) {
     unset($config['actions']['list']['comments']);
     /*$pos = array_search('comments', $config['actions']['order']);
     if ($pos !== false) {
