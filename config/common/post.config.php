@@ -68,9 +68,7 @@ $config = array(
     ),
     'thumbnails' => true,
     'api' => array(
-        'comments' => array(
-            'use_recaptcha' => $app_config['comments']['use_recaptcha']
-        )
+        'comments' => isset($app_config['comments']) ? $app_config['comments'] : array()
     )
 );
 
