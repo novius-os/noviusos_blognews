@@ -11,7 +11,6 @@
 namespace Nos\BlogNews;
 
 use Nos\Controller_Front_Application;
-use \Nos\Comments\Model_Comment;
 use View;
 
 class Controller_Front extends Controller_Front_Application
@@ -84,8 +83,8 @@ class Controller_Front extends Controller_Front_Application
     public function after($response)
     {
         // Note to translator: The following texts are related to RSS feeds
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(__('Posts list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(__('Comments list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(__('Posts list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(__('Comments list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
 
         $this->main_controller->addCss('static/apps/noviusos_blognews/css/blognews.css');
 
@@ -155,37 +154,37 @@ class Controller_Front extends Controller_Front_Application
                 return $this->display_list_category($args);
             } elseif ($segments[0] == 'rss') {
                 $rss = \Nos\Tools_RSS::forge(array(
-                        'link' => $this->main_controller->getUrl(),
-                        'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
-                    ));
+                    'link' => $this->main_controller->getUrl(),
+                    'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
+                ));
 
                 if ($segments[1] === 'posts') {
                     if (empty($segments[2])) {
                         $posts = $this->_get_post_list();
                         $rss->set(array(
-                                'title' => static::_html_entity_decode(__('Posts list')),
-                                'description' => static::_html_entity_decode(__('The full list of blog posts.')),
+                                'title' => \Security::html_entity_decode(__('Posts list')),
+                                'description' => \Security::html_entity_decode(__('The full list of blog posts.')),
                             ));
                     } elseif ($segments[2] === 'category' && !empty($segments[3])) {
                         $category = $this->_get_category($segments[3]);
                         $posts = $this->_get_post_list(array('category' => $category));
                         $rss->set(array(
-                                'title' => static::_html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
-                                'description' => static::_html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
+                                'title' => \Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
+                                'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
                             ));
                     } elseif ($segments[2] === 'tag' && !empty($segments[3])) {
                         $tag = $this->_get_tag($segments[3]);
                         $posts = $this->_get_post_list(array('tag' => $tag));
                         $rss->set(array(
-                                'title' => static::_html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
-                                'description' => static::_html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
+                                'title' => \Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
+                                'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
                             ));
                     } elseif ($segments[2] === 'author' && !empty($segments[3])) {
                         $author = $this->_get_author($segments[3]);
                         $posts = $this->_get_post_list(array('author' => $author));
                         $rss->set(array(
-                            'title' => static::_html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname()))),
-                            'description' => static::_html_entity_decode(strtr(__('Blog posts written by {{author}}.'), array('{{author}}' => $author->fullname()))),
+                            'title' => \Security::html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname()))),
+                            'description' => \Security::html_entity_decode(strtr(__('Blog posts written by {{author}}.'), array('{{author}}' => $author->fullname()))),
                         ));
                     } else {
                         throw new \Nos\NotFoundException();
@@ -197,44 +196,31 @@ class Controller_Front extends Controller_Front_Application
                     $rss->set_items($items);
 
                 } elseif ($segments[1] === 'comments') {
-                    if (empty($segments[2])) {
-                        $rss->set(array(
-                                'title' => static::_html_entity_decode(__('Comments list')),
-                                'description' => static::_html_entity_decode(__('The full list of comments.')),
-                            ));
-
-                        $comments = \Nos\Comments\Model_Comment::find('all', array(
-                            'order_by' => array('comm_created_at' => 'DESC'),
-                        ));
-                    } else {
-                        $post = $this->_get_post(array(
+                    $api_request = array();
+                    $api_request['model'] = static::$post_class;
+                    if (!empty($segments[2])) {
+                        $api_request['item'] = $this->_get_post(array(
                             'where' => array(
                                 array('post_virtual_name', '=', $segments[2]),
                                 array('post_context', '=', $this->page_from->page_context),
                             ),
-                            'related' => 'comments',
-                            'order_by' => array('comments.comm_created_at' => 'DESC'),
                         ));
-                        if (empty($post)) {
-                            throw new \Nos\NotFoundException();
-                        }
+                    }
 
+                    $api = new \Nos\Comments\API(static::$post_class);
+                    $rss = $api->getRss($api_request);
+
+                    if (isset($api_request['item'])) {
                         $rss->set(array(
-                                'title' => static::_html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title))),
-                                'description' => static::_html_entity_decode(strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title))),
-                            ));
-
-                        $comments = $post->comments;
+                            'title' => \Security::html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $api_request['item']->title_item()))),
+                            'description' => \Security::html_entity_decode(strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $api_request['item']->title_item()))),
+                        ));
+                    } else {
+                        $rss->set(array(
+                            'title' => \Security::html_entity_decode(__('Comments list')),
+                            'description' => \Security::html_entity_decode(__('The full list of comments.')),
+                        ));
                     }
-                    $items = array();
-                    foreach ($comments as $comment) {
-                        $item = static::_get_rss_comment($comment);
-                        if (!empty($item)) {
-                            $items[] = $item;
-                        }
-                    }
-                    $rss->set_items($items);
-
                 }
 
                 $this->main_controller->setHeader('Content-Type', 'application/xml');
@@ -289,7 +275,7 @@ class Controller_Front extends Controller_Front_Application
         $tag = $this->_get_tag($tag);
         $posts = $this->_get_post_list(array('tag' => $tag));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -305,7 +291,7 @@ class Controller_Front extends Controller_Front_Application
         $category = $this->_get_category($category);
         $posts = $this->_get_post_list(array('category' => $category));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -324,7 +310,7 @@ class Controller_Front extends Controller_Front_Application
         $author = $this->_get_author($id_author);
         $posts = $this->_get_post_list(array('author' => $author));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname())))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/author/'.urlencode($id_author).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname())))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/author/'.urlencode($id_author).'.html">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -353,23 +339,23 @@ class Controller_Front extends Controller_Front_Application
             throw new \Nos\NotFoundException();
         }
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(static::_html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
 
         $page = $this->main_controller->getPage();
         $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
         $page->page_title = $post->post_title;
-        $add_comment_success = 'none';
+
         if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
-            if ($this->app_config['comments']['use_recaptcha']) {
-                \Package::load('fuel-recatpcha', APPPATH.'packages/fuel-recaptcha/');
+            if (\Input::post('action') == 'addComment') {
+                $api = new \Nos\Comments\API(get_class($post));
+                $api->addComment(\Input::post());
+                \Response::redirect($this->main_controller->getUrl().'#comment_form');
             }
-            $add_comment_success = $this->_add_comment($post);
         }
 
         return View::forge(
             $this->config['views']['item'],
             array(
-                'add_comment_success' => $add_comment_success,
                 'item' => $post,
             ),
             false
@@ -523,22 +509,6 @@ class Controller_Front extends Controller_Front_Application
         return $item;
     }
 
-    protected static function _get_rss_comment($comment)
-    {
-        $post_class = static::$post_class;
-        $post = $post_class::find($comment->comm_foreign_id);
-        if (empty($post)) {
-            return null;
-        }
-        $item = array();
-        $item['title'] = strtr(__('Comment to the post ‘{{post}}’.'), array('{{post}}' => $post->post_title));
-        $item['link'] = $post->url_canonical().'#comment'.$comment->comm_id;
-        $item['description'] = $comment->comm_content;
-        $item['pubDate'] = $comment->comm_created_at;
-        $item['author'] = $comment->comm_author;
-
-        return $item;
-    }
     protected function url_stats($item)
     {
         return $this->main_controller->getEnhancedUrlPath().'stats/'.urlencode($item->post_id).'.html';
@@ -568,47 +538,5 @@ class Controller_Front extends Controller_Front_Application
         }
 
         return false;
-    }
-
-    protected function _add_comment($post)
-    {
-        if (\Input::post('todo') == 'add_comment' && \Input::post('ismm') == '327') {
-            if (!$this->app_config['comments']['use_recaptcha'] || \ReCaptcha\ReCaptcha::instance()->check_answer(
-                \Input::real_ip(),
-                \Input::post('recaptcha_challenge_field'),
-                \Input::post('recaptcha_response_field')
-            )
-            ) {
-                $post_class = static::$post_class;
-                $comm = new Model_Comment();
-                $comm->comm_foreign_model = $post_class;
-                $comm->comm_email = \Input::post('comm_email');
-                $comm->comm_author = \Input::post('comm_author');
-                $comm->comm_content = \Input::post('comm_content');
-                $date = new \Fuel\Core\Date();
-                $comm->comm_created_at = \Date::forge()->format('mysql');
-                $comm->comm_foreign_id = $post->post_id;
-                $comm->comm_state = $this->config['comment_default_state'];
-                $comm->comm_ip = \Input::ip();
-
-                \Event::trigger_function('noviusos_blognews|front->_add_comment', array(&$comm, &$post));
-
-                $comm->save();
-
-                \Cookie::set('comm_email', \Input::post('comm_email'));
-                \Cookie::set('comm_author', \Input::post('comm_author'));
-
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        return 'none'; // @todo: see if we can't return null
-    }
-
-    protected static function _html_entity_decode($text)
-    {
-        return html_entity_decode($text, ENT_COMPAT, 'UTF-8');
     }
 }

@@ -28,14 +28,10 @@ if ($blognews_config['comments']['enabled']) {
         <?= \View::forge('noviusos_blognews::front/comment/nb', array('item' => $item), false) ?>
     <?php
     if ($blognews_config['comments']['show']) {
-        ?>
-            <?= \View::forge('noviusos_comments::front/list', array('from_item' => $item, 'comments' => $item->comments), true) ?>
-        <?php
+        echo \View::forge('noviusos_comments::front/list', array('from_item' => $item, 'comments' => $item->comments), true);
     }
     if ($blognews_config['comments']['can_post']) {
-        ?>
-            <?= \View::forge('noviusos_comments::front/form', array('add_comment_success' => $add_comment_success, 'use_recaptcha' => $blognews_config['comments']['use_recaptcha']), true) ?>
-        <?php
+        echo \View::forge('noviusos_comments::front/form', array('from_item' => $item), true);
     }
     ?>
     </div>
