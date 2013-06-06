@@ -8,7 +8,7 @@
  * @link http://www.novius-os.org
  */
 ?>
-<div class="blognews_posts_list">
+<div class="<?= $blognews_config['application_name'] ?> noviusos_enhancer blognews_posts_list">
     <?= \View::forge('noviusos_blognews::front/post/list_title', array('type' => $type, 'item' => $item), false) ?>
     <div class="blognews_list">
 <?php
