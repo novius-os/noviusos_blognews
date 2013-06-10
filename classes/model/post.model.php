@@ -134,7 +134,7 @@ class Model_Post extends \Nos\Orm\Model
             'context_property'      => 'post_context',
             'common_id_property' => 'post_context_common_id',
             'is_main_property' => 'post_context_is_main',
-            'invariant_fields'   => array(),
+            'common_fields'   => array(),
         ),
     );
 

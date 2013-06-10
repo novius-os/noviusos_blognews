@@ -114,7 +114,7 @@ class Model_Category extends \Nos\Orm\Model
             'context_property'      => 'cat_context',
             'common_id_property' => 'cat_context_common_id',
             'is_main_property' => 'cat_context_is_main',
-            'invariant_fields'   => array(),
+            'common_fields'   => array(),
         ),
     );
 
