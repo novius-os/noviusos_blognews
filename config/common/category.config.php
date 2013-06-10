@@ -8,7 +8,15 @@
  * @link http://www.novius-os.org
  */
 
+$current_application = \Nos\Application::getCurrent();
 \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
+
+$check_permission_category = function($inverted = false) use ($current_application) {
+    return function($category) use($inverted, $current_application) {
+        $allowed = Nos\User\Permission::exists($current_application.'::category', 'no');
+        return $inverted ? !$allowed : $allowed;
+    };
+};
 
 return array(
     'data_mapping' => array(
@@ -54,6 +62,24 @@ return array(
         'deleting with N children' => __('This category has <strong>{{children_count}} sub-categories</strong>.'),
     ),
     'actions' => array(
+        'add' => array(
+            'visible' => array(
+                'check_permission' => $check_permission_category(true),
+            ),
+            'disabled' => array(
+                'check_permission' => $check_permission_category(),
+            ),
+        ),
+        'edit' => array(
+            'disabled' => array(
+                'check_permission' => $check_permission_category(),
+            ),
+        ),
         'visualise' => false,
+        'delete' => array(
+            'disabled' => array(
+                'check_permission' => $check_permission_category(),
+            ),
+        ),
     ),
 );

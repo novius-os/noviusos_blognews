@@ -13,6 +13,31 @@ $app_config = \Config::application($current_application);
 
 \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
 
+$check_disabled_draft = function($post) use($current_application) {
+    // Not published => not disabled
+    if ($post->planificationStatus() == 0) {
+        return false;
+    }
+    // Published or scheduled => disabled
+    return \Nos\User\Permission::atMost($current_application.'::post', '1_draft_only', '2_full_access');
+};
+
+$check_disabled_author = function($post) use($current_application, $app_config) {
+
+    // When authors are disabled, don't check further and allow the action to be carried out
+    if (!$app_config['authors']['enabled']) {
+        return false;
+    }
+
+    // If user has full access, don't disable the action
+    if (\Nos\User\Permission::atLeast($current_application.'::others_post', '3_full_access', '3_full_access')) {
+        return false;
+    }
+
+    // Disabled when the author is not the current user
+    return empty($post->author) || $post->author->user_id != \Session::user()->user_id;
+};
+
 $config = array(
     'data_mapping' => array(
         'post_title' => array(
@@ -61,6 +86,18 @@ $config = array(
     ),
     'actions' => array(
         'list' => array(
+            'edit' => array(
+                'disabled' => array(
+                    'check_draft' => $check_disabled_draft,
+                    'check_author' => $check_disabled_author,
+                ),
+            ),
+            'delete' => array(
+                'disabled' => array(
+                    'check_draft' => $check_disabled_draft,
+                    'check_author' => $check_disabled_author,
+                ),
+            ),
             'comments' => array(
                 'primary' => true,
             ),
@@ -69,7 +106,7 @@ $config = array(
     'thumbnails' => true,
     'api' => array(
         'comments' => isset($app_config['comments']) ? $app_config['comments'] : array()
-    )
+    ),
 );
 
 if (empty($app_config['authors']['enabled'])) {

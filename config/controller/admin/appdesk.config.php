@@ -21,6 +21,14 @@ $config = array(
         'related' => array('linked_medias'),
         'order_by' => array('post_created_at' => 'DESC'),
         'limit' => 20,
+        'callback' => array(
+            'restrict_other_authors_posts' => function($query) use ($current_application, $app_config) {
+                if ($app_config['authors']['enabled'] && \Nos\User\Permission::atMost($current_application.'::others_post', '1_no_access', '3_full_access')) {
+                    $query->where('post_author_id', \Session::user()->user_id);
+                }
+                return $query;
+            },
+        ),
     ),
     'search_text' => 'post_title',
     'thumbnails' => true,
