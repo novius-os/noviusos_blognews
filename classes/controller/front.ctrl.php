@@ -518,27 +518,30 @@ class Controller_Front extends Controller_Front_Application
         return $this->main_controller->getEnhancedUrlPath().'stats/'.urlencode($item->post_id).'.html';
     }
 
-    public static function get_url_model($item, $params = array())
+    public static function getUrlEnhanced($params = array())
     {
-        $model = get_class($item);
-        $page = isset($params['page']) ? $params['page'] : 1;
+        $item = \Arr::get($params, 'item', false);
+        if ($item) {
+            $model = get_class($item);
+            $page = \Arr::get($params, 'page', 1);
 
-        switch ($model) {
-            case static::$post_class:
-                return urlencode($item->post_virtual_name).'.html';
-                break;
+            switch ($model) {
+                case static::$post_class:
+                    return urlencode($item->post_virtual_name).'.html';
+                    break;
 
-            case static::$tag_class:
-                return 'tag/'.urlencode($item->tag_label).($page > 1 ? '/'.$page : '').'.html';
-                break;
+                case static::$tag_class:
+                    return 'tag/'.urlencode($item->tag_label).($page > 1 ? '/'.$page : '').'.html';
+                    break;
 
-            case static::$category_class:
-                return 'category/'.urlencode($item->cat_virtual_name).($page > 1 ? '/'.$page : '').'.html';
-                break;
+                case static::$category_class:
+                    return 'category/'.urlencode($item->cat_virtual_name).($page > 1 ? '/'.$page : '').'.html';
+                    break;
 
-            case static::$author_class:
-                return 'author/'.urlencode($item->user_name.'_'.$item->user_firstname.'_'.$item->user_id).($page > 1 ? '/'.$page : '').'.html';
-                break;
+                case static::$author_class:
+                    return 'author/'.urlencode($item->user_name.'_'.$item->user_firstname.'_'.$item->user_id).($page > 1 ? '/'.$page : '').'.html';
+                    break;
+            }
         }
 
         return false;
