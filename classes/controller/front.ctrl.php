@@ -353,6 +353,7 @@ class Controller_Front extends Controller_Front_Application
             if (\Input::post('action') == 'addComment') {
                 $api = new \Nos\Comments\API(get_class($post));
                 $api->addComment(\Input::post());
+                $this->main_controller->deleteCache();
                 \Response::redirect($this->main_controller->getUrl().'#comment_form');
             }
         }
