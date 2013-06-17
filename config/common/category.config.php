@@ -13,8 +13,8 @@ $current_application = \Nos\Application::getCurrent();
 
 $check_permission_category = function($inverted = false) use ($current_application) {
     return function($category) use($inverted, $current_application) {
-        $allowed = Nos\User\Permission::exists($current_application.'::category', 'no');
-        return $inverted ? !$allowed : $allowed;
+        $disabled = Nos\User\Permission::exists($current_application.'::category', 'no');
+        return $inverted ? !$disabled : $disabled;
     };
 };
 

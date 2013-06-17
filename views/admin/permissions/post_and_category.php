@@ -10,7 +10,7 @@ Nos\I18n::current_dictionary('noviusos_blognews::common');
 
 <p>
     <label>
-        <input type="radio" name="perm[<?= $application ?>::post][]" value="1_draft_only" <?= (int) $role->getPermissionValue($application.'::post', 1) == 1 ? 'checked' : '' ?> />
+        <input type="radio" name="perm[<?= $application ?>::post][]" value="1_draft_only" <?= (int) $role->getPermissionValue($application.'::post', 2) == 1 ? 'checked' : '' ?> />
         <?= __('Can add, edit and delete unpublished posts only') ?>
     </label>
 </p>
