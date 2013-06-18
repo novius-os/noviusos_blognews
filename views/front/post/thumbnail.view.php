@@ -19,7 +19,6 @@ if (isset($item->medias->thumbnail)) {
 
         $link_url   = $item->url();
         $link_class = 'blognews_thumbnail_link';
-        $img_src    = $item->medias->thumbnail->get_public_path_resized($thumbnail_width, $thumbnail_height);
     } else {
         $print_link = \Arr::get($blognews_config, 'thumbnail.front.item.link_to_fullsize', true);
         $thumbnail_width = \Arr::get($blognews_config, 'thumbnail.front.item.max_width', 200);
@@ -27,10 +26,12 @@ if (isset($item->medias->thumbnail)) {
 
         $link_url   = $item->medias->thumbnail->get_public_path();
         $link_class = 'blognews_thumbnail_link_fullsize';
-        $img_src    = $item->medias->thumbnail->get_public_path_resized($thumbnail_width, $thumbnail_height);
     }
 
     $print_link and print '<a href="'.$link_url.'" class="'.$link_class.'">';
-    echo '<img src="'.$img_src.'" class="blognews_thumbnail" />';
+    echo $item->medias->thumbnail->get_img_tag_resized($thumbnail_width, $thumbnail_height, array(
+        'alt' => $item->post_title,
+        'class' => 'blognews_thumbnail',
+    ));
     $print_link and print '</a>';
 }
