@@ -32,6 +32,8 @@ class Controller_Front extends Controller_Front_Application
     public static $category_class;
     public static $author_class;
 
+    public $comment_api;
+
     public static function _init()
     {
         if (is_subclass_of(get_called_class(), 'Nos\\BlogNews\\Blog\\Controller_Front')) {
@@ -53,6 +55,8 @@ class Controller_Front extends Controller_Front_Application
     public function before()
     {
         parent::before();
+
+        $this->comment_api = new \Nos\Comments\API(static::$post_class);
 
         \Nos\I18n::current_dictionary(array('noviusos_blognews::front'));
         $this->app_config = \Arr::merge($this->app_config, static::getGlobalConfiguration());
@@ -138,6 +142,18 @@ class Controller_Front extends Controller_Front_Application
                 }
                 \Nos\Tools_File::send(DOCROOT.'static/apps/noviusos_blognews/img/transparent.gif');
 
+            } elseif ($segments[0] === 'unsubscribe' || $segments[0] === 'subscribe') {
+                $this->main_controller->disableCaching();
+                if (isset($_GET['email'])) {
+                    $post = $this->_get_post(array(
+                        'where' => array(
+                            array('post_virtual_name', '=', $segments[1]),
+                            array('post_context', '=', $this->page_from->page_context),
+                        ),
+                    ));
+                    $this->comment_api->changeSubscriptionStatus($post, $_GET['email'], $segments[0] === 'subscribe');
+                    return render('noviusos_comments::front/subscriptions/'.$segments[0], array('item' => $post, 'email' => $_GET['email']), false);
+                }
             } elseif ($segments[0] === 'page') {
                 $this->init_pagination(empty($segments[1]) ? 1 : $segments[1]);
 
@@ -209,8 +225,7 @@ class Controller_Front extends Controller_Front_Application
                         ));
                     }
 
-                    $api = new \Nos\Comments\API(static::$post_class);
-                    $rss = $api->getRss($api_request);
+                    $rss = $this->comment_api->getRss($api_request);
 
                     if (isset($api_request['item'])) {
                         $rss->set(array(
@@ -351,8 +366,7 @@ class Controller_Front extends Controller_Front_Application
 
         if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
             if (\Input::post('action') == 'addComment') {
-                $api = new \Nos\Comments\API(get_class($post));
-                $api->addComment(\Input::post());
+                $this->comment_api->addComment(\Input::post());
                 $this->main_controller->deleteCache();
                 \Response::redirect($this->main_controller->getUrl().'#comment_form');
             }
@@ -528,7 +542,14 @@ class Controller_Front extends Controller_Front_Application
 
             switch ($model) {
                 case static::$post_class:
-                    return urlencode($item->post_virtual_name).'.html';
+                    $post_url = urlencode($item->post_virtual_name).'.html';
+                    if (isset($params['unsubscribe']) && $params['unsubscribe']) {
+                        return 'unsubscribe/'.$post_url;
+                    }
+                    if (isset($params['subscribe']) && $params['subscribe']) {
+                        return 'subscribe/'.$post_url;
+                    }
+                    return $post_url;
                     break;
 
                 case static::$tag_class:
