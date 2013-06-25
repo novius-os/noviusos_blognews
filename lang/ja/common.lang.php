@@ -1,34 +1,49 @@
 <?php
 
-// Generated on 16/04/2013 19:15:50
+// Generated on 25/06/2013 11:06:52
 
-// 60 out of 60 messages are translated (100%).
-// 246 out of 246 words are translated (100%).
+// 59 out of 67 messages are translated (88%).
+// 245 out of 286 words are translated (88%).
 
 return array(
-    #: classes/model/post.model.php:146
+    #: classes/model/post.model.php:157
     'Use post title' => '投稿タイトルを使用する',
 
-    #: classes/model/post.model.php:180
+    #: classes/model/post.model.php:191
     'Use post summary' => '投稿サマリを使用する',
 
-    #: classes/model/category.model.php:122
+    #: classes/model/category.model.php:132
     'Use category title' => 'カテゴリータイトルを使用する',
 
     #: classes/model/tag.model.php:47
     'Use tag label' => 'タグラベルを使用する',
 
-    #: views/admin/application/popup.view.php:15
-    'Posts per page:' => '1ページの投稿数:',
+    #: views/admin/permissions/post_and_category.php:7
+    'Can add, edit, delete and publish posts' => '',
 
-    #: views/admin/application/popup.view.php:20
-    'Category:' => 'カテゴリー:',
+    #: views/admin/permissions/post_and_category.php:14
+    'Can add, edit and delete unpublished posts only' => '',
 
-    #: views/admin/application/popup.view.php:24
-    'Leave blank to select all categories' => '空欄にしておくと、全てのカテゴリーを選択します',
+    #: views/admin/permissions/post_and_category.php:21
+    'Can add, edit and delete categories' => '',
 
-    #: views/admin/application/popup.view.php:29
-    'Clickable post titles' => 'クリック可能な投稿タイトル',
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:9
+    'Can edit and delete' => '',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:19
+    'Can visualise only' => '',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:29
+    'Can access her/his own posts only' => '',
+
+    #: config/permissions.config.php:11
+    'Permissions for this application' => '',
+
+    #: config/permissions.config.php:18
+    'Other authors\' posts' => '',
 
     #: config/controller/admin/inspector/author.config.php:22
     #: config/controller/admin/inspector/author.config.php:26
@@ -36,8 +51,8 @@ return array(
 
     #: config/controller/admin/inspector/tag.config.php:19
     #: config/controller/admin/post.config.php:63
-    #: config/controller/admin/post.config.php:199
-    #: config/controller/admin/post.config.php:254
+    #: config/controller/admin/post.config.php:159
+    #: config/controller/admin/post.config.php:214
     #: config/common/tag.config.php:16
     'Tags' => 'タグ',
 
@@ -46,6 +61,18 @@ return array(
 
     #: config/controller/admin/inspector/category.config.php:19
     'Root' => 'ルート',
+
+    #: config/controller/admin/enhancer.config.php:14
+    'Posts per page:' => '1ページの投稿数:',
+
+    #: config/controller/admin/enhancer.config.php:20
+    'Category:' => 'カテゴリー:',
+
+    #: config/controller/admin/enhancer.config.php:32
+    'Leave blank to select all categories' => '空欄にしておくと、全てのカテゴリーを選択します',
+
+    #: config/controller/admin/enhancer.config.php:35
+    'Clickable post titles' => 'クリック可能な投稿タイトル',
 
     #: config/controller/admin/post.config.php:23
     'Add a post' => '投稿を追加',
@@ -59,7 +86,7 @@ return array(
 
     #. user_fullname is not a real field in the database
     #: config/controller/admin/post.config.php:60
-    #: config/controller/admin/post.config.php:263
+    #: config/controller/admin/post.config.php:223
     #: config/controller/admin/category.config.php:30
     'Properties' => 'プロパティ',
 
@@ -67,9 +94,14 @@ return array(
     'URL (post address)' => 'URL (投稿アドレス)',
 
     #: config/controller/admin/post.config.php:62
-    #: config/controller/admin/post.config.php:259
-    #: config/common/category.config.php:16
+    #: config/controller/admin/post.config.php:219
+    #: config/common/category.config.php:24
     'Categories' => 'カテゴリー',
+
+    #: config/controller/admin/post.config.php:77
+    #: config/controller/admin/category.config.php:53
+    #: config/common/post.config.php:44
+    'Title' => 'タイトル',
 
     #: config/controller/admin/post.config.php:87
     'Summary' => 'サマリ',
@@ -84,23 +116,20 @@ return array(
     #: config/controller/admin/post.config.php:110
     'Author:' => '著者:',
 
-    #: config/controller/admin/post.config.php:146
+    #: config/controller/admin/post.config.php:132
     'Created on:' => '作成日:',
 
-    #: config/controller/admin/post.config.php:161
-    'Time:' => '時刻:',
-
-    #: config/controller/admin/post.config.php:183
+    #: config/controller/admin/post.config.php:143
     'Never read' => 'まだ読まれていません',
 
-    #: config/controller/admin/post.config.php:184
+    #: config/controller/admin/post.config.php:144
     'Read once' => '一回読まれました',
 
-    #: config/controller/admin/post.config.php:185
+    #: config/controller/admin/post.config.php:145
     'Read {{nb}} times' => '{{nb}}回読まれました',
 
     #. Note to translator: This is a submit button
-    #: config/controller/admin/post.config.php:241
+    #: config/controller/admin/post.config.php:201
     #: config/controller/admin/category.config.php:89
     'Save' => '保存',
 
@@ -110,14 +139,10 @@ return array(
     #: config/controller/admin/category.config.php:20
     'Translate a category' => 'カテゴリーを翻訳',
 
-    #: config/controller/admin/category.config.php:53
-    #: config/common/post.config.php:19
-    'Title' => 'タイトル',
-
     #: config/controller/admin/category.config.php:72
     'Location:' => '位置:',
 
-    #: config/config.php:46
+    #: config/config.php:60
     'Blog' => 'ブログ',
 
     #. Crud
@@ -139,78 +164,78 @@ return array(
     #: config/common/tag.config.php:32
     'Yes, delete this tag' => 'はい、このタグを削除します',
 
-    #: config/common/post.config.php:23
+    #: config/common/post.config.php:48
     'Author' => '著者',
 
-    #: config/common/post.config.php:29
+    #: config/common/post.config.php:54
     'Status' => '公開状態',
 
-    #: config/common/post.config.php:34
+    #: config/common/post.config.php:60
     'Date' => '日付',
 
     #. Crud
-    #: config/common/category.config.php:21
+    #: config/common/category.config.php:29
     'There you go, the category has been added.' => 'さあ、どうぞ。カテゴリーが追加されました。',
 
-    #: config/common/category.config.php:22
+    #: config/common/category.config.php:30
     'The category has been deleted.' => 'カテゴリーが削除されました。',
 
     #. General errors
-    #: config/common/category.config.php:25
+    #: config/common/category.config.php:33
     'This category doesn’t exist any more. It has been deleted.' => 'このカテゴリーは存在しません。削除されました。',
 
-    #: config/common/category.config.php:26
+    #: config/common/category.config.php:34
     'We cannot find this category.' => 'このカテゴリーは見つかりませんでした。',
 
     #. Blank slate
-    #: config/common/category.config.php:29
+    #: config/common/category.config.php:37
     'We’re afraid this category cannot be added to {{context}} because its <a>parent</a> is not available in this context yet.' => 'このカテゴリーは{{context}} に追加できません。なぜなら、<a>親</a>がこのコンテキストで利用可能ではないからです。',
 
-    #: config/common/category.config.php:30
+    #: config/common/category.config.php:38
     'We’re afraid this category cannot be translated into {{language}} because its <a>parent</a> is not available in this language yet.' => 'このカテゴリーは {{language}} に追加できません。なぜなら、<a>親</a>がこの言語で利用可能ではないからです。',
 
     #. Deletion popup
-    #: config/common/category.config.php:33
+    #: config/common/category.config.php:41
     'Deleting the category ‘{{title}}’' => 'カテゴリー ‘{{title}}’ を削除します',
 
     #. Delete action's labels
-    #: config/common/category.config.php:36
+    #: config/common/category.config.php:44
     'Yes, delete this category' => 'はい、このカテゴリーを削除します',
 
-    #: config/common/category.config.php:37
+    #: config/common/category.config.php:45
     'Yes, delete these {{count}} categories' => 'はい、これら {{count}} 個のカテゴリーを削除します',
 
-    #: config/common/category.config.php:39
+    #: config/common/category.config.php:47
     '1 category' => '1 個のカテゴリー',
 
-    #: config/common/category.config.php:40
+    #: config/common/category.config.php:48
     '{{count}} categories' => '{{count}} 個のカテゴリー',
 
     #. Keep only if the model has the behaviour Contextable
-    #: config/common/category.config.php:43
+    #: config/common/category.config.php:51
     'This category exists in <strong>{{context_count}} contexts</strong>.' => 'このカテゴリーは、<strong>{{context_count}} 個のコンテキスト</strong>に存在します。',
 
-    #: config/common/category.config.php:44
+    #: config/common/category.config.php:52
     'This category exists in <strong>{{language_count}} languages</strong>.' => 'このカテゴリーは、<strong>{{language_count}} 個の言語</strong>に存在します。',
 
     #. Keep only if the model has the behaviours Contextable + Tree
-    #: config/common/category.config.php:47
+    #: config/common/category.config.php:55
     'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'このカテゴリーは、<strong>{{context_count}} 個のコンテキスト</strong>に存在し、<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
 
-    #: config/common/category.config.php:48
+    #: config/common/category.config.php:56
     'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>one sub-category</strong>.' => 'このカテゴリーは、<strong>{{context_count}} 個のコンテキスト</strong>に存在し、<strong>1 個のサブカテゴリー</strong>があります。',
 
-    #: config/common/category.config.php:49
+    #: config/common/category.config.php:57
     'This category exists in <strong>{{language_count}} languages</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'このカテゴリーは<strong>{{language_count}} 個の言語</strong>に存在し、<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
 
-    #: config/common/category.config.php:50
+    #: config/common/category.config.php:58
     'This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.' => 'このカテゴリーは<strong>{{language_count}} 個の言語</strong>に存在し、<strong>1 個のサブカテゴリー</strong>があります。',
 
     #. Keep only if the model has the behaviour Tree
-    #: config/common/category.config.php:53
+    #: config/common/category.config.php:61
     'This category has <strong>1 sub-category</strong>.' => 'このカテゴリーには<strong>1 個のサブカテゴリー</strong>があります。',
 
-    #: config/common/category.config.php:54
+    #: config/common/category.config.php:62
     'This category has <strong>{{children_count}} sub-categories</strong>.' => 'このカテゴリーには<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
 
 );

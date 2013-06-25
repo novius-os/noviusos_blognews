@@ -1,34 +1,49 @@
 <?php
 
-// Generated on 16/04/2013 19:15:50
+// Generated on 25/06/2013 11:06:52
 
-// 60 out of 60 messages are translated (100%).
-// 246 out of 246 words are translated (100%).
+// 59 out of 67 messages are translated (88%).
+// 245 out of 286 words are translated (88%).
 
 return array(
-    #: classes/model/post.model.php:146
+    #: classes/model/post.model.php:157
     'Use post title' => 'Reprendre le titre du billet',
 
-    #: classes/model/post.model.php:180
+    #: classes/model/post.model.php:191
     'Use post summary' => 'Reprendre le chapeau du billet',
 
-    #: classes/model/category.model.php:122
+    #: classes/model/category.model.php:132
     'Use category title' => 'Reprendre le titre de la catégorie',
 
     #: classes/model/tag.model.php:47
     'Use tag label' => 'Reprendre le tag',
 
-    #: views/admin/application/popup.view.php:15
-    'Posts per page:' => 'Billets par page&nbsp;:',
+    #: views/admin/permissions/post_and_category.php:7
+    'Can add, edit, delete and publish posts' => '',
 
-    #: views/admin/application/popup.view.php:20
-    'Category:' => 'Catégorie&nbsp;:',
+    #: views/admin/permissions/post_and_category.php:14
+    'Can add, edit and delete unpublished posts only' => '',
 
-    #: views/admin/application/popup.view.php:24
-    'Leave blank to select all categories' => 'Pour tout sélectionner, ne rien sélectionner',
+    #: views/admin/permissions/post_and_category.php:21
+    'Can add, edit and delete categories' => '',
 
-    #: views/admin/application/popup.view.php:29
-    'Clickable post titles' => 'Titres des billets cliquables',
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:9
+    'Can edit and delete' => '',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:19
+    'Can visualise only' => '',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:29
+    'Can access her/his own posts only' => '',
+
+    #: config/permissions.config.php:11
+    'Permissions for this application' => '',
+
+    #: config/permissions.config.php:18
+    'Other authors\' posts' => '',
 
     #: config/controller/admin/inspector/author.config.php:22
     #: config/controller/admin/inspector/author.config.php:26
@@ -36,8 +51,8 @@ return array(
 
     #: config/controller/admin/inspector/tag.config.php:19
     #: config/controller/admin/post.config.php:63
-    #: config/controller/admin/post.config.php:199
-    #: config/controller/admin/post.config.php:254
+    #: config/controller/admin/post.config.php:159
+    #: config/controller/admin/post.config.php:214
     #: config/common/tag.config.php:16
     'Tags' => 'Tags',
 
@@ -46,6 +61,18 @@ return array(
 
     #: config/controller/admin/inspector/category.config.php:19
     'Root' => 'Racine',
+
+    #: config/controller/admin/enhancer.config.php:14
+    'Posts per page:' => 'Billets par page&nbsp;:',
+
+    #: config/controller/admin/enhancer.config.php:20
+    'Category:' => 'Catégorie&nbsp;:',
+
+    #: config/controller/admin/enhancer.config.php:32
+    'Leave blank to select all categories' => 'Pour tout sélectionner, ne rien sélectionner',
+
+    #: config/controller/admin/enhancer.config.php:35
+    'Clickable post titles' => 'Titres des billets cliquables',
 
     #: config/controller/admin/post.config.php:23
     'Add a post' => 'Ajouter un billet',
@@ -59,7 +86,7 @@ return array(
 
     #. user_fullname is not a real field in the database
     #: config/controller/admin/post.config.php:60
-    #: config/controller/admin/post.config.php:263
+    #: config/controller/admin/post.config.php:223
     #: config/controller/admin/category.config.php:30
     'Properties' => 'Propriétés',
 
@@ -67,9 +94,14 @@ return array(
     'URL (post address)' => 'URL (adresse du billet)',
 
     #: config/controller/admin/post.config.php:62
-    #: config/controller/admin/post.config.php:259
-    #: config/common/category.config.php:16
+    #: config/controller/admin/post.config.php:219
+    #: config/common/category.config.php:24
     'Categories' => 'Catégories',
+
+    #: config/controller/admin/post.config.php:77
+    #: config/controller/admin/category.config.php:53
+    #: config/common/post.config.php:44
+    'Title' => 'Titre',
 
     #: config/controller/admin/post.config.php:87
     'Summary' => 'Chapeau',
@@ -84,23 +116,20 @@ return array(
     #: config/controller/admin/post.config.php:110
     'Author:' => 'Auteur&nbsp;:',
 
-    #: config/controller/admin/post.config.php:146
+    #: config/controller/admin/post.config.php:132
     'Created on:' => 'Créé le&nbsp;:',
 
-    #: config/controller/admin/post.config.php:161
-    'Time:' => 'Heure&nbsp;:',
-
-    #: config/controller/admin/post.config.php:183
+    #: config/controller/admin/post.config.php:143
     'Never read' => 'Pas encore lu',
 
-    #: config/controller/admin/post.config.php:184
+    #: config/controller/admin/post.config.php:144
     'Read once' => 'Lu 1 fois',
 
-    #: config/controller/admin/post.config.php:185
+    #: config/controller/admin/post.config.php:145
     'Read {{nb}} times' => 'Lu {{nb}} fois',
 
     #. Note to translator: This is a submit button
-    #: config/controller/admin/post.config.php:241
+    #: config/controller/admin/post.config.php:201
     #: config/controller/admin/category.config.php:89
     'Save' => 'Enregistrer',
 
@@ -110,14 +139,10 @@ return array(
     #: config/controller/admin/category.config.php:20
     'Translate a category' => 'Traduire une catégorie',
 
-    #: config/controller/admin/category.config.php:53
-    #: config/common/post.config.php:19
-    'Title' => 'Titre',
-
     #: config/controller/admin/category.config.php:72
     'Location:' => 'Emplacement&nbsp;:',
 
-    #: config/config.php:46
+    #: config/config.php:60
     'Blog' => 'Blog',
 
     #. Crud
@@ -139,78 +164,78 @@ return array(
     #: config/common/tag.config.php:32
     'Yes, delete this tag' => 'Oui, supprimer ce tag',
 
-    #: config/common/post.config.php:23
+    #: config/common/post.config.php:48
     'Author' => 'Auteur',
 
-    #: config/common/post.config.php:29
+    #: config/common/post.config.php:54
     'Status' => 'Statut',
 
-    #: config/common/post.config.php:34
+    #: config/common/post.config.php:60
     'Date' => 'Date',
 
     #. Crud
-    #: config/common/category.config.php:21
+    #: config/common/category.config.php:29
     'There you go, the category has been added.' => 'Et voici, une nouvelle catégorie.',
 
-    #: config/common/category.config.php:22
+    #: config/common/category.config.php:30
     'The category has been deleted.' => 'La catégorie a été supprimée.',
 
     #. General errors
-    #: config/common/category.config.php:25
+    #: config/common/category.config.php:33
     'This category doesn’t exist any more. It has been deleted.' => 'Cette catégorie n’existe plus. Elle a été supprimée.',
 
-    #: config/common/category.config.php:26
+    #: config/common/category.config.php:34
     'We cannot find this category.' => 'Nous n’arrivons pas à trouver cette catégorie.',
 
     #. Blank slate
-    #: config/common/category.config.php:29
+    #: config/common/category.config.php:37
     'We’re afraid this category cannot be added to {{context}} because its <a>parent</a> is not available in this context yet.' => 'Malheureusement cette catégorie ne peut être ajoutée à {{context}} car elledépend d’<a>une autre catégorie</a> qui n’est pas encore disponible dans cecontexte.',
 
-    #: config/common/category.config.php:30
+    #: config/common/category.config.php:38
     'We’re afraid this category cannot be translated into {{language}} because its <a>parent</a> is not available in this language yet.' => 'Malheureusement cette catégorie ne peut être traduite en {{language}} carelle dépend d’<a>une autre catégorie</a> qui n’est pas encore disponibledans cette langue.',
 
     #. Deletion popup
-    #: config/common/category.config.php:33
+    #: config/common/category.config.php:41
     'Deleting the category ‘{{title}}’' => 'Supprimer la catégorie «&nbsp;{{title}}&nbsp;»',
 
     #. Delete action's labels
-    #: config/common/category.config.php:36
+    #: config/common/category.config.php:44
     'Yes, delete this category' => 'Oui, supprimer cette catégorie',
 
-    #: config/common/category.config.php:37
+    #: config/common/category.config.php:45
     'Yes, delete these {{count}} categories' => 'Oui, supprimer ces {{count}} catégories',
 
-    #: config/common/category.config.php:39
+    #: config/common/category.config.php:47
     '1 category' => '1 catégories',
 
-    #: config/common/category.config.php:40
+    #: config/common/category.config.php:48
     '{{count}} categories' => '{{count}} catégories',
 
     #. Keep only if the model has the behaviour Contextable
-    #: config/common/category.config.php:43
+    #: config/common/category.config.php:51
     'This category exists in <strong>{{context_count}} contexts</strong>.' => 'Cette catégorie existe dans <strong>{{context_count}} contextes</strong>.',
 
-    #: config/common/category.config.php:44
+    #: config/common/category.config.php:52
     'This category exists in <strong>{{language_count}} languages</strong>.' => 'Cette catégorie existe dans <strong>{{language_count}} langues</strong>.',
 
     #. Keep only if the model has the behaviours Contextable + Tree
-    #: config/common/category.config.php:47
+    #: config/common/category.config.php:55
     'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'Cette catégorie existe dans <strong>{{context_count}} contextes</strong> eta <strong>{{children_count}} sous-catégories</strong>.',
 
-    #: config/common/category.config.php:48
+    #: config/common/category.config.php:56
     'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>one sub-category</strong>.' => 'Cette catégorie existe dans <strong>{{context_count}} contextes</strong> eta <strong>une sous-catégorie</strong>.',
 
-    #: config/common/category.config.php:49
+    #: config/common/category.config.php:57
     'This category exists in <strong>{{language_count}} languages</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'Cette catégorie existe dans <strong>{{language_count}} langues</strong> et a<strong>{{children_count}} sous-catégories</strong>.',
 
-    #: config/common/category.config.php:50
+    #: config/common/category.config.php:58
     'This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.' => 'Cette catégorie existe dans <strong>{{language_count}} langues</strong> et a<strong>une sous-catégorie</strong>.',
 
     #. Keep only if the model has the behaviour Tree
-    #: config/common/category.config.php:53
+    #: config/common/category.config.php:61
     'This category has <strong>1 sub-category</strong>.' => 'Cette catégorie a <strong>une sous-catégorie</strong>.',
 
-    #: config/common/category.config.php:54
+    #: config/common/category.config.php:62
     'This category has <strong>{{children_count}} sub-categories</strong>.' => 'Cette catégorie a <strong>{{children_count}} sous-catégories</strong>.',
 
 );

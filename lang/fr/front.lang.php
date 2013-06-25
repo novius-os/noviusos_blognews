@@ -1,56 +1,53 @@
 <?php
 
-// Generated on 16/04/2013 19:15:50
+// Generated on 25/06/2013 11:06:52
 
-// 19 out of 21 messages are translated (90%).
-// 64 out of 72 words are translated (90%).
+// 20 out of 20 messages are translated (100%).
+// 67 out of 67 words are translated (100%).
 
 return array(
     #. Note to translator: The following texts are related to RSS feeds
-    #: classes/controller/front.ctrl.php:86
-    #: classes/controller/front.ctrl.php:164
+    #: classes/controller/front.ctrl.php:89
+    #: classes/controller/front.ctrl.php:181
     'Posts list' => 'Liste des billets',
 
-    #: classes/controller/front.ctrl.php:87
-    #: classes/controller/front.ctrl.php:200
+    #: classes/controller/front.ctrl.php:91
+    #: classes/controller/front.ctrl.php:235
     'Comments list' => 'Liste des commentaires',
 
-    #: classes/controller/front.ctrl.php:165
+    #: classes/controller/front.ctrl.php:182
     'The full list of blog posts.' => 'La liste complète des billets de blog.',
 
-    #: classes/controller/front.ctrl.php:171
-    #: classes/controller/front.ctrl.php:306
+    #: classes/controller/front.ctrl.php:188
+    #: classes/controller/front.ctrl.php:309
     '{{category}}: Posts list' => '{{category}}&nbsp; Liste des billets',
 
-    #: classes/controller/front.ctrl.php:172
+    #: classes/controller/front.ctrl.php:189
     'Blog posts listed under the ‘{{category}}’ category.' => 'Billets de blog appartenant à la catégorie «&nbsp;{{category}}&nbsp;»',
 
-    #: classes/controller/front.ctrl.php:178
-    #: classes/controller/front.ctrl.php:290
+    #: classes/controller/front.ctrl.php:195
+    #: classes/controller/front.ctrl.php:293
     '{{tag}}: Posts list' => '{{tag}}&nbsp; Liste des billets',
 
-    #: classes/controller/front.ctrl.php:179
+    #: classes/controller/front.ctrl.php:196
     'Blog posts listed under the ‘{{tag}}’ tag.' => 'Billets de blog portant le tag «&nbsp;{{tag}}&nbsp;»',
 
-    #: classes/controller/front.ctrl.php:185
-    #: classes/controller/front.ctrl.php:325
-    '{{author}}: Posts list' => '',
+    #: classes/controller/front.ctrl.php:202
+    #: classes/controller/front.ctrl.php:328
+    '{{author}}: Posts list' => '{{author}}&nbsp;: Liste des billets',
 
-    #: classes/controller/front.ctrl.php:186
-    'Blog posts written by {{author}}.' => '',
+    #: classes/controller/front.ctrl.php:203
+    'Blog posts written by {{author}}.' => 'Billets de blog écrit par {{author}}.',
 
-    #: classes/controller/front.ctrl.php:201
-    'The full list of comments.' => 'La liste complète des commentaires.',
-
-    #: classes/controller/front.ctrl.php:221
-    #: classes/controller/front.ctrl.php:354
+    #: classes/controller/front.ctrl.php:230
+    #: classes/controller/front.ctrl.php:358
     '{{post}}: Comments list' => '{{post}}&nbsp; Liste des commentaires',
 
-    #: classes/controller/front.ctrl.php:222
+    #: classes/controller/front.ctrl.php:231
     'Comments to the post ‘{{post}}’.' => 'Commentaires du billlet «&nbsp;{{post}}&nbsp;».',
 
-    #: classes/controller/front.ctrl.php:532
-    'Comment to the post ‘{{post}}’.' => 'Commentaire du billlet «&nbsp;{{post}}&nbsp;».',
+    #: classes/controller/front.ctrl.php:236
+    'The full list of comments.' => 'La liste complète des commentaires.',
 
     #: views/front/comment/nb.view.php:18
     '{{nb}} comments' => '{{nb}} commentaires',
