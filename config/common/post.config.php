@@ -50,12 +50,7 @@ $config = array(
                 return !empty($item->author) ? $item->author->fullname() : $item->post_author_alias;
             },
         ),
-        'publication_status' => array(
-            'title' => __('Status'),
-            'column' => 'published',
-            'isSafeHtml' => true,
-            'multiContextHide' => true,
-        ),
+        'publication_status' => true,
         'post_created_at' => array(
             'title'    => __('Date'),
             'dataType' => 'datetime',
