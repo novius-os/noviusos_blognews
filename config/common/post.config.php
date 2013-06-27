@@ -54,6 +54,15 @@ $config = array(
         'post_created_at' => array(
             'title'    => __('Date'),
             'dataType' => 'datetime',
+            // Works without value on Chrome, but not on Firefox
+            'value' =>
+            function ($item)
+            {
+                if ($item->is_new()) {
+                    return null;
+                }
+                return \Date::create_from_string($item->post_created_at, 'mysql')->wijmoFormat();
+            },
         ),
         'thumbnail' => array(
             'value' => function ($item) {
