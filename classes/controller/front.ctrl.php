@@ -463,9 +463,12 @@ class Controller_Front extends Controller_Front_Application
 
         // Apply pagination
         if (isset($this->pagination)) {
+            $query_count = $post_class::get_query($params);
+            $this->applyQueryCallback($query_count, $params);
+
             $this->pagination->set_config(
                 array(
-                    'total_items' => $post_class::count_all($params),
+                    'total_items' => $query_count->count(),
                     'per_page' => $this->config['item_per_page'],
                     'current_page' => $this->current_page,
                 )
@@ -497,9 +500,7 @@ class Controller_Front extends Controller_Front_Application
         // Get objects
         $query = $post_class::get_query($params);
 
-        if (isset($this->config['query_callback'])) {
-            $this->config['query_callback']($query, $params, $this);
-        }
+        $this->applyQueryCallback($query, $params);
 
         $posts = $post_class::get_all_from_query($query);
 
@@ -510,6 +511,13 @@ class Controller_Front extends Controller_Front_Application
         }
 
         return $posts;
+    }
+
+    protected function applyQueryCallback($query, $params)
+    {
+        if (isset($this->config['query_callback'])) {
+            $this->config['query_callback']($query, $params, $this);
+        }
     }
 
     protected static function _get_rss_post($post)
