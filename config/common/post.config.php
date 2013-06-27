@@ -58,14 +58,6 @@ $config = array(
         ),
         'post_created_at' => array(
             'title'    => __('Date'),
-            'value' =>
-                function ($item)
-                {
-                    if ($item->is_new()) {
-                        return null;
-                    }
-                    return \Date::create_from_string($item->post_created_at, 'mysql')->format('%m/%d/%Y %H:%M:%S'); //%m/%d/%Y %H:%i:%s
-                },
             'dataType' => 'datetime',
         ),
         'thumbnail' => array(
