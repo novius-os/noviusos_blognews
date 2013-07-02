@@ -41,6 +41,10 @@ $ret = array(
             'format' => 'eu_full'
         ),
     ),
+    // Sample of config to display sumarry + content in RSS
+    /*'rss' => array(
+        'description_template' => '<p>{{summary}}</p>{{content}}',
+    ),*/
     'thumbnail' => array(
         'front' => array(
             'list' => array(

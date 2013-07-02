@@ -209,7 +209,7 @@ class Controller_Front extends Controller_Front_Application
                     }
                     $items = array();
                     foreach ($posts as $post) {
-                        $items[] = static::_get_rss_post($post);
+                        $items[] = static::_get_rss_post($post, $this->app_config);
                     }
                     $rss->set_items($items);
 
@@ -520,7 +520,7 @@ class Controller_Front extends Controller_Front_Application
         }
     }
 
-    protected static function _get_rss_post($post)
+    protected static function _get_rss_post($post, $config)
     {
         $content = $post->get_default_nuggets();
         $item = array();
@@ -529,7 +529,14 @@ class Controller_Front extends Controller_Front_Application
         if (isset($content[\Nos\DataCatcher::TYPE_IMAGE])) {
             $item['img'] = \Uri::base(false).$content[\Nos\DataCatcher::TYPE_IMAGE];
         }
-        $item['description'] = isset($content[\Nos\DataCatcher::TYPE_TEXT]) ? $content[\Nos\DataCatcher::TYPE_TEXT] : $post->post_summary;
+        if (isset($config['rss']['description_template'])) {
+            $item['description'] = \Config::placeholderReplace($config['rss']['description_template'], array(
+                'summary' => $post->post_summary,
+                'content' => \Nos\Nos::parse_wysiwyg($post->wysiwygs->content),
+            ));
+        } else {
+            $item['description'] = isset($content[\Nos\DataCatcher::TYPE_TEXT]) ? $content[\Nos\DataCatcher::TYPE_TEXT] : $post->post_summary;
+        }
         $item['pubDate'] = $post->post_created_at;
         $item['author'] = !empty($post->author) ? $post->author->fullname() : $post->post_author_alias;
 
