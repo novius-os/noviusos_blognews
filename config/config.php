@@ -8,6 +8,8 @@
  * @link http://www.novius-os.org
  */
 
+\Nos\I18n::current_dictionary('noviusos_blognews::front');
+
 $ret = array(
     'namespace' => '{{namespace}}',
     'application_name' => '{{application_name}}',
@@ -37,9 +39,6 @@ $ret = array(
     'publication_date' => array(
         'enabled' => true,
         'show'    => true,
-        'front' => array(
-            'format' => 'eu_full'
-        ),
     ),
     // Sample of config to display sumarry + content in RSS
     /*'rss' => array(
