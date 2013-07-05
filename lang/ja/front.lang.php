@@ -1,9 +1,9 @@
 <?php
 
-// Generated on 25/06/2013 11:06:52
+// Generated on 05/07/2013 14:57:58
 
-// 20 out of 20 messages are translated (100%).
-// 67 out of 67 words are translated (100%).
+// 20 out of 21 messages are translated (95%).
+// 67 out of 68 words are translated (95%).
 
 return array(
     #. Note to translator: The following texts are related to RSS feeds
@@ -57,6 +57,9 @@ return array(
 
     #: views/front/comment/nb.view.php:23
     'No comments' => 'コメント無し',
+
+    #: views/front/post/publication_date.view.php:23
+    'PUBLICATION_DATE_FORMAT' => '',
 
     #: views/front/post/tags.view.php:24
     'Tags: {{tags}}' => 'タグ: {{tags}}',

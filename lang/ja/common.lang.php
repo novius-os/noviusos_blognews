@@ -1,9 +1,9 @@
 <?php
 
-// Generated on 25/06/2013 11:06:52
+// Generated on 05/07/2013 14:57:58
 
-// 59 out of 67 messages are translated (88%).
-// 245 out of 286 words are translated (88%).
+// 58 out of 66 messages are translated (87%).
+// 244 out of 285 words are translated (87%).
 
 return array(
     #: classes/model/post.model.php:157
@@ -142,7 +142,7 @@ return array(
     #: config/controller/admin/category.config.php:72
     'Location:' => '位置:',
 
-    #: config/config.php:60
+    #: config/config.php:63
     'Blog' => 'ブログ',
 
     #. Crud
@@ -167,10 +167,7 @@ return array(
     #: config/common/post.config.php:48
     'Author' => '著者',
 
-    #: config/common/post.config.php:54
-    'Status' => '公開状態',
-
-    #: config/common/post.config.php:60
+    #: config/common/post.config.php:55
     'Date' => '日付',
 
     #. Crud
