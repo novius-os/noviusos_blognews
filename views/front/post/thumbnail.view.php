@@ -24,12 +24,12 @@ if (isset($item->medias->thumbnail)) {
         $thumbnail_width = \Arr::get($blognews_config, 'thumbnail.front.item.max_width', 200);
         $thumbnail_height = \Arr::get($blognews_config, 'thumbnail.front.list.max_height', $thumbnail_width);
 
-        $link_url   = $item->medias->thumbnail->get_public_path();
+        $link_url   = $item->medias->thumbnail->url();
         $link_class = 'blognews_thumbnail_link_fullsize';
     }
 
     $print_link and print '<a href="'.$link_url.'" class="'.$link_class.'">';
-    echo $item->medias->thumbnail->get_img_tag_resized($thumbnail_width, $thumbnail_height, array(
+    echo $item->medias->thumbnail->getImgTagResized($thumbnail_width, $thumbnail_height, array(
         'alt' => $item->post_title,
         'class' => 'blognews_thumbnail',
     ));
