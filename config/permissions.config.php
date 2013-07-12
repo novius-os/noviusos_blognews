@@ -15,7 +15,7 @@ return array(
                     ),
                 ),
                 'other_authors_post' => array(
-                    'title' => __("Other authors' posts"),
+                    'title' => __("Other authors’ posts"),
                     'view' => 'noviusos_blognews::admin/permissions/other_authors',
                     'params' => array(
                         'application' => '{{application_name}}',
