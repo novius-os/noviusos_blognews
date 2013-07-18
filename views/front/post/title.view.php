@@ -12,22 +12,9 @@ $tag = empty($context) || $context != 'show' ? 'h2' : 'h1';
 
 // Always display the link in the list
 if ($tag == 'h1' && empty($enhancer_args['link_on_title'])) {
-    ?>
-
-    <<?= $tag ?> class="blognews_title">
-        <?= e($item->post_title) ?>
-    </<?= $tag ?>>
-
-    <?php
+    $content = e($item->post_title);
 } else {
-    ?>
-
-    <<?= $tag ?> class="blognews_title">
-        <a href="<?= $item->url() ?>">
-            <?= e($item->post_title) ?>
-        </a>
-    </<?= $tag ?>>
-
-    <?php
+    $content = $item->htmlAnchor();
 }
+echo '<', $tag, ' class="blognews_title">', $content, '</', $tag, '>';
 

@@ -13,13 +13,15 @@ $title = null;
 \Nos\I18n::current_dictionary(array('noviusos_blognews::front'));
 
 if ($type == 'tag') {
-    $title = strtr(__('Tag: {{tag}}'), array('{{tag}}' => $item->tag_label));
-    $link  = $item->url();
+    $title  = $item->htmlAnchor(array(
+        'text' => e(strtr(__('Tag: {{tag}}'), array('{{tag}}' => $item->tag_label)))
+    ));
 }
 if ($type == 'category') {
-    $title = strtr(__('Category: {{category}}'), array('{{category}}' => $item->cat_title));
-    $link  = $item->url();
+    $title  = $item->htmlAnchor(array(
+        'text' => e(strtr(__('Category: {{category}}'), array('{{category}}' => $item->cat_title)))
+    ));
 }
 if ($title !== null) {
-    echo '<h1><a href="'.$link.'">'.e($title).'</a></h1>';
+    echo '<h1>'.$title.'</h1>';
 }

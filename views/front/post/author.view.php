@@ -15,11 +15,9 @@ if ($blognews_config['authors']['enabled'] && $blognews_config['authors']['show'
     <div class="blognews_author">
     <?php
     if (!empty($item->author)) {
-        ?>
-        <a href="<?= $item->author->url() ?>">
-            <?= e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->author->fullname()))) ?>
-        </a>
-        <?php
+        echo $item->author->htmlAnchor(array(
+            'text' => e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->author->fullname())))
+        ));
     } else {
         echo e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->post_author_alias)));
     }

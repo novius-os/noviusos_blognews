@@ -172,7 +172,7 @@ class Controller_Front extends Controller_Front_Application
                 return $this->display_list_category($args);
             } elseif ($segments[0] == 'rss') {
                 $rss = \Nos\Tools_RSS::forge(array(
-                    'link' => $this->main_controller->getUrl(),
+                    'link' => \Nos\Tools_Url::encodePath($this->main_controller->getUrl()),
                     'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
                 ));
 
@@ -368,7 +368,7 @@ class Controller_Front extends Controller_Front_Application
             if (\Input::post('action') == 'addComment') {
                 $this->comment_api->addComment(\Input::post());
                 $this->main_controller->deleteCache();
-                \Response::redirect($this->main_controller->getUrl().'#comment_form');
+                \Response::redirect(\Nos\Tools_Url::encodePath($this->main_controller->getUrl()).'#comment_form');
             }
         }
 

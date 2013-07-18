@@ -16,11 +16,9 @@ if ($blognews_config['categories']['enabled'] && $blognews_config['categories'][
     if (count($item->categories) > 0) {
         $categories = array();
         foreach ($item->categories as $category) {
-            $categories[$category->url()] = $category->cat_title;
+            $categories[] = $category->htmlAnchor();
         }
-        $categories_str = implode(', ', array_map(function($href, $title) {
-            return '<a href="'.$href.'">'.e($title).'</a>';
-        }, array_keys($categories), array_values($categories)));
+        $categories_str = implode(', ', $categories);
         echo strtr(__('Categories: {{categories}}'), array('{{categories}}' => $categories_str));
     }
     ?>
