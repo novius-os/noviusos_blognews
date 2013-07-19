@@ -22,7 +22,7 @@ if (isset($item->medias->thumbnail)) {
         $thumbnail_height = \Arr::get($blognews_config, 'thumbnail.front.list.max_height', $thumbnail_width);
     }
 
-    $img = $item->medias->thumbnail->getImgTagResized($thumbnail_width, $thumbnail_height, array(
+    $img = $item->medias->thumbnail->htmlImgResized($thumbnail_width, $thumbnail_height, array(
         'alt' => $item->post_title,
         'class' => 'blognews_thumbnail',
     ));
