@@ -33,6 +33,7 @@ return array(
         ),
         'link_on_title' => array(
             'label' => __('Clickable post titles'),
+            'template' => '<p>{field} {label}</p>',
             'form' => array(
                 'type' => 'checkbox',
                 'value' => 1,

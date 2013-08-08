@@ -124,8 +124,10 @@ $config = array(
         'medias->thumbnail->medil_media_id' => array(
             'label' => '',
             'renderer' => 'Nos\Media\Renderer_Media',
-            'form' => array(
-                'title' => 'Thumbnail',
+            'renderer_options' => array(
+                'inputFileThumb' => array(
+                    'title' => __('Thumbnail'),
+                ),
             ),
         ),
         'post_created_at' => array(

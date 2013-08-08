@@ -172,7 +172,7 @@ class Controller_Front extends Controller_Front_Application
                 return $this->display_list_category($args);
             } elseif ($segments[0] == 'rss') {
                 $rss = \Nos\Tools_RSS::forge(array(
-                    'link' => $this->main_controller->getUrl(),
+                    'link' => \Nos\Tools_Url::encodePath($this->main_controller->getUrl()),
                     'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
                 ));
 
@@ -292,7 +292,13 @@ class Controller_Front extends Controller_Front_Application
         $tag = $this->_get_tag($tag);
         $posts = $this->_get_post_list(array('tag' => $tag));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/tag/'.urlencode($tag->tag_label).'.html">');
+        $rss_title = strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label));
+        $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
+            'rss/posts/tag/'.urlencode($tag->tag_label).'.html';
+
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+            'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
+            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -308,7 +314,13 @@ class Controller_Front extends Controller_Front_Application
         $category = $this->_get_category($category);
         $posts = $this->_get_post_list(array('category' => $category));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/category/'.urlencode($category->cat_virtual_name).'.html">');
+        $rss_title = strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title));
+        $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
+            'rss/posts/category/'.$category->cat_virtual_name.'.html';
+
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+            'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
+            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -327,7 +339,13 @@ class Controller_Front extends Controller_Front_Application
         $author = $this->_get_author($id_author);
         $posts = $this->_get_post_list(array('author' => $author));
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname())))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts/author/'.urlencode($id_author).'.html">');
+        $rss_title = strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname()));
+        $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
+            'rss/posts/author/'.$id_author.'.html';
+
+        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+            'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
+            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -357,7 +375,13 @@ class Controller_Front extends Controller_Front_Application
         }
 
         if ($this->app_config['comments']['enabled']) {
-            $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title)))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments/'.urlencode($post->post_virtual_name).'.html">');
+            $rss_title = strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title));
+            $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
+                'rss/comments/'.$post->post_virtual_name.'.html';
+
+            $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+                'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
+                'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
         }
 
         $page = $this->main_controller->getPage();
@@ -368,7 +392,7 @@ class Controller_Front extends Controller_Front_Application
             if (\Input::post('action') == 'addComment') {
                 $this->comment_api->addComment(\Input::post());
                 $this->main_controller->deleteCache();
-                \Response::redirect($this->main_controller->getUrl().'#comment_form');
+                \Response::redirect(\Nos\Tools_Url::encodePath($this->main_controller->getUrl()).'#comment_form');
             }
         }
 
@@ -557,7 +581,7 @@ class Controller_Front extends Controller_Front_Application
 
             switch ($model) {
                 case static::$post_class:
-                    $post_url = urlencode($item->post_virtual_name).'.html';
+                    $post_url = $item->post_virtual_name.'.html';
                     if (isset($params['unsubscribe']) && $params['unsubscribe']) {
                         return 'unsubscribe/'.$post_url;
                     }
@@ -572,7 +596,7 @@ class Controller_Front extends Controller_Front_Application
                     break;
 
                 case static::$category_class:
-                    return 'category/'.urlencode($item->cat_virtual_name).($page > 1 ? '/'.$page : '').'.html';
+                    return 'category/'.$item->cat_virtual_name.($page > 1 ? '/'.$page : '').'.html';
                     break;
 
                 case static::$author_class:
