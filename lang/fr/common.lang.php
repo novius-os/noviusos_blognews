@@ -1,49 +1,49 @@
 <?php
 
-// Generated on 05/07/2013 14:57:58
+// Generated on 09/08/2013 10:16:42
 
-// 58 out of 66 messages are translated (87%).
-// 244 out of 285 words are translated (87%).
+// 67 out of 67 messages are translated (100%).
+// 286 out of 286 words are translated (100%).
 
 return array(
-    #: classes/model/post.model.php:157
+    #: classes/model/post.model.php:156
     'Use post title' => 'Reprendre le titre du billet',
 
-    #: classes/model/post.model.php:191
+    #: classes/model/post.model.php:190
     'Use post summary' => 'Reprendre le chapeau du billet',
 
-    #: classes/model/category.model.php:132
+    #: classes/model/category.model.php:131
     'Use category title' => 'Reprendre le titre de la catégorie',
 
     #: classes/model/tag.model.php:47
     'Use tag label' => 'Reprendre le tag',
 
     #: views/admin/permissions/post_and_category.php:7
-    'Can add, edit, delete and publish posts' => '',
+    'Can add, edit, delete and publish posts' => 'Peut ajouter, modifier et supprimer des billets',
 
     #: views/admin/permissions/post_and_category.php:14
-    'Can add, edit and delete unpublished posts only' => '',
+    'Can add, edit and delete unpublished posts only' => 'Peut ajouter, modifier et supprimer des billets non-publiés uniquement',
 
     #: views/admin/permissions/post_and_category.php:21
-    'Can add, edit and delete categories' => '',
+    'Can add, edit and delete categories' => 'Peut ajouter, modifier et supprimer des catégories',
 
     #. Other authors' posts
     #: views/admin/permissions/other_authors.php:9
-    'Can edit and delete' => '',
+    'Can edit and delete' => 'Peut modifier et supprimer',
 
     #. Other authors' posts
     #: views/admin/permissions/other_authors.php:19
-    'Can visualise only' => '',
+    'Can visualise only' => 'Peut uniquement visualiser',
 
     #. Other authors' posts
     #: views/admin/permissions/other_authors.php:29
-    'Can access her/his own posts only' => '',
+    'Can access her/his own posts only' => 'Peut accéder uniquement à ses propres billets',
 
     #: config/permissions.config.php:11
-    'Permissions for this application' => '',
+    'Permissions for this application' => 'Droits d’accès pour cette application',
 
     #: config/permissions.config.php:18
-    'Other authors\' posts' => '',
+    'Other authors’ posts' => 'Billets d’autres auteurs',
 
     #: config/controller/admin/inspector/author.config.php:22
     #: config/controller/admin/inspector/author.config.php:26
@@ -51,8 +51,8 @@ return array(
 
     #: config/controller/admin/inspector/tag.config.php:19
     #: config/controller/admin/post.config.php:63
-    #: config/controller/admin/post.config.php:159
-    #: config/controller/admin/post.config.php:214
+    #: config/controller/admin/post.config.php:161
+    #: config/controller/admin/post.config.php:216
     #: config/common/tag.config.php:16
     'Tags' => 'Tags',
 
@@ -86,7 +86,7 @@ return array(
 
     #. user_fullname is not a real field in the database
     #: config/controller/admin/post.config.php:60
-    #: config/controller/admin/post.config.php:223
+    #: config/controller/admin/post.config.php:225
     #: config/controller/admin/category.config.php:30
     'Properties' => 'Propriétés',
 
@@ -94,7 +94,7 @@ return array(
     'URL (post address)' => 'URL (adresse du billet)',
 
     #: config/controller/admin/post.config.php:62
-    #: config/controller/admin/post.config.php:219
+    #: config/controller/admin/post.config.php:221
     #: config/common/category.config.php:24
     'Categories' => 'Catégories',
 
@@ -116,20 +116,23 @@ return array(
     #: config/controller/admin/post.config.php:110
     'Author:' => 'Auteur&nbsp;:',
 
-    #: config/controller/admin/post.config.php:132
+    #: config/controller/admin/post.config.php:129
+    'Thumbnail' => 'Vignette',
+
+    #: config/controller/admin/post.config.php:134
     'Created on:' => 'Créé le&nbsp;:',
 
-    #: config/controller/admin/post.config.php:143
+    #: config/controller/admin/post.config.php:145
     'Never read' => 'Pas encore lu',
 
-    #: config/controller/admin/post.config.php:144
+    #: config/controller/admin/post.config.php:146
     'Read once' => 'Lu 1 fois',
 
-    #: config/controller/admin/post.config.php:145
+    #: config/controller/admin/post.config.php:147
     'Read {{nb}} times' => 'Lu {{nb}} fois',
 
     #. Note to translator: This is a submit button
-    #: config/controller/admin/post.config.php:201
+    #: config/controller/admin/post.config.php:203
     #: config/controller/admin/category.config.php:89
     'Save' => 'Enregistrer',
 

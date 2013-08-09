@@ -1,6 +1,6 @@
 <?php
 
-// Generated on 05/07/2013 14:57:58
+// Generated on 09/08/2013 10:16:42
 
 // 20 out of 21 messages are translated (95%).
 // 67 out of 68 words are translated (95%).
@@ -19,7 +19,7 @@ return array(
     'The full list of blog posts.' => 'La liste complète des billets de blog.',
 
     #: classes/controller/front.ctrl.php:188
-    #: classes/controller/front.ctrl.php:309
+    #: classes/controller/front.ctrl.php:315
     '{{category}}: Posts list' => '{{category}}&nbsp; Liste des billets',
 
     #: classes/controller/front.ctrl.php:189
@@ -33,14 +33,14 @@ return array(
     'Blog posts listed under the ‘{{tag}}’ tag.' => 'Billets de blog portant le tag «&nbsp;{{tag}}&nbsp;»',
 
     #: classes/controller/front.ctrl.php:202
-    #: classes/controller/front.ctrl.php:328
+    #: classes/controller/front.ctrl.php:340
     '{{author}}: Posts list' => '{{author}}&nbsp;: Liste des billets',
 
     #: classes/controller/front.ctrl.php:203
     'Blog posts written by {{author}}.' => 'Billets de blog écrit par {{author}}.',
 
     #: classes/controller/front.ctrl.php:230
-    #: classes/controller/front.ctrl.php:358
+    #: classes/controller/front.ctrl.php:376
     '{{post}}: Comments list' => '{{post}}&nbsp; Liste des commentaires',
 
     #: classes/controller/front.ctrl.php:231
@@ -61,20 +61,20 @@ return array(
     #: views/front/post/publication_date.view.php:23
     'PUBLICATION_DATE_FORMAT' => '',
 
-    #: views/front/post/tags.view.php:24
+    #: views/front/post/tags.view.php:22
     'Tags: {{tags}}' => 'Tags&nbsp;: {{tags}}',
 
-    #: views/front/post/list_title.view.php:16
+    #: views/front/post/list_title.view.php:17
     'Tag: {{tag}}' => 'Tag&nbsp;: {{tag}}',
 
-    #: views/front/post/list_title.view.php:20
+    #: views/front/post/list_title.view.php:22
     'Category: {{category}}' => 'Catégorie&nbsp;: {{category}}',
 
-    #: views/front/post/author.view.php:19
-    #: views/front/post/author.view.php:23
+    #: views/front/post/author.view.php:18
+    #: views/front/post/author.view.php:21
     'Author: {{author}}' => 'Auteur&nbsp;: {{author}}',
 
-    #: views/front/post/categories.view.php:24
+    #: views/front/post/categories.view.php:22
     'Categories: {{categories}}' => 'Catégories&nbsp;: {{categories}}',
 
 );
