@@ -412,14 +412,4 @@ class Model_Post extends \Nos\Orm\Model
 
         return $items;
     }
-
-    protected $nb_comments = null;
-    public function count_comments()
-    {
-        if ($this->nb_comments === null) {
-            $this->nb_comments = \Nos\Comments\Model_Comment::count(array('where' => array(array('comm_foreign_id' => $this->id), array('comm_foreign_model' => get_called_class()))));
-        }
-
-        return $this->nb_comments;
-    }
 }
