@@ -338,7 +338,14 @@ class Model_Post extends \Nos\Orm\Model
     public static function get_all_from_query($query)
     {
         $posts = $query->get();
-        static::count_multiple_comments($posts);
+
+        list($app) = \Config::configFile(get_called_class());
+        \Config::load($app.'::config', true);
+        $withCom = \Config::get($app.'::config.comments.enabled');
+        if ($withCom) {
+            $posts = static::count_multiple_comments($posts);
+        }
+
         return $posts;
     }
 
