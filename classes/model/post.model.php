@@ -251,7 +251,12 @@ class Model_Post extends \Nos\Orm\Model
                 'key_to' => 'comm_foreign_id',
                 'cascade_save' => false,
                 'cascade_delete' => true,
-                'conditions' => array('where' => array(array('comm_foreign_model', '=', get_called_class())), 'order_by' => array('comm_created_at' => 'ASC'))
+                'conditions' => array(
+                    'where' => array(
+                        array('comm_foreign_model', '=', get_called_class()),
+                        array('comm_state', '=', 'published'),
+                    ),
+                    'order_by' => array('comm_created_at' => 'ASC'))
             );
         }
 
