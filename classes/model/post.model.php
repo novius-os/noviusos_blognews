@@ -145,7 +145,7 @@ class Model_Post extends \Nos\Orm\Model
     {
         $class = get_called_class();
         list($app) = \Config::configFile($class);
-        \Config::load($app.'::config', true);
+        $app_config = \Config::load($app.'::config', true);
         $withCom = \Config::get($app.'::config.comments.enabled');
 
         \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
@@ -193,9 +193,7 @@ class Model_Post extends \Nos\Orm\Model
         );
 
         if ($withCom) {
-            static::$_behaviours['Nos\Comments\Orm_Behaviour_Commentable'] = array(
-                'comments_relation' => 'comments'
-            );
+            static::$_behaviours['Nos\Comments\Orm_Behaviour_Commentable'] = isset($app_config['comments']) ? $app_config['comments'] : array();
         }
     }
 
@@ -243,22 +241,6 @@ class Model_Post extends \Nos\Orm\Model
 
         list($app) = \Config::configFile($class);
         \Config::load($app.'::config', true);
-        $withCom = \Config::get($app.'::config.comments.enabled');
-        if ($withCom) {
-            static::$_has_many['comments'] = array(
-                'key_from' => 'post_id',
-                'model_to' => '\Nos\Comments\Model_Comment',
-                'key_to' => 'comm_foreign_id',
-                'cascade_save' => false,
-                'cascade_delete' => true,
-                'conditions' => array(
-                    'where' => array(
-                        array('comm_foreign_model', '=', get_called_class()),
-                        array('comm_state', '=', 'published'),
-                    ),
-                    'order_by' => array('comm_created_at' => 'ASC'))
-            );
-        }
 
         return parent::relations($specific);
     }
@@ -378,38 +360,5 @@ class Model_Post extends \Nos\Orm\Model
         $query = static::get_query($params);
 
         return $query->count();
-    }
-
-    public static function count_multiple_comments($items)
-    {
-        $class = get_called_class();
-        list($app) = \Config::configFile($class);
-        \Config::load($app.'::config', true);
-        $withCom = \Config::get($app.'::config.comments.enabled');
-        if (!$withCom || count($items) == 0) {
-            return $items;
-        }
-        $ids = array();
-
-        foreach ($items as $post) {
-            $ids[] = $post->id;
-        }
-
-        $comments_count = \Db::select(\Db::expr('COUNT(comm_id) AS count_result'), 'comm_foreign_id')
-            ->from(\Nos\Comments\Model_Comment::table())
-            ->where('comm_foreign_id', 'in', $ids)
-            ->and_where('comm_foreign_model', '=', get_called_class())
-            ->group_by('comm_foreign_id')
-            ->execute()->as_array();
-
-        $comments_count = \Arr::assoc_to_keyval($comments_count, 'comm_foreign_id', 'count_result');
-
-        foreach ($items as $key => $item) {
-            if (isset($comments_count[$items[$key]->id])) {
-                $items[$key]->nb_comments = $comments_count[$items[$key]->id];
-            }
-        }
-
-        return $items;
     }
 }

@@ -100,9 +100,6 @@ $config = array(
         ),
     ),
     'thumbnails' => true,
-    'api' => array(
-        'comments' => isset($app_config['comments']) ? $app_config['comments'] : array()
-    ),
 );
 
 if (empty($app_config['authors']['enabled'])) {
