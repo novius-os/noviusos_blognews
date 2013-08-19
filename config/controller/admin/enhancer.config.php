@@ -29,7 +29,7 @@ return array(
                 'model'       => '{{namespace}}Model_Category',
                 'main_column' => 'cat_title',
             ),
-            'template' => '<div>{label} {field} <p>'.__('Leave blank to select all categories').'</p></div>',
+            'template' => '<div style="margin-bottom: 0.5em;">{label} {field} <p>'.__('Leave blank to select all categories').'</p></div>',
         ),
         'link_on_title' => array(
             'label' => __('Clickable post titles'),
