@@ -1,18 +1,18 @@
 <?php
 
-// Generated on 05/07/2013 14:57:58
+// Generated on 19/08/2013 18:12:14
 
-// 58 out of 66 messages are translated (87%).
-// 244 out of 285 words are translated (87%).
+// 58 out of 67 messages are translated (86%).
+// 244 out of 286 words are translated (86%).
 
 return array(
-    #: classes/model/post.model.php:157
+    #: classes/model/post.model.php:156
     'Use post title' => '投稿タイトルを使用する',
 
-    #: classes/model/post.model.php:191
+    #: classes/model/post.model.php:190
     'Use post summary' => '投稿サマリを使用する',
 
-    #: classes/model/category.model.php:132
+    #: classes/model/category.model.php:131
     'Use category title' => 'カテゴリータイトルを使用する',
 
     #: classes/model/tag.model.php:47
@@ -43,7 +43,7 @@ return array(
     'Permissions for this application' => '',
 
     #: config/permissions.config.php:18
-    'Other authors\' posts' => '',
+    'Other authors’ posts' => '',
 
     #: config/controller/admin/inspector/author.config.php:22
     #: config/controller/admin/inspector/author.config.php:26
@@ -51,8 +51,8 @@ return array(
 
     #: config/controller/admin/inspector/tag.config.php:19
     #: config/controller/admin/post.config.php:63
-    #: config/controller/admin/post.config.php:159
-    #: config/controller/admin/post.config.php:214
+    #: config/controller/admin/post.config.php:161
+    #: config/controller/admin/post.config.php:216
     #: config/common/tag.config.php:16
     'Tags' => 'タグ',
 
@@ -86,7 +86,7 @@ return array(
 
     #. user_fullname is not a real field in the database
     #: config/controller/admin/post.config.php:60
-    #: config/controller/admin/post.config.php:223
+    #: config/controller/admin/post.config.php:225
     #: config/controller/admin/category.config.php:30
     'Properties' => 'プロパティ',
 
@@ -94,7 +94,7 @@ return array(
     'URL (post address)' => 'URL (投稿アドレス)',
 
     #: config/controller/admin/post.config.php:62
-    #: config/controller/admin/post.config.php:219
+    #: config/controller/admin/post.config.php:221
     #: config/common/category.config.php:24
     'Categories' => 'カテゴリー',
 
@@ -116,20 +116,23 @@ return array(
     #: config/controller/admin/post.config.php:110
     'Author:' => '著者:',
 
-    #: config/controller/admin/post.config.php:132
+    #: config/controller/admin/post.config.php:129
+    'Thumbnail' => '',
+
+    #: config/controller/admin/post.config.php:134
     'Created on:' => '作成日:',
 
-    #: config/controller/admin/post.config.php:143
+    #: config/controller/admin/post.config.php:145
     'Never read' => 'まだ読まれていません',
 
-    #: config/controller/admin/post.config.php:144
+    #: config/controller/admin/post.config.php:146
     'Read once' => '一回読まれました',
 
-    #: config/controller/admin/post.config.php:145
+    #: config/controller/admin/post.config.php:147
     'Read {{nb}} times' => '{{nb}}回読まれました',
 
     #. Note to translator: This is a submit button
-    #: config/controller/admin/post.config.php:201
+    #: config/controller/admin/post.config.php:203
     #: config/controller/admin/category.config.php:89
     'Save' => '保存',
 
