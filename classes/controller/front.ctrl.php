@@ -32,8 +32,6 @@ class Controller_Front extends Controller_Front_Application
     public static $category_class;
     public static $author_class;
 
-    public $comment_api;
-
     public static function _init()
     {
         if (is_subclass_of(get_called_class(), 'Nos\\BlogNews\\Blog\\Controller_Front')) {
@@ -55,8 +53,6 @@ class Controller_Front extends Controller_Front_Application
     public function before()
     {
         parent::before();
-
-        $this->comment_api = new \Nos\Comments\API(static::$post_class);
 
         \Nos\I18n::current_dictionary(array('noviusos_blognews::front'));
         $this->app_config = \Arr::merge($this->app_config, static::getGlobalConfiguration());
@@ -151,7 +147,7 @@ class Controller_Front extends Controller_Front_Application
                             array('post_context', '=', $this->page_from->page_context),
                         ),
                     ));
-                    $this->comment_api->changeSubscriptionStatus($post, $_GET['email'], $segments[0] === 'subscribe');
+                    $post::commentApi()->changeSubscriptionStatus($post, $_GET['email'], $segments[0] === 'subscribe');
                     return render('noviusos_comments::front/subscriptions/'.$segments[0], array('item' => $post, 'email' => $_GET['email']), false);
                 }
             } elseif ($segments[0] === 'page') {
@@ -225,7 +221,7 @@ class Controller_Front extends Controller_Front_Application
                         ));
                     }
 
-                    $rss = $this->comment_api->getRss($api_request);
+                    $rss = $api_request['model']::commentApi()->getRss($api_request);
 
                     if (isset($api_request['item'])) {
                         $rss->set(array(
@@ -390,7 +386,7 @@ class Controller_Front extends Controller_Front_Application
 
         if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
             if (\Input::post('action') == 'addComment') {
-                $this->comment_api->addComment(\Input::post());
+                $post::commentApi()->addComment(\Input::post());
                 $this->main_controller->deleteCache();
                 \Response::redirect(\Nos\Tools_Url::encodePath($this->main_controller->getUrl()).'#comment_form');
             }
