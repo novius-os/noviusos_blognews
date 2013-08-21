@@ -112,10 +112,6 @@ class Model_Post extends \Nos\Orm\Model
             'mysql_timestamp' => true,
             'property'=>'post_updated_at'
         ),
-        'Nos\Orm_Behaviour_Author' => array(
-            'created_by_property' => 'post_author_id',
-            'updated_by_property' => 'post_updated_by_id',
-        ),
     );
 
     protected static $_behaviours = array(
@@ -134,6 +130,10 @@ class Model_Post extends \Nos\Orm\Model
             'context_property'      => 'post_context',
             'common_id_property' => 'post_context_common_id',
             'is_main_property' => 'post_context_is_main',
+        ),
+        'Nos\Orm_Behaviour_Author' => array(
+            'created_by_property' => 'post_author_id',
+            'updated_by_property' => 'post_updated_by_id',
         ),
     );
 
