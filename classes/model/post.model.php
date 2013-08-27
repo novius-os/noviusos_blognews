@@ -193,7 +193,7 @@ class Model_Post extends \Nos\Orm\Model
         );
 
         if ($withCom) {
-            static::$_behaviours['Nos\Comments\Orm_Behaviour_Commentable'] = isset($app_config['comments']) ? $app_config['comments'] : array();
+            static::$_behaviours['Nos\Comments\Orm_Behaviour_Commentable'] = array();
         }
     }
 
