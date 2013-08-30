@@ -368,4 +368,28 @@ class Model_Post extends \Nos\Orm\Model
 
         return $query->count();
     }
+
+    public function deleteCacheItem()
+    {
+        static::_behaviours('deleteCacheItem', array(), array('this' => $this, 'return' => true));
+        $enhancers = $this->behaviours('Nos\Orm_Behaviour_Urlenhancer');
+        $enhancers = $enhancers['enhancers'];
+        $url_enhanced = \Nos\Config_Data::get('url_enhanced', array());
+
+        $base = \Uri::base(false);
+        foreach ($enhancers as $enhancer_name) {
+            $page_enhanced = \Nos\Config_Data::get('page_enhanced.'.$enhancer_name, array());
+            if (empty($page_enhanced)) {
+                return array();
+            }
+            foreach ($page_enhanced as $page_id => $page_params) {
+                $url_params = \Arr::get($url_enhanced, $page_id, false);
+                $url_params['url'] = substr($url_params['url'], 0, -1).'.html';
+                if ($url_params) {
+                    $cache_path = \Nos\FrontCache::getPathFromUrl($base, parse_url($url_params['url'], PHP_URL_PATH));
+                    \Nos\FrontCache::forge($cache_path)->delete();
+                }
+            }
+        }
+    }
 }
