@@ -368,42 +368,4 @@ class Model_Post extends \Nos\Orm\Model
 
         return $query->count();
     }
-
-    public function deleteCacheItem()
-    {
-        static::_behaviours('deleteCacheItem', array(), array('this' => $this, 'return' => true));
-        $enhancers = $this->behaviours('Nos\Orm_Behaviour_Urlenhancer');
-        $enhancers = $enhancers['enhancers'];
-        $url_enhanced = \Nos\Config_Data::get('url_enhanced', array());
-
-        $base = \Uri::base(false);
-        foreach ($enhancers as $enhancer_name) {
-            $page_enhanced = \Nos\Config_Data::get('page_enhanced.'.$enhancer_name, array());
-            if (empty($page_enhanced)) {
-                return array();
-            }
-            foreach ($page_enhanced as $page_id => $page_params) {
-                $url_params = \Arr::get($url_enhanced, $page_id, false);
-                if ($url_params) {
-                    $list_url = substr($url_params['url'], 0, -1).'.html';
-                    $rss_comments_url = $url_params['url'].'rss/comments.html';
-                    $cache_path = \Nos\FrontCache::getPathFromUrl($base, parse_url($list_url, PHP_URL_PATH));
-                    \Nos\FrontCache::forge($cache_path)->delete();
-                    $cache_path = \Nos\FrontCache::getPathFromUrl($base, parse_url($rss_comments_url, PHP_URL_PATH));
-                    \Nos\FrontCache::forge($cache_path)->delete();
-                }
-            }
-
-            foreach (\Nos\Tools_Enhancer::url_item($enhancer_name, $this) as $key => $url) {
-                $post_comments_rss = explode('/', $url);
-                array_splice($post_comments_rss, count($post_comments_rss) - 1, 0, 'rss');
-                array_splice($post_comments_rss, count($post_comments_rss) - 1, 0, 'comments');
-                $post_comments_rss = implode('/', $post_comments_rss);
-
-                $cache_path = \Nos\FrontCache::getPathFromUrl($base, parse_url($post_comments_rss, PHP_URL_PATH));
-                \Debug::dump($cache_path);
-                \Nos\FrontCache::forge($cache_path)->delete();
-            }
-        }
-    }
 }
