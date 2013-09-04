@@ -28,7 +28,8 @@ class Orm_Behaviour_Cachemanager extends \Nos\Orm_Behaviour
             array(
                 '',
                 'rss/posts.html',
-            )
+            ),
+            $item->context
         );
     }
 
@@ -39,7 +40,8 @@ class Orm_Behaviour_Cachemanager extends \Nos\Orm_Behaviour
             array(
                 '',
                 'rss/posts.html',
-            )
+            ),
+            $item->context
         );
     }
 
@@ -52,7 +54,8 @@ class Orm_Behaviour_Cachemanager extends \Nos\Orm_Behaviour
                 'rss/comments.html',
                 'rss/posts.html',
                 'rss/comments/'.$item->post_virtual_name.'.html'
-            )
+            ),
+            $item->context
         );
     }
 
@@ -64,7 +67,8 @@ class Orm_Behaviour_Cachemanager extends \Nos\Orm_Behaviour
                 '', // Number of comments
                 'rss/comments.html',
                 'rss/comments/'.$item->post_virtual_name.'.html'
-            )
+            ),
+            $item->context
         );
     }
 }
