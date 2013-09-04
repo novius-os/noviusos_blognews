@@ -603,14 +603,4 @@ class Controller_Front extends Controller_Front_Application
 
         return false;
     }
-
-    public static function getCachedUrls($item)
-    {
-        return array(
-            '',
-            'rss/comments.html',
-            'rss/posts.html',
-            'rss/comments/'.$item->post_virtual_name.'.html'
-        );
-    }
 }
