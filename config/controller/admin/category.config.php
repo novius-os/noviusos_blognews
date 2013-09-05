@@ -46,7 +46,6 @@ return array (
                 ),
             ),
         ),
-        'save' => 'save',
     ),
     'fields' => array(
         'cat_title' => array (
@@ -78,17 +77,6 @@ return array (
                 'model'                 => '{{namespace}}\\Model_Category',
                 'sortable'              => true,
                 'main_column'           => 'cat_title',
-            ),
-        ),
-        'save' => array(
-            'label' => '',
-            'form' => array(
-                'type' => 'submit',
-                'tag' => 'button',
-                // Note to translator: This is a submit button
-                'value' => __('Save'),
-                'class' => 'ui-priority-primary',
-                'data-icon' => 'check',
             ),
         ),
     ),

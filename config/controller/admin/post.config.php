@@ -30,8 +30,6 @@ $config = array(
         'large' => true,
         'medias' => array('medias->thumbnail->medil_media_id'),//'medias->thumbnail->medil_media_id'),
 
-        'save' => 'save',
-
         'subtitle' => array('post_summary'),
 
         'content' => array(
@@ -193,17 +191,6 @@ $config = array(
                         $item->categories = $category_class::find('all', array('where' => array(array('cat_id', 'IN', (array) $data['categories']))));
                     }
                 },
-        ),
-        'save' => array(
-            'label' => '',
-            'form' => array(
-                'type' => 'submit',
-                'tag' => 'button',
-                // Note to translator: This is a submit button
-                'value' => __('Save'),
-                'class' => 'ui-priority-primary',
-                'data-icon' => 'check',
-            ),
         ),
     )
 );
