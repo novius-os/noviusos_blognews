@@ -31,6 +31,7 @@ class Controller_Front extends Controller_Front_Application
     public static $post_class;
     public static $category_class;
     public static $author_class;
+    public static $application_name;
 
     public static function _init()
     {
@@ -61,7 +62,7 @@ class Controller_Front extends Controller_Front_Application
         \View::set_global('app_config', $this->app_config); // @deprecated DON'T USE ANYMORE app_config BUT blognews_config
 
         // @todo voir l'extension des modules -> refactoring a faire au niveau generique
-        list($application_name) = \Config::configFile(get_called_class());
+        list($this->application_name) = \Config::configFile(get_called_class());
         \Config::load('noviusos_blognews::controller/front', true);
 
 
@@ -70,12 +71,18 @@ class Controller_Front extends Controller_Front_Application
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::loadConfiguration($application_name, 'controller/front'));
+        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::loadConfiguration($this->application_name, 'controller/front'));
         $this->config['classes'] = array(
             'post' => static::$post_class,
             'tag' => static::$tag_class,
             'category' => static::$category_class,
         );
+
+        $this->page_from = $this->main_controller->getPage();
+
+        $this->config['item_per_page'] = (int) isset($this->enhancer_args['item_per_page']) ?
+            $this->enhancer_args['item_per_page'] : $this->config['item_per_page'];
+        \View::set_global('enhancer_args', $this->enhancer_args);
 
         parent::before();
     }
@@ -93,162 +100,193 @@ class Controller_Front extends Controller_Front_Application
         return parent::after($response);
     }
 
-
-    public function action_main($args = array())
+    public function action_list($page)
     {
-        list($application_name) = \Config::configFile(get_called_class());
-
-        $this->page_from = $this->main_controller->getPage();
-
-        $this->config['item_per_page'] = (int) isset($args['item_per_page']) ? $args['item_per_page'] : $this->config['item_per_page'];
-
-        \View::set_global('enhancer_args', $args);
-
-        $enhancer_url = $this->main_controller->getEnhancerUrl();
-
-        $this->action = 'home';
-
-        if (!empty($enhancer_url)) {
-            $this->enhancerUrl_segments = explode('/', $enhancer_url);
-            $segments = $this->enhancerUrl_segments;
-
-            if (!empty($segments[1])) {
-                $this->action = $segments[0];
-            }
-            \View::set_global('blognews_action', $this->action);
-
-            if (empty($segments[1])) {
-                return $this->display_item($args);
-            } elseif ($segments[0] == 'stats') {
-
-                $post = $this->_get_post(array(
-                    'where' => array(
-                        array('post_id', $segments[1]),
-                    ),
-                ));
-                if (!empty($post)) {
-                    $stats = \Session::get('noviusos_'.$application_name.'_stats', array());
-                    if (!in_array($post->post_id, $stats)) {
-                        $post->post_read++;
-                        $post->save();
-                        $stats[] = $post->post_id;
-                        \Session::set('noviusos_'.$application_name.'_stats', $stats);
-                        \Session::write();
-                    }
-                }
-                \Nos\Tools_File::send(DOCROOT.'static/apps/noviusos_blognews/img/transparent.gif');
-
-            } elseif ($segments[0] === 'unsubscribe' || $segments[0] === 'subscribe') {
-                $this->main_controller->disableCaching();
-                if (isset($_GET['email'])) {
-                    $post = $this->_get_post(array(
-                        'where' => array(
-                            array('post_virtual_name', '=', $segments[1]),
-                            array('post_context', '=', $this->page_from->page_context),
-                        ),
-                    ));
-                    $post::commentApi()->changeSubscriptionStatus($post, $_GET['email'], $segments[0] === 'subscribe');
-                    return render('noviusos_comments::front/subscriptions/'.$segments[0], array('item' => $post, 'email' => $_GET['email']), false);
-                }
-            } elseif ($segments[0] === 'page') {
-                $this->init_pagination(empty($segments[1]) ? 1 : $segments[1]);
-
-                return $this->display_list_main($args);
-            } elseif ($segments[0] === 'author') {
-                $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
-
-                return $this->display_list_author($args);
-            } elseif ($segments[0] === 'tag') {
-                $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
-
-                return $this->display_list_tag($args);
-            } elseif ($segments[0] === 'category') {
-                $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
-
-                return $this->display_list_category($args);
-            } elseif ($segments[0] == 'rss') {
-                $rss = \Nos\Tools_RSS::forge(array(
-                    'link' => \Nos\Tools_Url::encodePath($this->main_controller->getUrl()),
-                    'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
-                ));
-
-                if ($segments[1] === 'posts') {
-                    if (empty($segments[2])) {
-                        $posts = $this->_get_post_list();
-                        $rss->set(array(
-                                'title' => \Security::html_entity_decode(__('Posts list')),
-                                'description' => \Security::html_entity_decode(__('The full list of blog posts.')),
-                            ));
-                    } elseif ($segments[2] === 'category' && !empty($segments[3])) {
-                        $category = $this->_get_category($segments[3]);
-                        $posts = $this->_get_post_list(array('category' => $category));
-                        $rss->set(array(
-                                'title' => \Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
-                                'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
-                            ));
-                    } elseif ($segments[2] === 'tag' && !empty($segments[3])) {
-                        $tag = $this->_get_tag($segments[3]);
-                        $posts = $this->_get_post_list(array('tag' => $tag));
-                        $rss->set(array(
-                                'title' => \Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
-                                'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
-                            ));
-                    } elseif ($segments[2] === 'author' && !empty($segments[3])) {
-                        $author = $this->_get_author($segments[3]);
-                        $posts = $this->_get_post_list(array('author' => $author));
-                        $rss->set(array(
-                            'title' => \Security::html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname()))),
-                            'description' => \Security::html_entity_decode(strtr(__('Blog posts written by {{author}}.'), array('{{author}}' => $author->fullname()))),
-                        ));
-                    } else {
-                        throw new \Nos\NotFoundException();
-                    }
-                    $items = array();
-                    foreach ($posts as $post) {
-                        $items[] = static::_get_rss_post($post, $this->app_config);
-                    }
-                    $rss->set_items($items);
-
-                } elseif ($segments[1] === 'comments') {
-                    $api_request = array();
-                    $api_request['model'] = static::$post_class;
-                    if (!empty($segments[2])) {
-                        $api_request['item'] = $this->_get_post(array(
-                            'where' => array(
-                                array('post_virtual_name', '=', $segments[2]),
-                                array('post_context', '=', $this->page_from->page_context),
-                            ),
-                        ));
-                    }
-
-                    $rss = $api_request['model']::commentApi()->getRss($api_request);
-
-                    if (isset($api_request['item'])) {
-                        $rss->set(array(
-                            'title' => \Security::html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $api_request['item']->title_item()))),
-                            'description' => \Security::html_entity_decode(strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $api_request['item']->title_item()))),
-                        ));
-                    } else {
-                        $rss->set(array(
-                            'title' => \Security::html_entity_decode(__('Comments list')),
-                            'description' => \Security::html_entity_decode(__('The full list of comments.')),
-                        ));
-                    }
-                }
-
-                $this->main_controller->setHeader('Content-Type', 'application/xml');
-                $this->main_controller->setCacheDuration($this->config['rss_cache_duration']);
-                return $this->main_controller->sendContent($rss->build());
-            }
-
-            throw new \Nos\NotFoundException();
-        }
-
-        $this->init_pagination(1);
-
-        \View::set_global('blognews_action', $this->action);
-        return $this->display_list_main($args);
+        $this->init_pagination($page);
+        return $this->display_list_main($this->enhancer_args);
     }
+
+    public function action_item($title)
+    {
+        return $this->display_item($title);
+    }
+
+    public function action_stats($id)
+    {
+        $post = $this->_get_post(array(
+            'where' => array(
+                array('post_id', $id),
+            ),
+        ));
+        if (!empty($post)) {
+            $stats = \Session::get('noviusos_'.$this->application_name.'_stats', array());
+            if (!in_array($post->post_id, $stats)) {
+                $post->post_read++;
+                $post->save();
+                $stats[] = $post->post_id;
+                \Session::set('noviusos_'.$this->application_name.'_stats', $stats);
+                \Session::write();
+            }
+        }
+        \Nos\Tools_File::send(DOCROOT.'static/apps/noviusos_blognews/img/transparent.gif');
+    }
+
+    public function action_subscribe($title)
+    {
+        return $this->changeSubscribeUnsubscribe($title, true);
+    }
+
+    public function action_unsubscribe($title)
+    {
+        return $this->changeSubscribeUnsubscribe($title, false);
+    }
+
+    public function action_author($title, $page)
+    {
+        $this->init_pagination(is_array($page) ? 1 : (int) $page);
+        return $this->display_list_author($title);
+    }
+
+    public function action_tag($title, $page)
+    {
+        $this->init_pagination(is_array($page) ? 1 : (int) $page);
+        return $this->display_list_tag($title);
+    }
+
+    public function action_category($title, $page)
+    {
+        $this->init_pagination(is_array($page) ? 1 : (int) $page);
+        return $this->display_list_category($title);
+    }
+
+    public function changeSubscribeUnsubscribe($title, $subscribe)
+    {
+        $this->main_controller->disableCaching();
+        if (isset($_GET['email'])) {
+            $post = $this->_get_post(array(
+                'where' => array(
+                    array('post_virtual_name', '=', $title),
+                    array('post_context', '=', $this->page_from->page_context),
+                ),
+            ));
+            $post::commentApi()->changeSubscriptionStatus($post, $_GET['email'], $subscribe);
+            return render(
+                'noviusos_comments::front/subscriptions/'.($subscribe ? 'subscribe' : 'unsubscribe'),
+                array(
+                    'item' => $post,
+                    'email' => $_GET['email']
+                ),
+                false);
+        }
+    }
+
+    public function action_rss_posts()
+    {
+        $rss = $this->initRss();
+        $posts = $this->_get_post_list();
+        $rss->set(array(
+            'title' => \Security::html_entity_decode(__('Posts list')),
+            'description' => \Security::html_entity_decode(__('The full list of blog posts.')),
+        ));
+        $this->postsToRss($rss, $posts);
+        $this->displayRss($rss);
+    }
+
+    public function action_rss_posts_category($category_title)
+    {
+        $rss = $this->initRss();
+        $category = $this->_get_category($category_title);
+        $posts = $this->_get_post_list(array('category' => $category));
+        $rss->set(array(
+            'title' => \Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
+            'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
+        ));
+        $this->postsToRss($rss, $posts);
+        $this->displayRss($rss);
+    }
+
+    public function action_rss_posts_tag($tag_title)
+    {
+        $rss = $this->initRss();
+        $tag = $this->_get_tag($tag_title);
+        $posts = $this->_get_post_list(array('tag' => $tag));
+        $rss->set(array(
+            'title' => \Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
+            'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
+        ));
+        $this->postsToRss($rss, $posts);
+        $this->displayRss($rss);
+    }
+
+    public function action_rss_posts_author($author_name)
+    {
+        $rss = $this->initRss();
+        $author = $this->_get_author($author_name);
+        $posts = $this->_get_post_list(array('author' => $author));
+        $rss->set(array(
+            'title' => \Security::html_entity_decode(strtr(__('{{author}}: Posts list'), array('{{author}}' => $author->fullname()))),
+            'description' => \Security::html_entity_decode(strtr(__('Blog posts written by {{author}}.'), array('{{author}}' => $author->fullname()))),
+        ));
+        $this->postsToRss($rss, $posts);
+        $this->displayRss($rss);
+    }
+
+    public function action_rss_comments()
+    {
+        $api_request = array();
+        $api_request['model'] = static::$post_class;
+        $rss = $api_request['model']::commentApi()->getRss($api_request);
+        $rss->set(array(
+            'title' => \Security::html_entity_decode(__('Comments list')),
+            'description' => \Security::html_entity_decode(__('The full list of comments.')),
+        ));
+        $this->displayRss($rss);
+    }
+
+    public function action_rss_comments_post($post_title)
+    {
+        $api_request = array();
+        $api_request['model'] = static::$post_class;
+        $api_request['item'] = $this->_get_post(array(
+            'where' => array(
+                array('post_virtual_name', '=', $post_title),
+                array('post_context', '=', $this->page_from->page_context),
+            ),
+        ));
+        $rss = $api_request['model']::commentApi()->getRss($api_request);
+        $rss->set(array(
+            'title' => \Security::html_entity_decode(strtr(__('{{post}}: Comments list'), array('{{post}}' => $api_request['item']->title_item()))),
+            'description' => \Security::html_entity_decode(strtr(__('Comments to the post ‘{{post}}’.'), array('{{post}}' => $api_request['item']->title_item()))),
+        ));
+
+        $this->displayRss($rss);
+    }
+
+    public function initRss()
+    {
+        $rss = \Nos\Tools_RSS::forge(array(
+            'link' => \Nos\Tools_Url::encodePath($this->main_controller->getUrl()),
+            'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
+        ));
+        return $rss;
+    }
+
+    public function postsToRss($rss, $posts)
+    {
+        $items = array();
+        foreach ($posts as $post) {
+            $items[] = static::_get_rss_post($post, $this->app_config);
+        }
+        $rss->set_items($items);
+    }
+
+    public function displayRss($rss)
+    {
+        $this->main_controller->setHeader('Content-Type', 'application/xml');
+        $this->main_controller->setCacheDuration($this->config['rss_cache_duration']);
+        return $this->main_controller->sendContent($rss->build());
+    }
+
 
     public function action_home($args = array())
     {
@@ -282,9 +320,8 @@ class Controller_Front extends Controller_Front_Application
         );
     }
 
-    public function display_list_tag()
+    public function display_list_tag($tag)
     {
-        list(, $tag) = $this->enhancerUrl_segments;
         $tag = $this->_get_tag($tag);
         $posts = $this->_get_post_list(array('tag' => $tag));
 
@@ -304,9 +341,8 @@ class Controller_Front extends Controller_Front_Application
         ), false);
     }
 
-    public function display_list_category()
+    public function display_list_category($category)
     {
-        list(, $category) = $this->enhancerUrl_segments;
         $category = $this->_get_category($category);
         $posts = $this->_get_post_list(array('category' => $category));
 
@@ -326,9 +362,8 @@ class Controller_Front extends Controller_Front_Application
         ), false);
     }
 
-    public function display_list_author()
+    public function display_list_author($parts_author)
     {
-        list(, $parts_author) = $this->enhancerUrl_segments;
         //id_author is made with 3 parts, only the last one is the id (the others are used for SEO)
         $array_author = explode('_', $parts_author);
         $id_author = array_pop($array_author);
@@ -357,9 +392,8 @@ class Controller_Front extends Controller_Front_Application
      * @param  type            $item_id
      * @return \Fuel\Core\View
      */
-    public function display_item()
+    public function display_item($item_virtual_name)
     {
-        list($item_virtual_name) = $this->enhancerUrl_segments;
         $post = $this->_get_post(array(
             'where' => array(
                 array('post_virtual_name', '=', $item_virtual_name),
