@@ -108,7 +108,45 @@ class Controller_Front extends Controller_Front_Application
 
     public function action_item($title)
     {
-        return $this->display_item($title);
+        $post = $this->_get_post(array(
+            'where' => array(
+                array('post_virtual_name', '=', $title),
+                array('post_context', '=', $this->page_from->page_context),
+            ),
+        ));
+        if (empty($post)) {
+            throw new \Nos\NotFoundException();
+        }
+
+        if ($this->app_config['comments']['enabled']) {
+            $rss_title = strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title));
+            $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
+                'rss/comments/'.$post->post_virtual_name.'.html';
+
+            $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+                'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
+                'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
+        }
+
+        $page = $this->main_controller->getPage();
+        $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
+        $page->page_title = $post->post_title;
+
+        if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
+            if (\Input::post('action') == 'addComment') {
+                $post::commentApi()->addComment(\Input::post());
+                $this->main_controller->deleteCache();
+                \Response::redirect(\Nos\Tools_Url::encodePath($this->main_controller->getUrl()).'#comment_form');
+            }
+        }
+
+        return View::forge(
+            $this->config['views']['item'],
+            array(
+                'item' => $post,
+            ),
+            false
+        );
     }
 
     public function action_stats($id)
@@ -384,55 +422,6 @@ class Controller_Front extends Controller_Front_Application
             'item'        => $author,
             'pagination' => $this->pagination,
         ), false);
-    }
-
-    /**
-     * Display a single item (outside a list context)
-     *
-     * @param  type            $item_id
-     * @return \Fuel\Core\View
-     */
-    public function display_item($item_virtual_name)
-    {
-        $post = $this->_get_post(array(
-            'where' => array(
-                array('post_virtual_name', '=', $item_virtual_name),
-                array('post_context', '=', $this->page_from->page_context),
-            ),
-        ));
-        if (empty($post)) {
-            throw new \Nos\NotFoundException();
-        }
-
-        if ($this->app_config['comments']['enabled']) {
-            $rss_title = strtr(__('{{post}}: Comments list'), array('{{post}}' => $post->post_title));
-            $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
-                'rss/comments/'.$post->post_virtual_name.'.html';
-
-            $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
-                'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
-                'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
-        }
-
-        $page = $this->main_controller->getPage();
-        $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
-        $page->page_title = $post->post_title;
-
-        if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
-            if (\Input::post('action') == 'addComment') {
-                $post::commentApi()->addComment(\Input::post());
-                $this->main_controller->deleteCache();
-                \Response::redirect(\Nos\Tools_Url::encodePath($this->main_controller->getUrl()).'#comment_form');
-            }
-        }
-
-        return View::forge(
-            $this->config['views']['item'],
-            array(
-                'item' => $post,
-            ),
-            false
-        );
     }
 
     protected function _get_post($options = array())
