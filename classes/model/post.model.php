@@ -135,6 +135,7 @@ class Model_Post extends \Nos\Orm\Model
             'created_by_property' => 'post_author_id',
             'updated_by_property' => 'post_updated_by_id',
         ),
+        'Nos\BlogNews\Orm_Behaviour_Cachemanager' => array(),
     );
 
     protected static $_belongs_to  = array();
