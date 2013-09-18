@@ -94,6 +94,7 @@ class Model_Post extends \Nos\Orm\Model
             'default' => null,
             'data_type' => 'varchar',
             'null' => false,
+            'character_maximum_length' => 100,
         ),
         'post_updated_by_id' => array(
             'default' => null,

@@ -31,6 +31,7 @@ class Model_Category extends \Nos\Orm\Model
             'default' => null,
             'data_type' => 'varchar',
             'null' => false,
+            'character_maximum_length' => 100,
         ),
         'cat_context' => array(
             'default' => null,
