@@ -13,7 +13,7 @@ $app_config = \Config::application($current_application);
 
 \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
 
-$check_disabled_draft = function($post) use($current_application) {
+$check_disabled_draft = function ($post) use ($current_application) {
     // Not published => not disabled
     if ($post->planificationStatus() == 0) {
         return false;
@@ -22,7 +22,7 @@ $check_disabled_draft = function($post) use($current_application) {
     return \Nos\User\Permission::atMost($current_application.'::post', '1_draft_only', '2_full_access');
 };
 
-$check_disabled_author = function($post) use($current_application, $app_config) {
+$check_disabled_author = function ($post) use ($current_application, $app_config) {
 
     // When authors are disabled, don't check further and allow the action to be carried out
     if (!$app_config['authors']['enabled']) {
@@ -46,7 +46,7 @@ $config = array(
         'context' => true,
         'author->user_name' => array(
             'title'         => __('Author'),
-            'value' =>  function($item) {
+            'value' =>  function ($item) {
                 return !empty($item->author) ? $item->author->fullname() : $item->post_author_alias;
             },
         ),
@@ -56,8 +56,7 @@ $config = array(
             'dataType' => 'datetime',
             // Works without value on Chrome, but not on Firefox
             'value' =>
-            function ($item)
-            {
+            function ($item) {
                 if ($item->is_new()) {
                     return null;
                 }
