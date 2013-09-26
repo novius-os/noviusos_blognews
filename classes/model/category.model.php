@@ -133,13 +133,11 @@ class Model_Category extends \Nos\Orm\Model
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
                     'value' =>
-                        function($category)
-                        {
+                        function ($category) {
                             return $category->url_canonical();
                         },
                     'options' =>
-                        function($category)
-                        {
+                        function ($category) {
                             return $category->urls();
                         },
                 ),

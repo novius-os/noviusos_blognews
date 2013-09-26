@@ -162,5 +162,4 @@ class Renderer_Selector extends \Nos\Renderer_Selector
             )
         )->response();
     }
-
 }

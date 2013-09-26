@@ -159,8 +159,7 @@ class Model_Post extends \Nos\Orm\Model
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
                     'value' =>
-                        function($post)
-                        {
+                        function ($post) {
                             $urls = $post->urls();
                             if (empty($urls)) {
                                 return null;
@@ -170,20 +169,19 @@ class Model_Post extends \Nos\Orm\Model
                             return key($urls);
                         },
                     'options' =>
-                        function($post)
-                        {
+                        function ($post) {
                             return $post->urls();
                         },
                 ),
                 \Nos\DataCatcher::TYPE_IMAGE => array(
                     'value' =>
-                        function($post) {
+                        function ($post) {
                             $possible = $post->possible_medias();
 
                             return \Arr::get(array_keys($possible), 0, null);
                         },
                     'options' =>
-                        function($post) {
+                        function ($post) {
                             return $post->possible_medias();
                         },
                 ),

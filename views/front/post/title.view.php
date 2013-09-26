@@ -17,5 +17,3 @@ if ($tag == 'h1' && empty($enhancer_args['link_on_title'])) {
     $content = $item->htmlAnchor();
 }
 echo '<', $tag, ' class="blognews_title">', $content, '</', $tag, '>';
-
-
