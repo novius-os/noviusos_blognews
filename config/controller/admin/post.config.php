@@ -178,8 +178,7 @@ $config = array(
             //'dont_populate' => true,
             'before_save' =>
                 function ($item, $data) {
-                    $item->categories;//fetch et 'cree' la relation
-                    unset($item->categories);
+                    $item->categories = array();
 
                     if (!empty($data['categories'])) {
                         $class = get_class($item);
