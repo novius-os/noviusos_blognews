@@ -456,6 +456,20 @@ class Controller_Front extends Controller_Front_Application
             $params['context'] = \Nos\Tools_Context::defaultContext();
         }
 
+        if (isset($params['cat_id'])) {
+            if (!is_array($params['cat_id'])) {
+                $params['cat_id'] = array($params['cat_id']);
+            }
+            $category_class = static::$category_class;
+            $pk = $category_class::primary_key();
+
+            $params['categories'] = $category_class::find('all', array('where' => array(array($pk[0], 'IN', $params['cat_id']))));
+            if (!empty($params['category']) && !in_array($params['category']->cat_id, $params['cat_id'])) {
+                $params['categories'][] = $params['category'];
+                unset($params['category']);
+            }
+        }
+
         // Apply pagination
         if (isset($this->pagination)) {
             $query_count = $post_class::get_query($params);
@@ -475,19 +489,6 @@ class Controller_Front extends Controller_Front_Application
             $params['limit'] = $this->config['item_per_page'];
         }
 
-        if (isset($params['cat_id'])) {
-            if (!is_array($params['cat_id'])) {
-                $params['cat_id'] = array($params['cat_id']);
-            }
-            $category_class = static::$category_class;
-            $pk = $category_class::primary_key();
-
-            $params['categories'] = $category_class::find('all', array('where' => array(array($pk[0], 'IN', $params['cat_id']))));
-            if (!empty($params['category']) && !in_array($params['category']->cat_id, $params['cat_id'])) {
-                $params['categories'][] = $params['category'];
-                unset($params['category']);
-            }
-        }
         if (isset($this->config['order_by'])) {
             $params['order_by'] = $this->config['order_by'];
         }
