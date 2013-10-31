@@ -138,20 +138,23 @@ $config = array(
             'template' => '<p>{field}</p>',
             'populate' =>
             function ($item) {
-                $texts = array(
-                    0       => __('Never read'),
-                    1       => __('Read once'),
-                    'more'  => __('Read {{nb}} times')
-                );
                 if ($item->is_new()) {
                     $item->post_read = 0;
                 }
-                return strtr(
-                    $texts[$item->post_read > 1 ? 'more' : $item->post_read],
-                    array(
-                        '{{nb}}' => $item->post_read
-                    )
-                );
+                if ($item->post_read === 0) {
+                    return __('Never read');
+                } else {
+                    return strtr(
+                        n__(
+                            'Read once',
+                            'Read {{nb}} times',
+                            $item->post_read
+                        ),
+                        array(
+                            '{{nb}}' => $item->post_read
+                        )
+                    );
+                }
             },
         ),
         'tags' => array(
