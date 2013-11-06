@@ -9,7 +9,7 @@
  */
 
 echo $pagination->create_links(
-    function($page) use ($type, $item) {
+    function ($page) use ($type, $item) {
 
         if ($type == 'main') {
             $main_controller = \Nos\Nos::main_controller();

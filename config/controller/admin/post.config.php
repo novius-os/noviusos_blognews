@@ -30,8 +30,6 @@ $config = array(
         'large' => true,
         'medias' => array('medias->thumbnail->medil_media_id'),//'medias->thumbnail->medil_media_id'),
 
-        'save' => 'save',
-
         'subtitle' => array('post_summary'),
 
         'content' => array(
@@ -139,8 +137,7 @@ $config = array(
             'renderer' => 'Nos\Renderer_Text',
             'template' => '<p>{field}</p>',
             'populate' =>
-            function($item)
-            {
+            function ($item) {
                 $texts = array(
                     0       => __('Never read'),
                     1       => __('Read once'),
@@ -180,10 +177,8 @@ $config = array(
             ),
             //'dont_populate' => true,
             'before_save' =>
-                function($item, $data)
-                {
-                    $item->categories;//fetch et 'cree' la relation
-                    unset($item->categories);
+                function ($item, $data) {
+                    $item->categories = array();
 
                     if (!empty($data['categories'])) {
                         $class = get_class($item);
@@ -193,17 +188,6 @@ $config = array(
                         $item->categories = $category_class::find('all', array('where' => array(array('cat_id', 'IN', (array) $data['categories']))));
                     }
                 },
-        ),
-        'save' => array(
-            'label' => '',
-            'form' => array(
-                'type' => 'submit',
-                'tag' => 'button',
-                // Note to translator: This is a submit button
-                'value' => __('Save'),
-                'class' => 'ui-priority-primary',
-                'data-icon' => 'check',
-            ),
         ),
     )
 );
@@ -222,7 +206,7 @@ if (!$app_config['categories']['enabled']) {
     unset($config['fields']['categories']);
 }
 if (!$app_config['authors']['enabled']) {
-    $config['layout']['menu'][__('Properties')]['fields'] = array_filter($config['layout']['menu'][__('Properties')]['fields'], function($item) {
+    $config['layout']['menu'][__('Properties')]['fields'] = array_filter($config['layout']['menu'][__('Properties')]['fields'], function ($item) {
         return !in_array($item, array('author->user_fullname', 'post_author_alias'));
     });
     unset($config['fields']['author->user_fullname']);

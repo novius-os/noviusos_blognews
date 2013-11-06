@@ -131,11 +131,6 @@ return array(
     #: config/controller/admin/post.config.php:147
     'Read {{nb}} times' => '{{nb}}回読まれました',
 
-    #. Note to translator: This is a submit button
-    #: config/controller/admin/post.config.php:203
-    #: config/controller/admin/category.config.php:89
-    'Save' => '保存',
-
     #: config/controller/admin/category.config.php:19
     'Add a category' => 'カテゴリーを追加',
 

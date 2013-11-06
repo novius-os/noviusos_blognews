@@ -48,13 +48,11 @@ class Model_Tag extends \Nos\Orm\Model
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
                     'value' =>
-                        function($tag)
-                        {
+                        function ($tag) {
                             return $tag->url_canonical();
                         },
                     'options' =>
-                        function($tag)
-                        {
+                        function ($tag) {
                             return $tag->urls();
                         },
                 ),

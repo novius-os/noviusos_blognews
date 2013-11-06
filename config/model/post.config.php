@@ -15,7 +15,7 @@ return array(
         'Nos\Orm_Behaviour_Publishable' => array(
             'options' => array(
                 'allow_publish' => array(
-                    'check_draft' => function() use ($current_application) {
+                    'check_draft' => function () use ($current_application) {
                         return \Nos\User\Permission::atLeast($current_application.'::post', '2_full_access', '2_full_access');
                     },
                 ),

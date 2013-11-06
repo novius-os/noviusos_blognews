@@ -94,6 +94,7 @@ class Model_Post extends \Nos\Orm\Model
             'default' => null,
             'data_type' => 'varchar',
             'null' => false,
+            'character_maximum_length' => 100,
         ),
         'post_updated_by_id' => array(
             'default' => null,
@@ -135,6 +136,7 @@ class Model_Post extends \Nos\Orm\Model
             'created_by_property' => 'post_author_id',
             'updated_by_property' => 'post_updated_by_id',
         ),
+        'Nos\BlogNews\Orm_Behaviour_Cachemanager' => array(),
     );
 
     protected static $_belongs_to  = array();
@@ -157,8 +159,7 @@ class Model_Post extends \Nos\Orm\Model
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
                     'value' =>
-                        function($post)
-                        {
+                        function ($post) {
                             $urls = $post->urls();
                             if (empty($urls)) {
                                 return null;
@@ -168,20 +169,19 @@ class Model_Post extends \Nos\Orm\Model
                             return key($urls);
                         },
                     'options' =>
-                        function($post)
-                        {
+                        function ($post) {
                             return $post->urls();
                         },
                 ),
                 \Nos\DataCatcher::TYPE_IMAGE => array(
                     'value' =>
-                        function($post) {
+                        function ($post) {
                             $possible = $post->possible_medias();
 
                             return \Arr::get(array_keys($possible), 0, null);
                         },
                     'options' =>
-                        function($post) {
+                        function ($post) {
                             return $post->possible_medias();
                         },
                 ),

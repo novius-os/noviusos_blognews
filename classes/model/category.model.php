@@ -31,6 +31,7 @@ class Model_Category extends \Nos\Orm\Model
             'default' => null,
             'data_type' => 'varchar',
             'null' => false,
+            'character_maximum_length' => 100,
         ),
         'cat_context' => array(
             'default' => null,
@@ -132,13 +133,11 @@ class Model_Category extends \Nos\Orm\Model
                 ),
                 \Nos\DataCatcher::TYPE_URL => array(
                     'value' =>
-                        function($category)
-                        {
+                        function ($category) {
                             return $category->url_canonical();
                         },
                     'options' =>
-                        function($category)
-                        {
+                        function ($category) {
                             return $category->urls();
                         },
                 ),

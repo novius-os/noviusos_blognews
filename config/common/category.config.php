@@ -11,8 +11,8 @@
 $current_application = \Nos\Application::getCurrent();
 \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
 
-$check_permission_category = function($inverted = false) use ($current_application) {
-    return function($category) use($inverted, $current_application) {
+$check_permission_category = function ($inverted = false) use ($current_application) {
+    return function ($category) use ($inverted, $current_application) {
         $disabled = Nos\User\Permission::exists($current_application.'::category', 'no');
         return $inverted ? !$disabled : $disabled;
     };
