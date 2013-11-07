@@ -160,7 +160,10 @@ return array(
 
     #. Delete action's labels
     #: config/common/tag.config.php:32
-    'Yes, delete this tag' => 'Oui, supprimer ce tag',
+    'Yes, delete this tag' => array(
+        0 => 'Oui, supprimer ce tag',
+        1 => 'Oui, supprimer ces {{count}} tags',
+    ),
 
     #: config/common/post.config.php:48
     'Author' => 'Auteur',
@@ -195,42 +198,34 @@ return array(
 
     #. Delete action's labels
     #: config/common/category.config.php:44
-    'Yes, delete this category' => 'Oui, supprimer cette catégorie',
-
-    #: config/common/category.config.php:45
-    'Yes, delete these {{count}} categories' => 'Oui, supprimer ces {{count}} catégories',
+    'Yes, delete this category' => array(
+        0 => 'Oui, supprimer cette catégorie',
+        1 => 'Oui, supprimer ces {{count}} catégories',
+    ),
 
     #: config/common/category.config.php:47
-    '1 category' => '1 catégories',
-
-    #: config/common/category.config.php:48
-    '{{count}} categories' => '{{count}} catégories',
+    '1 category' => array(
+        0 => '1 catégories',
+        1 => '{{count}} catégories',
+    ),
 
     #. Keep only if the model has the behaviour Contextable
     #: config/common/category.config.php:51
-    'This category exists in <strong>{{context_count}} contexts</strong>.' => 'Cette catégorie existe dans <strong>{{context_count}} contextes</strong>.',
+    'This category exists in <strong>one context</strong>.' => array(
+        0 => 'Cette catégorie existe dans <strong>un contexte</strong>.',
+        1 => 'Cette catégorie existe dans <strong>{{context_count}} contextes</strong>.',
+    ),
 
     #: config/common/category.config.php:52
-    'This category exists in <strong>{{language_count}} languages</strong>.' => 'Cette catégorie existe dans <strong>{{language_count}} langues</strong>.',
-
-    #. Keep only if the model has the behaviours Contextable + Tree
-    #: config/common/category.config.php:55
-    'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'Cette catégorie existe dans <strong>{{context_count}} contextes</strong> eta <strong>{{children_count}} sous-catégories</strong>.',
-
-    #: config/common/category.config.php:56
-    'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>one sub-category</strong>.' => 'Cette catégorie existe dans <strong>{{context_count}} contextes</strong> eta <strong>une sous-catégorie</strong>.',
-
-    #: config/common/category.config.php:57
-    'This category exists in <strong>{{language_count}} languages</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'Cette catégorie existe dans <strong>{{language_count}} langues</strong> et a<strong>{{children_count}} sous-catégories</strong>.',
-
-    #: config/common/category.config.php:58
-    'This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.' => 'Cette catégorie existe dans <strong>{{language_count}} langues</strong> et a<strong>une sous-catégorie</strong>.',
+    'This category exists in <strong>one language</strong>.' => array(
+        0 => 'Cette catégorie existe dans <strong>une langue</strong>.',
+        1 => 'Cette catégorie existe dans <strong>{{language_count}} langues</strong>.',
+    ),
 
     #. Keep only if the model has the behaviour Tree
     #: config/common/category.config.php:61
-    'This category has <strong>1 sub-category</strong>.' => 'Cette catégorie a <strong>une sous-catégorie</strong>.',
-
-    #: config/common/category.config.php:62
-    'This category has <strong>{{children_count}} sub-categories</strong>.' => 'Cette catégorie a <strong>{{children_count}} sous-catégories</strong>.',
-
+    'This category has <strong>one sub-category</strong>.' => array(
+        0 => 'Cette catégorie a <strong>une sous-catégorie</strong>.',
+        1 => 'Cette catégorie a <strong>{{children_count}} sous-catégories</strong>.',
+    ),
 );

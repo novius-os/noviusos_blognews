@@ -41,25 +41,31 @@ return array(
         'deleting item title' => __('Deleting the category ‘{{title}}’'),
 
         # Delete action's labels
-        'deleting button 1 item' => __('Yes, delete this category'),
-        'deleting button N items' => __('Yes, delete these {{count}} categories'),
+        'deleting button N items' => n__(
+            'Yes, delete this category',
+            'Yes, delete these {{count}} categories'
+        ),
 
-        '1 item' => __('1 category'),
-        'N items' => __('{{count}} categories'),
+        'N items' => n__(
+            '1 category',
+            '{{count}} categories'
+        ),
 
         # Keep only if the model has the behaviour Contextable
-        'deleting with N contexts' => __('This category exists in <strong>{{context_count}} contexts</strong>.'),
-        'deleting with N languages' => __('This category exists in <strong>{{language_count}} languages</strong>.'),
-
-        # Keep only if the model has the behaviours Contextable + Tree
-        'deleting with N contexts and N children' => __('This category exists in <strong>{{context_count}} contexts</strong> and has <strong>{{children_count}} sub-categories</strong>.'),
-        'deleting with N contexts and 1 child' => __('This category exists in <strong>{{context_count}} contexts</strong> and has <strong>one sub-category</strong>.'),
-        'deleting with N languages and N children' => __('This category exists in <strong>{{language_count}} languages</strong> and has <strong>{{children_count}} sub-categories</strong>.'),
-        'deleting with N languages and 1 child' => __('This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.'),
+        'deleting with N contexts' => n__(
+            'This category exists in <strong>one context</strong>.',
+            'This category exists in <strong>{{context_count}} contexts</strong>.'
+        ),
+        'deleting with N languages' => n__(
+            'This category exists in <strong>one language</strong>.',
+            'This category exists in <strong>{{language_count}} languages</strong>.'
+        ),
 
         # Keep only if the model has the behaviour Tree
-        'deleting with 1 child' => __('This category has <strong>1 sub-category</strong>.'),
-        'deleting with N children' => __('This category has <strong>{{children_count}} sub-categories</strong>.'),
+        'deleting with N children' => n__(
+            'This category has <strong>one sub-category</strong>.',
+            'This category has <strong>{{children_count}} sub-categories</strong>.'
+        ),
     ),
     'actions' => array(
         'add' => array(

@@ -160,7 +160,9 @@ return array(
 
     #. Delete action's labels
     #: config/common/tag.config.php:32
-    'Yes, delete this tag' => 'はい、このタグを削除します',
+    'Yes, delete this tag' => array(
+        0 => 'はい、このタグを削除します',
+    ),
 
     #: config/common/post.config.php:48
     'Author' => '著者',
@@ -195,42 +197,29 @@ return array(
 
     #. Delete action's labels
     #: config/common/category.config.php:44
-    'Yes, delete this category' => 'はい、このカテゴリーを削除します',
-
-    #: config/common/category.config.php:45
-    'Yes, delete these {{count}} categories' => 'はい、これら {{count}} 個のカテゴリーを削除します',
+    'Yes, delete this category' => array(
+        0 => 'はい、これら {{count}} 個のカテゴリーを削除します',
+    ),
 
     #: config/common/category.config.php:47
-    '1 category' => '1 個のカテゴリー',
-
-    #: config/common/category.config.php:48
-    '{{count}} categories' => '{{count}} 個のカテゴリー',
+    '1 category' => array(
+        0 => '{{count}} 個のカテゴリー',
+    ),
 
     #. Keep only if the model has the behaviour Contextable
     #: config/common/category.config.php:51
-    'This category exists in <strong>{{context_count}} contexts</strong>.' => 'このカテゴリーは、<strong>{{context_count}} 個のコンテキスト</strong>に存在します。',
+    'This category exists in <strong>one context</strong>.' => array(
+        0 => 'このカテゴリーは、<strong>{{context_count}} 個のコンテキスト</strong>に存在します。',
+    ),
 
     #: config/common/category.config.php:52
-    'This category exists in <strong>{{language_count}} languages</strong>.' => 'このカテゴリーは、<strong>{{language_count}} 個の言語</strong>に存在します。',
-
-    #. Keep only if the model has the behaviours Contextable + Tree
-    #: config/common/category.config.php:55
-    'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'このカテゴリーは、<strong>{{context_count}} 個のコンテキスト</strong>に存在し、<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
-
-    #: config/common/category.config.php:56
-    'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>one sub-category</strong>.' => 'このカテゴリーは、<strong>{{context_count}} 個のコンテキスト</strong>に存在し、<strong>1 個のサブカテゴリー</strong>があります。',
-
-    #: config/common/category.config.php:57
-    'This category exists in <strong>{{language_count}} languages</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'このカテゴリーは<strong>{{language_count}} 個の言語</strong>に存在し、<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
-
-    #: config/common/category.config.php:58
-    'This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.' => 'このカテゴリーは<strong>{{language_count}} 個の言語</strong>に存在し、<strong>1 個のサブカテゴリー</strong>があります。',
+    'This category exists in <strong>one language</strong>.' => array(
+        0 => 'このカテゴリーは、<strong>{{language_count}} 個の言語</strong>に存在します。',
+    ),
 
     #. Keep only if the model has the behaviour Tree
     #: config/common/category.config.php:61
-    'This category has <strong>1 sub-category</strong>.' => 'このカテゴリーには<strong>1 個のサブカテゴリー</strong>があります。',
-
-    #: config/common/category.config.php:62
-    'This category has <strong>{{children_count}} sub-categories</strong>.' => 'このカテゴリーには<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
-
+    'This category has <strong>one sub-category</strong>.' => array(
+        1 => 'このカテゴリーには<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
+    ),
 );
