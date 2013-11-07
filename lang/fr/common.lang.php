@@ -1,18 +1,18 @@
 <?php
 
-// Generated on 19/08/2013 18:12:14
+// Generated on 07/11/2013 15:24:52
 
-// 67 out of 67 messages are translated (100%).
-// 286 out of 286 words are translated (100%).
+// 58 out of 58 messages are translated (100%).
+// 230 out of 230 words are translated (100%).
 
 return array(
-    #: classes/model/post.model.php:156
+    #: classes/model/post.model.php:158
     'Use post title' => 'Reprendre le titre du billet',
 
     #: classes/model/post.model.php:190
     'Use post summary' => 'Reprendre le chapeau du billet',
 
-    #: classes/model/category.model.php:131
+    #: classes/model/category.model.php:132
     'Use category title' => 'Reprendre le titre de la catégorie',
 
     #: classes/model/tag.model.php:47
@@ -50,9 +50,9 @@ return array(
     'Authors' => 'Auteurs',
 
     #: config/controller/admin/inspector/tag.config.php:19
-    #: config/controller/admin/post.config.php:63
+    #: config/controller/admin/post.config.php:61
     #: config/controller/admin/post.config.php:161
-    #: config/controller/admin/post.config.php:216
+    #: config/controller/admin/post.config.php:203
     #: config/common/tag.config.php:16
     'Tags' => 'Tags',
 
@@ -80,52 +80,52 @@ return array(
     #: config/controller/admin/post.config.php:24
     'Translate a post' => 'Traduire un billet',
 
-    #: config/controller/admin/post.config.php:41
-    #: config/controller/admin/post.config.php:117
+    #: config/controller/admin/post.config.php:39
+    #: config/controller/admin/post.config.php:115
     'Content' => 'Contenu',
 
     #. user_fullname is not a real field in the database
-    #: config/controller/admin/post.config.php:60
-    #: config/controller/admin/post.config.php:225
+    #: config/controller/admin/post.config.php:58
+    #: config/controller/admin/post.config.php:212
     #: config/controller/admin/category.config.php:30
     'Properties' => 'Propriétés',
 
-    #: config/controller/admin/post.config.php:61
+    #: config/controller/admin/post.config.php:59
     'URL (post address)' => 'URL (adresse du billet)',
 
-    #: config/controller/admin/post.config.php:62
-    #: config/controller/admin/post.config.php:221
+    #: config/controller/admin/post.config.php:60
+    #: config/controller/admin/post.config.php:208
     #: config/common/category.config.php:24
     'Categories' => 'Catégories',
 
-    #: config/controller/admin/post.config.php:77
-    #: config/controller/admin/category.config.php:53
+    #: config/controller/admin/post.config.php:75
+    #: config/controller/admin/category.config.php:52
     #: config/common/post.config.php:44
     'Title' => 'Titre',
 
-    #: config/controller/admin/post.config.php:87
+    #: config/controller/admin/post.config.php:85
     'Summary' => 'Chapeau',
 
-    #: config/controller/admin/post.config.php:96
+    #: config/controller/admin/post.config.php:94
     'Change the author’s name (alias):' => 'Changer le nom de l’auteur (alias)&nbsp;:',
 
-    #: config/controller/admin/post.config.php:102
-    #: config/controller/admin/category.config.php:63
+    #: config/controller/admin/post.config.php:100
+    #: config/controller/admin/category.config.php:62
     'URL:' => 'URL&nbsp;:',
 
-    #: config/controller/admin/post.config.php:110
+    #: config/controller/admin/post.config.php:108
     'Author:' => 'Auteur&nbsp;:',
 
-    #: config/controller/admin/post.config.php:129
+    #: config/controller/admin/post.config.php:127
     'Thumbnail' => 'Vignette',
 
-    #: config/controller/admin/post.config.php:134
+    #: config/controller/admin/post.config.php:132
     'Created on:' => 'Créé le&nbsp;:',
 
     #: config/controller/admin/post.config.php:145
     'Never read' => 'Pas encore lu',
 
-    #: config/controller/admin/post.config.php:146
+    #: config/controller/admin/post.config.php:149
     'Read once' => array(
         0 => 'Lu 1 fois',
         1 => 'Lu {{nb}} fois',
@@ -137,10 +137,10 @@ return array(
     #: config/controller/admin/category.config.php:20
     'Translate a category' => 'Traduire une catégorie',
 
-    #: config/controller/admin/category.config.php:72
+    #: config/controller/admin/category.config.php:71
     'Location:' => 'Emplacement&nbsp;:',
 
-    #: config/config.php:63
+    #: config/config.php:62
     'Blog' => 'Blog',
 
     #. Crud
@@ -158,8 +158,7 @@ return array(
     #: config/common/tag.config.php:29
     'Deleting the tag ‘{{title}}’' => 'Supprimer le tag «&nbsp;{{title}}&nbsp;»',
 
-    #. Delete action's labels
-    #: config/common/tag.config.php:32
+    #: config/common/tag.config.php:33
     'Yes, delete this tag' => array(
         0 => 'Oui, supprimer ce tag',
         1 => 'Oui, supprimer ces {{count}} tags',
@@ -196,36 +195,34 @@ return array(
     #: config/common/category.config.php:41
     'Deleting the category ‘{{title}}’' => 'Supprimer la catégorie «&nbsp;{{title}}&nbsp;»',
 
-    #. Delete action's labels
-    #: config/common/category.config.php:44
+    #: config/common/category.config.php:45
     'Yes, delete this category' => array(
         0 => 'Oui, supprimer cette catégorie',
         1 => 'Oui, supprimer ces {{count}} catégories',
     ),
 
-    #: config/common/category.config.php:47
+    #: config/common/category.config.php:50
     '1 category' => array(
         0 => '1 catégories',
         1 => '{{count}} catégories',
     ),
 
-    #. Keep only if the model has the behaviour Contextable
-    #: config/common/category.config.php:51
+    #: config/common/category.config.php:56
     'This category exists in <strong>one context</strong>.' => array(
         0 => 'Cette catégorie existe dans <strong>un contexte</strong>.',
         1 => 'Cette catégorie existe dans <strong>{{context_count}} contextes</strong>.',
     ),
 
-    #: config/common/category.config.php:52
+    #: config/common/category.config.php:60
     'This category exists in <strong>one language</strong>.' => array(
         0 => 'Cette catégorie existe dans <strong>une langue</strong>.',
         1 => 'Cette catégorie existe dans <strong>{{language_count}} langues</strong>.',
     ),
 
-    #. Keep only if the model has the behaviour Tree
-    #: config/common/category.config.php:61
+    #: config/common/category.config.php:66
     'This category has <strong>one sub-category</strong>.' => array(
         0 => 'Cette catégorie a <strong>une sous-catégorie</strong>.',
         1 => 'Cette catégorie a <strong>{{children_count}} sous-catégories</strong>.',
     ),
+
 );

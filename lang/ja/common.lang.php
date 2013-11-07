@@ -1,18 +1,18 @@
 <?php
 
-// Generated on 19/08/2013 18:12:14
+// Generated on 07/11/2013 15:24:52
 
-// 58 out of 67 messages are translated (86%).
-// 244 out of 286 words are translated (86%).
+// 58 out of 58 messages are translated (100%).
+// 230 out of 230 words are translated (100%).
 
 return array(
-    #: classes/model/post.model.php:156
+    #: classes/model/post.model.php:158
     'Use post title' => '投稿タイトルを使用する',
 
     #: classes/model/post.model.php:190
     'Use post summary' => '投稿サマリを使用する',
 
-    #: classes/model/category.model.php:131
+    #: classes/model/category.model.php:132
     'Use category title' => 'カテゴリータイトルを使用する',
 
     #: classes/model/tag.model.php:47
@@ -50,9 +50,9 @@ return array(
     'Authors' => '著者',
 
     #: config/controller/admin/inspector/tag.config.php:19
-    #: config/controller/admin/post.config.php:63
+    #: config/controller/admin/post.config.php:61
     #: config/controller/admin/post.config.php:161
-    #: config/controller/admin/post.config.php:216
+    #: config/controller/admin/post.config.php:203
     #: config/common/tag.config.php:16
     'Tags' => 'タグ',
 
@@ -80,52 +80,52 @@ return array(
     #: config/controller/admin/post.config.php:24
     'Translate a post' => '投稿を翻訳',
 
-    #: config/controller/admin/post.config.php:41
-    #: config/controller/admin/post.config.php:117
+    #: config/controller/admin/post.config.php:39
+    #: config/controller/admin/post.config.php:115
     'Content' => 'コンテンツ',
 
     #. user_fullname is not a real field in the database
-    #: config/controller/admin/post.config.php:60
-    #: config/controller/admin/post.config.php:225
+    #: config/controller/admin/post.config.php:58
+    #: config/controller/admin/post.config.php:212
     #: config/controller/admin/category.config.php:30
     'Properties' => 'プロパティ',
 
-    #: config/controller/admin/post.config.php:61
+    #: config/controller/admin/post.config.php:59
     'URL (post address)' => 'URL (投稿アドレス)',
 
-    #: config/controller/admin/post.config.php:62
-    #: config/controller/admin/post.config.php:221
+    #: config/controller/admin/post.config.php:60
+    #: config/controller/admin/post.config.php:208
     #: config/common/category.config.php:24
     'Categories' => 'カテゴリー',
 
-    #: config/controller/admin/post.config.php:77
-    #: config/controller/admin/category.config.php:53
+    #: config/controller/admin/post.config.php:75
+    #: config/controller/admin/category.config.php:52
     #: config/common/post.config.php:44
     'Title' => 'タイトル',
 
-    #: config/controller/admin/post.config.php:87
+    #: config/controller/admin/post.config.php:85
     'Summary' => 'サマリ',
 
-    #: config/controller/admin/post.config.php:96
+    #: config/controller/admin/post.config.php:94
     'Change the author’s name (alias):' => '著者名 (別名) を変更:',
 
-    #: config/controller/admin/post.config.php:102
-    #: config/controller/admin/category.config.php:63
+    #: config/controller/admin/post.config.php:100
+    #: config/controller/admin/category.config.php:62
     'URL:' => 'URL:',
 
-    #: config/controller/admin/post.config.php:110
+    #: config/controller/admin/post.config.php:108
     'Author:' => '著者:',
 
-    #: config/controller/admin/post.config.php:129
+    #: config/controller/admin/post.config.php:127
     'Thumbnail' => '',
 
-    #: config/controller/admin/post.config.php:134
+    #: config/controller/admin/post.config.php:132
     'Created on:' => '作成日:',
 
     #: config/controller/admin/post.config.php:145
     'Never read' => 'まだ読まれていません',
 
-    #: config/controller/admin/post.config.php:146
+    #: config/controller/admin/post.config.php:149
     'Read once' => array(
         0 => '{{nb}}回読まれました',
     ),
@@ -136,10 +136,10 @@ return array(
     #: config/controller/admin/category.config.php:20
     'Translate a category' => 'カテゴリーを翻訳',
 
-    #: config/controller/admin/category.config.php:72
+    #: config/controller/admin/category.config.php:71
     'Location:' => '位置:',
 
-    #: config/config.php:63
+    #: config/config.php:62
     'Blog' => 'ブログ',
 
     #. Crud
@@ -157,8 +157,7 @@ return array(
     #: config/common/tag.config.php:29
     'Deleting the tag ‘{{title}}’' => 'タグ ‘{{title}}’ を削除します',
 
-    #. Delete action's labels
-    #: config/common/tag.config.php:32
+    #: config/common/tag.config.php:33
     'Yes, delete this tag' => array(
         0 => 'はい、このタグを削除します',
     ),
@@ -194,31 +193,29 @@ return array(
     #: config/common/category.config.php:41
     'Deleting the category ‘{{title}}’' => 'カテゴリー ‘{{title}}’ を削除します',
 
-    #. Delete action's labels
-    #: config/common/category.config.php:44
+    #: config/common/category.config.php:45
     'Yes, delete this category' => array(
         0 => 'はい、これら {{count}} 個のカテゴリーを削除します',
     ),
 
-    #: config/common/category.config.php:47
+    #: config/common/category.config.php:50
     '1 category' => array(
         0 => '{{count}} 個のカテゴリー',
     ),
 
-    #. Keep only if the model has the behaviour Contextable
-    #: config/common/category.config.php:51
+    #: config/common/category.config.php:56
     'This category exists in <strong>one context</strong>.' => array(
         0 => 'このカテゴリーは、<strong>{{context_count}} 個のコンテキスト</strong>に存在します。',
     ),
 
-    #: config/common/category.config.php:52
+    #: config/common/category.config.php:60
     'This category exists in <strong>one language</strong>.' => array(
         0 => 'このカテゴリーは、<strong>{{language_count}} 個の言語</strong>に存在します。',
     ),
 
-    #. Keep only if the model has the behaviour Tree
-    #: config/common/category.config.php:61
+    #: config/common/category.config.php:66
     'This category has <strong>one sub-category</strong>.' => array(
-        1 => 'このカテゴリーには<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
+        0 => 'このカテゴリーには<strong>{{children_count}} 個のサブカテゴリー</strong>があります。',
     ),
+
 );
