@@ -126,10 +126,9 @@ return array(
     'Never read' => 'まだ読まれていません',
 
     #: config/controller/admin/post.config.php:146
-    'Read once' => '一回読まれました',
-
-    #: config/controller/admin/post.config.php:147
-    'Read {{nb}} times' => '{{nb}}回読まれました',
+    'Read once' => array(
+        0 => '{{nb}}回読まれました',
+    ),
 
     #: config/controller/admin/category.config.php:19
     'Add a category' => 'カテゴリーを追加',

@@ -50,10 +50,11 @@ return array(
     'The full list of comments.' => '全てのコメントの一覧です。',
 
     #: views/front/comment/nb.view.php:18
-    '{{nb}} comments' => '{{nb}} 件のコメント',
 
     #: views/front/comment/nb.view.php:20
-    '1 comment' => '1 件のコメント',
+    '1 comment' => array(
+        0 => '{{nb}} 件のコメント',
+    ),
 
     #: views/front/comment/nb.view.php:23
     'No comments' => 'コメント無し',

@@ -49,11 +49,11 @@ return array(
     #: classes/controller/front.ctrl.php:236
     'The full list of comments.' => 'La liste complète des commentaires.',
 
-    #: views/front/comment/nb.view.php:18
-    '{{nb}} comments' => '{{nb}} commentaires',
-
     #: views/front/comment/nb.view.php:20
-    '1 comment' => '1 commentaire',
+    '1 comment' => array(
+        0 => '1 commentaire',
+        1 => '{{nb}} commentaires',
+    ),
 
     #: views/front/comment/nb.view.php:23
     'No comments' => 'Pas de commentaire',

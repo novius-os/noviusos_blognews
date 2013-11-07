@@ -126,10 +126,10 @@ return array(
     'Never read' => 'Pas encore lu',
 
     #: config/controller/admin/post.config.php:146
-    'Read once' => 'Lu 1 fois',
-
-    #: config/controller/admin/post.config.php:147
-    'Read {{nb}} times' => 'Lu {{nb}} fois',
+    'Read once' => array(
+        0 => 'Lu 1 fois',
+        1 => 'Lu {{nb}} fois',
+    ),
 
     #: config/controller/admin/category.config.php:19
     'Add a category' => 'Ajouter une catégorie',
