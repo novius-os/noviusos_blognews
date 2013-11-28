@@ -10,7 +10,7 @@
 
 return array(
     'name'    => 'BlogNews',
-    'version' => 'chiba.2.2',
+    'version' => 'chiba.2.3',
     'provider' => array(
         'name' => 'Novius Dev',
     ),
