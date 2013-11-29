@@ -292,9 +292,11 @@ class Controller_Front extends Controller_Front_Application
         $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
             'rss/posts/tag/'.urlencode($tag->tag_label).'.html';
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+        $this->main_controller->addMeta(
+            '<link rel="alternate" type="application/rss+xml" '.
             'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
-            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
+            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
+        );
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -314,9 +316,11 @@ class Controller_Front extends Controller_Front_Application
         $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
             'rss/posts/category/'.$category->cat_virtual_name.'.html';
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+        $this->main_controller->addMeta(
+            '<link rel="alternate" type="application/rss+xml" '.
             'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
-            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
+            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
+        );
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -339,9 +343,11 @@ class Controller_Front extends Controller_Front_Application
         $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
             'rss/posts/author/'.$id_author.'.html';
 
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+        $this->main_controller->addMeta(
+            '<link rel="alternate" type="application/rss+xml" '.
             'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
-            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
+            'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
+        );
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -375,9 +381,11 @@ class Controller_Front extends Controller_Front_Application
             $rss_url = $this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().
                 'rss/comments/'.$post->post_virtual_name.'.html';
 
-            $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" '.
+            $this->main_controller->addMeta(
+                '<link rel="alternate" type="application/rss+xml" '.
                 'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
-                'href="'.\Nos\Tools_Url::encodePath($rss_url).'">');
+                'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
+            );
         }
 
         $page = $this->main_controller->getPage();
