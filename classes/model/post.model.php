@@ -147,6 +147,7 @@ class Model_Post extends \Nos\Orm\Model
     {
         $class = get_called_class();
         list($app) = \Config::configFile($class);
+        \Config::load($app.'::config', true);
         $withCom = \Config::get($app.'::config.comments.enabled');
 
         \Nos\I18n::current_dictionary(array('noviusos_blognews::common'));
