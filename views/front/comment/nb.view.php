@@ -15,11 +15,14 @@ if ($blognews_config['comments']['enabled'] && $blognews_config['comments']['sho
     <div class="blognews_nb_comments">
     <?php
     if ($item->count_comments() > 0) {
-        if ($item->count_comments() > 1) {
-            echo e(strtr(__('{{nb}} comments'), array('{{nb}}' => $item->count_comments())));
-        } else {
-            echo e(__('1 comment'));
-        }
+        echo e(strtr(
+            n__(
+                '1 comment',
+                '{{nb}} comments',
+                $item->count_comments()
+            ),
+            array('{{nb}}' => $item->count_comments())
+        ));
     } else {
         echo e(__('No comments'));
     }

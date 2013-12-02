@@ -29,7 +29,10 @@ return array(
         'deleting item title' => __('Deleting the tag ‘{{title}}’'),
 
         # Delete action's labels
-        'deleting button 1 item' => __('Yes, delete this tag'),
+        'deleting button N items' => n__(
+            'Yes, delete this tag',
+            'Yes, delete these {{count}} tags'
+        ),
     ),
     'actions' => array(
         '{{namespace}}\Model_Tag.edit' => false,
