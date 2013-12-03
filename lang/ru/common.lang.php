@@ -1,6 +1,6 @@
 <?php
 
-// Generated on 03/12/2013 16:06:58
+// Generated on 03/12/2013 16:22:23
 
 // 55 out of 58 messages are translated (94%).
 // 213 out of 230 words are translated (94%).
@@ -130,7 +130,6 @@ return array(
         0 => 'Прочитано 1 раз',
         1 => 'Прочитано {{nb}} раз',
         2 => '',
-        3 => '',
     ),
 
     #: config/controller/admin/category.config.php:19
@@ -165,7 +164,6 @@ return array(
         0 => 'Да, я хочу удалить этот тэг',
         1 => '',
         2 => '',
-        3 => '',
     ),
 
     #: config/common/post.config.php:48
@@ -204,7 +202,6 @@ return array(
         0 => 'Да, я хочу удалить эту категорию',
         1 => 'Да, я хочу удалить {{count}} категории',
         2 => '',
-        3 => '',
     ),
 
     #: config/common/category.config.php:50
@@ -212,7 +209,6 @@ return array(
         0 => '1 категория',
         1 => '{{count}} категорий',
         2 => '',
-        3 => '',
     ),
 
     #: config/common/category.config.php:56
@@ -220,7 +216,6 @@ return array(
         0 => '',
         1 => '',
         2 => 'Категория присутствует в <strong>{{context_count}} контекстах</strong>.',
-        3 => '',
     ),
 
     #: config/common/category.config.php:60
@@ -228,7 +223,6 @@ return array(
         0 => '',
         1 => '',
         2 => 'Категория доступна на <strong>{{language_count}} языках</strong>.',
-        3 => '',
     ),
 
     #: config/common/category.config.php:66
@@ -236,7 +230,6 @@ return array(
         0 => '',
         1 => '',
         2 => 'Эта категория имеет <strong>{{children_count}} подкатегорий</strong>.',
-        3 => '',
     ),
 
 );
