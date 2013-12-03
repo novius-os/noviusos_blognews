@@ -1,9 +1,9 @@
 <?php
 
-// Generated on 02/12/2013 17:53:33
+// Generated on 03/12/2013 16:06:58
 
-// 21 out of 21 messages are translated (100%).
-// 68 out of 68 words are translated (100%).
+// 20 out of 20 messages are translated (100%).
+// 66 out of 66 words are translated (100%).
 
 return array(
     #. Note to translator: The following texts are related to RSS feeds
@@ -19,7 +19,7 @@ return array(
     'The full list of blog posts.' => 'Полный список постов в блоге.',
 
     #: classes/controller/front.ctrl.php:184
-    #: classes/controller/front.ctrl.php:311
+    #: classes/controller/front.ctrl.php:313
     '{{category}}: Posts list' => '{{category}}: Список постов',
 
     #: classes/controller/front.ctrl.php:185
@@ -33,14 +33,14 @@ return array(
     'Blog posts listed under the ‘{{tag}}’ tag.' => 'Список постов с тэгом «{{tag}}».',
 
     #: classes/controller/front.ctrl.php:198
-    #: classes/controller/front.ctrl.php:336
+    #: classes/controller/front.ctrl.php:340
     '{{author}}: Posts list' => '{{author}}: Список постов',
 
     #: classes/controller/front.ctrl.php:199
     'Blog posts written by {{author}}.' => 'Посты в блоге, написанные {{author}}.',
 
     #: classes/controller/front.ctrl.php:226
-    #: classes/controller/front.ctrl.php:372
+    #: classes/controller/front.ctrl.php:378
     '{{post}}: Comments list' => '{{post}}: Список комментариев',
 
     #: classes/controller/front.ctrl.php:227
@@ -49,13 +49,15 @@ return array(
     #: classes/controller/front.ctrl.php:232
     'The full list of comments.' => 'Весь список комментариев.',
 
-    #: views/front/comment/nb.view.php:18
-    '{{nb}} comments' => '{{nb}} комментариев',
+    #: views/front/comment/nb.view.php:19
+    '1 comment' => array(
+        0 => '1 комментарий',
+        1 => '{{nb}} комментариев',
+        2 => '',
+        3 => '',
+    ),
 
-    #: views/front/comment/nb.view.php:20
-    '1 comment' => '1 комментарий',
-
-    #: views/front/comment/nb.view.php:23
+    #: views/front/comment/nb.view.php:26
     'No comments' => 'Нет комментариев',
 
     #: views/front/post/publication_date.view.php:23

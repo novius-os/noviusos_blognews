@@ -1,9 +1,9 @@
 <?php
 
-// Generated on 02/12/2013 17:53:33
+// Generated on 03/12/2013 16:06:58
 
-// 21 out of 21 messages are translated (100%).
-// 68 out of 68 words are translated (100%).
+// 20 out of 20 messages are translated (100%).
+// 66 out of 66 words are translated (100%).
 
 return array(
     #. Note to translator: The following texts are related to RSS feeds
@@ -49,13 +49,12 @@ return array(
     #: classes/controller/front.ctrl.php:232
     'The full list of comments.' => '全てのコメントの一覧です。',
 
-    #: views/front/comment/nb.view.php:18
-    '{{nb}} comments' => '{{nb}} 件のコメント',
+    #: views/front/comment/nb.view.php:19
+    '1 comment' => array(
+        0 => '1 件のコメント',
+    ),
 
-    #: views/front/comment/nb.view.php:20
-    '1 comment' => '1 件のコメント',
-
-    #: views/front/comment/nb.view.php:23
+    #: views/front/comment/nb.view.php:26
     'No comments' => 'コメント無し',
 
     #: views/front/post/publication_date.view.php:23

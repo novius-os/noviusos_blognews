@@ -1,18 +1,18 @@
 <?php
 
-// Generated on 02/12/2013 17:53:33
+// Generated on 03/12/2013 16:06:58
 
-// 66 out of 66 messages are translated (100%).
-// 285 out of 285 words are translated (100%).
+// 58 out of 58 messages are translated (100%).
+// 230 out of 230 words are translated (100%).
 
 return array(
-    #: classes/model/post.model.php:157
+    #: classes/model/post.model.php:158
     'Use post title' => 'Usar li titul del post.',
 
-    #: classes/model/post.model.php:191
+    #: classes/model/post.model.php:190
     'Use post summary' => 'Usar li summarium del post',
 
-    #: classes/model/category.model.php:131
+    #: classes/model/category.model.php:132
     'Use category title' => 'Usar li titul del categorie',
 
     #: classes/model/tag.model.php:47
@@ -51,7 +51,7 @@ return array(
 
     #: config/controller/admin/inspector/tag.config.php:19
     #: config/controller/admin/post.config.php:61
-    #: config/controller/admin/post.config.php:159
+    #: config/controller/admin/post.config.php:161
     #: config/controller/admin/post.config.php:203
     #: config/common/tag.config.php:16
     'Tags' => 'Tags',
@@ -122,14 +122,14 @@ return array(
     #: config/controller/admin/post.config.php:132
     'Created on:' => 'Creat li:',
 
-    #: config/controller/admin/post.config.php:143
+    #: config/controller/admin/post.config.php:145
     'Never read' => 'Nequande leet',
 
-    #: config/controller/admin/post.config.php:144
-    'Read once' => 'Leet un vez',
-
-    #: config/controller/admin/post.config.php:145
-    'Read {{nb}} times' => 'Leet {{nb}} vezes',
+    #: config/controller/admin/post.config.php:149
+    'Read once' => array(
+        0 => 'Leet un vez',
+        1 => 'Leet {{nb}} vezes',
+    ),
 
     #: config/controller/admin/category.config.php:19
     'Add a category' => 'Addir un categorie',
@@ -158,9 +158,11 @@ return array(
     #: config/common/tag.config.php:29
     'Deleting the tag ‘{{title}}’' => 'Delete li tag ‘{{title}}’',
 
-    #. Delete action's labels
-    #: config/common/tag.config.php:32
-    'Yes, delete this tag' => 'Yes, delete ti tag',
+    #: config/common/tag.config.php:33
+    'Yes, delete this tag' => array(
+        0 => 'Yes, delete ti tag',
+        1 => '',
+    ),
 
     #: config/common/post.config.php:48
     'Author' => 'Autor',
@@ -193,44 +195,34 @@ return array(
     #: config/common/category.config.php:41
     'Deleting the category ‘{{title}}’' => 'Deleter li categorie ‘{{title}}’',
 
-    #. Delete action's labels
-    #: config/common/category.config.php:44
-    'Yes, delete this category' => 'Yes, delete ti categorie',
-
     #: config/common/category.config.php:45
-    'Yes, delete these {{count}} categories' => 'Yes, delete ti {{count}} categories',
+    'Yes, delete this category' => array(
+        0 => 'Yes, delete ti categorie',
+        1 => 'Yes, delete ti {{count}} categories',
+    ),
 
-    #: config/common/category.config.php:47
-    '1 category' => '1 categorie',
-
-    #: config/common/category.config.php:48
-    '{{count}} categories' => '{{count}} categories',
-
-    #. Keep only if the model has the behaviour Contextable
-    #: config/common/category.config.php:51
-    'This category exists in <strong>{{context_count}} contexts</strong>.' => 'Ti categorie existe in <strong>{{context_count}} contextus</strong>.',
-
-    #: config/common/category.config.php:52
-    'This category exists in <strong>{{language_count}} languages</strong>.' => 'Ti categorie existe in <strong>{{language_count}} lingues</strong>.',
-
-    #. Keep only if the model has the behaviours Contextable + Tree
-    #: config/common/category.config.php:55
-    'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'Ti categorie existe in <strong>{{context_count}} contexuts</strong> e have <strong>{{children_count}} sub-categories</strong>.',
+    #: config/common/category.config.php:50
+    '1 category' => array(
+        0 => '1 categorie',
+        1 => '{{count}} categories',
+    ),
 
     #: config/common/category.config.php:56
-    'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>one sub-category</strong>.' => 'Ti categorie existe in <strong>{{context_count}} contextus</strong> e have <strong>un sub-categorie</strong>.',
+    'This category exists in <strong>one context</strong>.' => array(
+        0 => 'Ti categorie existe in <strong>1 contextu</strong>.',
+        1 => 'Ti categorie existe in <strong>{{context_count}} contextus</strong>.',
+    ),
 
-    #: config/common/category.config.php:57
-    'This category exists in <strong>{{language_count}} languages</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'Ti categorie existe in <strong>{{language_count}} lingues</strong> e have <strong> {{children_count}} sub-categories</strong>.',
+    #: config/common/category.config.php:60
+    'This category exists in <strong>one language</strong>.' => array(
+        0 => 'Ti categorie existe in <strong>1 lingue</strong>.',
+        1 => 'Ti categorie existe in <strong>{{language_count}} lingues</strong>.',
+    ),
 
-    #: config/common/category.config.php:58
-    'This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.' => 'Ti categorie existe in <strong>{{language_count}} lingues</strong> e have <strong>un sub-categorie</strong>.',
-
-    #. Keep only if the model has the behaviour Tree
-    #: config/common/category.config.php:61
-    'This category has <strong>1 sub-category</strong>.' => 'Ti categorie have <strong>1 sub-categorie</strong>.',
-
-    #: config/common/category.config.php:62
-    'This category has <strong>{{children_count}} sub-categories</strong>.' => 'Ti categorie have <strong>{{children_count}} sub-categories</strong>.',
+    #: config/common/category.config.php:66
+    'This category has <strong>one sub-category</strong>.' => array(
+        0 => 'Ti categorie have <strong>1 sub-categorie</strong>.',
+        1 => 'Ti categorie have <strong>{{children_count}}  sub-categories</strong>.',
+    ),
 
 );

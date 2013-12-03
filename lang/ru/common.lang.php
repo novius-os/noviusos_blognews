@@ -1,9 +1,9 @@
 <?php
 
-// Generated on 02/12/2013 17:53:33
+// Generated on 03/12/2013 16:06:58
 
-// 66 out of 66 messages are translated (100%).
-// 285 out of 285 words are translated (100%).
+// 55 out of 58 messages are translated (94%).
+// 213 out of 230 words are translated (94%).
 
 return array(
     #: classes/model/post.model.php:158
@@ -51,8 +51,8 @@ return array(
 
     #: config/controller/admin/inspector/tag.config.php:19
     #: config/controller/admin/post.config.php:61
-    #: config/controller/admin/post.config.php:158
-    #: config/controller/admin/post.config.php:200
+    #: config/controller/admin/post.config.php:161
+    #: config/controller/admin/post.config.php:203
     #: config/common/tag.config.php:16
     'Tags' => 'Тэги',
 
@@ -86,7 +86,7 @@ return array(
 
     #. user_fullname is not a real field in the database
     #: config/controller/admin/post.config.php:58
-    #: config/controller/admin/post.config.php:209
+    #: config/controller/admin/post.config.php:212
     #: config/controller/admin/category.config.php:30
     'Properties' => 'Свойства',
 
@@ -94,7 +94,7 @@ return array(
     'URL (post address)' => 'URL (адрес поста)',
 
     #: config/controller/admin/post.config.php:60
-    #: config/controller/admin/post.config.php:205
+    #: config/controller/admin/post.config.php:208
     #: config/common/category.config.php:24
     'Categories' => 'Категории',
 
@@ -122,14 +122,16 @@ return array(
     #: config/controller/admin/post.config.php:132
     'Created on:' => 'Создано:',
 
-    #: config/controller/admin/post.config.php:142
+    #: config/controller/admin/post.config.php:145
     'Never read' => 'Не прочитано',
 
-    #: config/controller/admin/post.config.php:143
-    'Read once' => 'Прочитано 1 раз',
-
-    #: config/controller/admin/post.config.php:144
-    'Read {{nb}} times' => 'Прочитано {{nb}} раз',
+    #: config/controller/admin/post.config.php:149
+    'Read once' => array(
+        0 => 'Прочитано 1 раз',
+        1 => 'Прочитано {{nb}} раз',
+        2 => '',
+        3 => '',
+    ),
 
     #: config/controller/admin/category.config.php:19
     'Add a category' => 'Добавить категорию',
@@ -158,9 +160,13 @@ return array(
     #: config/common/tag.config.php:29
     'Deleting the tag ‘{{title}}’' => 'Удаление тэга «{{title}}»',
 
-    #. Delete action's labels
-    #: config/common/tag.config.php:32
-    'Yes, delete this tag' => 'Да, я хочу удалить этот тэг',
+    #: config/common/tag.config.php:33
+    'Yes, delete this tag' => array(
+        0 => 'Да, я хочу удалить этот тэг',
+        1 => '',
+        2 => '',
+        3 => '',
+    ),
 
     #: config/common/post.config.php:48
     'Author' => 'Автор',
@@ -193,44 +199,44 @@ return array(
     #: config/common/category.config.php:41
     'Deleting the category ‘{{title}}’' => 'Удаление категории «{{title}}»',
 
-    #. Delete action's labels
-    #: config/common/category.config.php:44
-    'Yes, delete this category' => 'Да, я хочу удалить эту категорию',
-
     #: config/common/category.config.php:45
-    'Yes, delete these {{count}} categories' => 'Да, я хочу удалить {{count}} категории',
+    'Yes, delete this category' => array(
+        0 => 'Да, я хочу удалить эту категорию',
+        1 => 'Да, я хочу удалить {{count}} категории',
+        2 => '',
+        3 => '',
+    ),
 
-    #: config/common/category.config.php:47
-    '1 category' => '1 категория',
-
-    #: config/common/category.config.php:48
-    '{{count}} categories' => '{{count}} категорий',
-
-    #. Keep only if the model has the behaviour Contextable
-    #: config/common/category.config.php:51
-    'This category exists in <strong>{{context_count}} contexts</strong>.' => 'Категория присутствует в <strong>{{context_count}} контекстах</strong>.',
-
-    #: config/common/category.config.php:52
-    'This category exists in <strong>{{language_count}} languages</strong>.' => 'Категория доступна на <strong>{{language_count}} языках</strong>.',
-
-    #. Keep only if the model has the behaviours Contextable + Tree
-    #: config/common/category.config.php:55
-    'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'Этак категория присутствует в <strong>{{context_count}} контекстах</strong> и имеет <strong>{{children_count}} подкатегорий</strong>.',
+    #: config/common/category.config.php:50
+    '1 category' => array(
+        0 => '1 категория',
+        1 => '{{count}} категорий',
+        2 => '',
+        3 => '',
+    ),
 
     #: config/common/category.config.php:56
-    'This category exists in <strong>{{context_count}} contexts</strong> and has <strong>one sub-category</strong>.' => 'Этак категория присутствует в <strong>{{context_count}} контекстах</strong> и имеет <strong>одну подкатегорию</strong>.',
+    'This category exists in <strong>one context</strong>.' => array(
+        0 => '',
+        1 => '',
+        2 => 'Категория присутствует в <strong>{{context_count}} контекстах</strong>.',
+        3 => '',
+    ),
 
-    #: config/common/category.config.php:57
-    'This category exists in <strong>{{language_count}} languages</strong> and has <strong>{{children_count}} sub-categories</strong>.' => 'Эта категория доступна на <strong>{{context_count}} языках</strong> и имеет <strong>{{children_count}} подкатегорий</strong>.',
+    #: config/common/category.config.php:60
+    'This category exists in <strong>one language</strong>.' => array(
+        0 => '',
+        1 => '',
+        2 => 'Категория доступна на <strong>{{language_count}} языках</strong>.',
+        3 => '',
+    ),
 
-    #: config/common/category.config.php:58
-    'This category exists in <strong>{{language_count}} languages</strong> and has <strong>one sub-category</strong>.' => 'Эта категория доступна на <strong>{{context_count}} языках</strong> и имеет <strong>одну подкатегорию</strong>.',
-
-    #. Keep only if the model has the behaviour Tree
-    #: config/common/category.config.php:61
-    'This category has <strong>1 sub-category</strong>.' => 'Эта категория имеет <strong>1 подкатегорию</strong>.',
-
-    #: config/common/category.config.php:62
-    'This category has <strong>{{children_count}} sub-categories</strong>.' => 'Эта категория имеет <strong>{{children_count}} подкатегорий</strong>.',
+    #: config/common/category.config.php:66
+    'This category has <strong>one sub-category</strong>.' => array(
+        0 => '',
+        1 => '',
+        2 => 'Эта категория имеет <strong>{{children_count}} подкатегорий</strong>.',
+        3 => '',
+    ),
 
 );

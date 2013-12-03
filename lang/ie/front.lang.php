@@ -1,9 +1,9 @@
 <?php
 
-// Generated on 02/12/2013 17:53:33
+// Generated on 03/12/2013 16:06:58
 
-// 21 out of 21 messages are translated (100%).
-// 68 out of 68 words are translated (100%).
+// 20 out of 20 messages are translated (100%).
+// 66 out of 66 words are translated (100%).
 
 return array(
     #. Note to translator: The following texts are related to RSS feeds
@@ -19,7 +19,7 @@ return array(
     'The full list of blog posts.' => 'Liste complete del posts de blog',
 
     #: classes/controller/front.ctrl.php:184
-    #: classes/controller/front.ctrl.php:311
+    #: classes/controller/front.ctrl.php:313
     '{{category}}: Posts list' => '{{category}}; Liste del posts',
 
     #: classes/controller/front.ctrl.php:185
@@ -33,14 +33,14 @@ return array(
     'Blog posts listed under the ‘{{tag}}’ tag.' => 'Posts de blog con li tag «&nbsp;{{tag}}&nbsp;»',
 
     #: classes/controller/front.ctrl.php:198
-    #: classes/controller/front.ctrl.php:336
+    #: classes/controller/front.ctrl.php:340
     '{{author}}: Posts list' => '{{author}}: Liste del posts',
 
     #: classes/controller/front.ctrl.php:199
     'Blog posts written by {{author}}.' => '{{post}}: Liste del comentas',
 
     #: classes/controller/front.ctrl.php:226
-    #: classes/controller/front.ctrl.php:372
+    #: classes/controller/front.ctrl.php:378
     '{{post}}: Comments list' => '{{post}}&nbsp; Liste del comentas',
 
     #: classes/controller/front.ctrl.php:227
@@ -49,13 +49,13 @@ return array(
     #: classes/controller/front.ctrl.php:232
     'The full list of comments.' => 'Li liste complete del comentas.',
 
-    #: views/front/comment/nb.view.php:18
-    '{{nb}} comments' => '{{nb}} comentas',
+    #: views/front/comment/nb.view.php:19
+    '1 comment' => array(
+        0 => '1 comenta',
+        1 => '{{nb}} comentas',
+    ),
 
-    #: views/front/comment/nb.view.php:20
-    '1 comment' => '1 comenta',
-
-    #: views/front/comment/nb.view.php:23
+    #: views/front/comment/nb.view.php:26
     'No comments' => 'Null comenta',
 
     #: views/front/post/publication_date.view.php:23
