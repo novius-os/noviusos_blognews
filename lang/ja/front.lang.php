@@ -1,6 +1,6 @@
 <?php
 
-// Generated on 03/12/2013 16:22:23
+// Generated on 11/12/2013 10:31:03
 
 // 20 out of 20 messages are translated (100%).
 // 66 out of 66 words are translated (100%).
@@ -58,7 +58,7 @@ return array(
     'No comments' => 'コメント無し',
 
     #: views/front/post/publication_date.view.php:23
-    'PUBLICATION_DATE_FORMAT' => '',
+    'PUBLICATION_DATE_FORMAT' => 'PUBLICATION_DATE_FORMAT',
 
     #: views/front/post/tags.view.php:22
     'Tags: {{tags}}' => 'タグ: {{tags}}',

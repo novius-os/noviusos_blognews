@@ -1,6 +1,6 @@
 <?php
 
-// Generated on 03/12/2013 16:22:23
+// Generated on 11/12/2013 10:31:03
 
 // 55 out of 58 messages are translated (94%).
 // 213 out of 230 words are translated (94%).
@@ -19,31 +19,31 @@ return array(
     'Use tag label' => 'タグラベルを使用する',
 
     #: views/admin/permissions/post_and_category.php:7
-    'Can add, edit, delete and publish posts' => '',
+    'Can add, edit, delete and publish posts' => '投稿を追加／編集／削除／公開できます。',
 
     #: views/admin/permissions/post_and_category.php:14
-    'Can add, edit and delete unpublished posts only' => '',
+    'Can add, edit and delete unpublished posts only' => '公開されていない投稿を追加／編集／削除できます。',
 
     #: views/admin/permissions/post_and_category.php:21
-    'Can add, edit and delete categories' => '',
+    'Can add, edit and delete categories' => 'カテゴリを追加／編集／削除／公開できます。',
 
     #. Other authors' posts
     #: views/admin/permissions/other_authors.php:9
-    'Can edit and delete' => '',
+    'Can edit and delete' => '編集／削除できます。',
 
     #. Other authors' posts
     #: views/admin/permissions/other_authors.php:19
-    'Can visualise only' => '',
+    'Can visualise only' => '閲覧できます。',
 
     #. Other authors' posts
     #: views/admin/permissions/other_authors.php:29
-    'Can access her/his own posts only' => '',
+    'Can access her/his own posts only' => '自分の投稿のみアクセスできます。',
 
     #: config/permissions.config.php:11
-    'Permissions for this application' => '',
+    'Permissions for this application' => 'このアプリケーションの権限',
 
     #: config/permissions.config.php:18
-    'Other authors’ posts' => '',
+    'Other authors’ posts' => '他の著者の投稿',
 
     #: config/controller/admin/inspector/author.config.php:22
     #: config/controller/admin/inspector/author.config.php:26
@@ -117,7 +117,7 @@ return array(
     'Author:' => '著者:',
 
     #: config/controller/admin/post.config.php:127
-    'Thumbnail' => '',
+    'Thumbnail' => 'サムネイル',
 
     #: config/controller/admin/post.config.php:132
     'Created on:' => '作成日:',
