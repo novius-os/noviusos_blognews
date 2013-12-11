@@ -1,9 +1,9 @@
 <?php
 
-// Generated on 11/12/2013 10:31:03
+// Generated on 11/12/2013 17:57:29
 
-// 55 out of 58 messages are translated (94%).
-// 213 out of 230 words are translated (94%).
+// 58 out of 58 messages are translated (100%).
+// 230 out of 230 words are translated (100%).
 
 return array(
     #: classes/model/post.model.php:158
@@ -205,17 +205,17 @@ return array(
 
     #: config/common/category.config.php:56
     'This category exists in <strong>one context</strong>.' => array(
-        0 => '',
+        0 => 'このカテゴリーは<strong>{{context_count}}つのコンテキスト</strong>にあります。',
     ),
 
     #: config/common/category.config.php:60
     'This category exists in <strong>one language</strong>.' => array(
-        0 => '',
+        0 => 'このカテゴリーは<strong>{{language_count}}つの言語</strong>にあります。',
     ),
 
     #: config/common/category.config.php:66
     'This category has <strong>one sub-category</strong>.' => array(
-        0 => '',
+        0 => 'このカテゴリーには<strong>{{children_count}}つの子カテゴリー</strong>があります。',
     ),
 
 );
