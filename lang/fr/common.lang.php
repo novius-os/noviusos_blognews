@@ -186,10 +186,10 @@ return array(
 
     #. Blank slate
     #: config/common/category.config.php:37
-    'We’re afraid this category cannot be added to {{context}} because its <a>parent</a> is not available in this context yet.' => 'Malheureusement cette catégorie ne peut être ajoutée à {{context}} car elledépend d’<a>une autre catégorie</a> qui n’est pas encore disponible dans cecontexte.',
+    'We’re afraid this category cannot be added to {{context}} because its <a>parent</a> is not available in this context yet.' => 'Malheureusement cette catégorie ne peut être ajoutée à {{context}} car elle dépend d’<a>une autre catégorie</a> qui n’est pas encore disponible dans ce contexte.',
 
     #: config/common/category.config.php:38
-    'We’re afraid this category cannot be translated into {{language}} because its <a>parent</a> is not available in this language yet.' => 'Malheureusement cette catégorie ne peut être traduite en {{language}} carelle dépend d’<a>une autre catégorie</a> qui n’est pas encore disponibledans cette langue.',
+    'We’re afraid this category cannot be translated into {{language}} because its <a>parent</a> is not available in this language yet.' => 'Malheureusement cette catégorie ne peut être traduite en {{language}} car elle dépend d’<a>une autre catégorie</a> qui n’est pas encore disponible dans cette langue.',
 
     #. Deletion popup
     #: config/common/category.config.php:41
