@@ -22,6 +22,11 @@ if ($type == 'category') {
         'text' => e(strtr(__('Category: {{category}}'), array('{{category}}' => $item->cat_title)))
     ));
 }
+if ($type == 'author') {
+    $title  = $item->htmlAnchor(array(
+        'text' => e(strtr(__('Author: {{author}}'), array('{{author}}' => $item->fullname())))
+    ));
+}
 if ($title !== null) {
     echo '<h1>'.$title.'</h1>';
 }

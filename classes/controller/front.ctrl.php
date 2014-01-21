@@ -301,6 +301,10 @@ class Controller_Front extends Controller_Front_Application
             'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
         );
 
+        $page = $this->main_controller->getPage();
+        $this->main_controller->setTitle($page->page_title.' - '.strtr(__('Tag: {{tag}}'), array('{{tag}}' => $tag->tag_label)));
+        $page->page_title = strtr(__('Tag: {{tag}}'), array('{{tag}}' => $tag->tag_label));
+
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
             'type'        => 'tag',
@@ -324,6 +328,10 @@ class Controller_Front extends Controller_Front_Application
             'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
             'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
         );
+
+        $page = $this->main_controller->getPage();
+        $this->main_controller->setTitle($page->page_title.' - '.strtr(__('Category: {{category}}'), array('{{category}}' => $category->cat_title)));
+        $page->page_title = strtr(__('Category: {{category}}'), array('{{category}}' => $category->cat_title));
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -351,6 +359,10 @@ class Controller_Front extends Controller_Front_Application
             'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
             'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
         );
+
+        $page = $this->main_controller->getPage();
+        $this->main_controller->setTitle($page->page_title.' - '.strtr(__('Author: {{author}}'), array('{{author}}' => $author->fullname())));
+        $page->page_title = strtr(__('Author: {{author}}'), array('{{author}}' => $author->fullname()));
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
