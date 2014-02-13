@@ -301,9 +301,11 @@ class Controller_Front extends Controller_Front_Application
             'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
         );
 
-        $page = $this->main_controller->getPage();
-        $this->main_controller->setTitle($page->page_title.' - '.strtr(__('Tag: {{tag}}'), array('{{tag}}' => $tag->tag_label)));
-        $page->page_title = strtr(__('Tag: {{tag}}'), array('{{tag}}' => $tag->tag_label));
+        $title = __('Tag: {{tag}}');
+        $this->main_controller->setItemDisplayed($tag, array(), array(
+            'title' => ':page_title - '.strtr($title, array('{{tag}}' => ':title')),
+            'h1' => strtr($title, array('{{tag}}' => ':h1')),
+        ));
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -329,9 +331,11 @@ class Controller_Front extends Controller_Front_Application
             'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
         );
 
-        $page = $this->main_controller->getPage();
-        $this->main_controller->setTitle($page->page_title.' - '.strtr(__('Category: {{category}}'), array('{{category}}' => $category->cat_title)));
-        $page->page_title = strtr(__('Category: {{category}}'), array('{{category}}' => $category->cat_title));
+        $title = __('Category: {{category}}');
+        $this->main_controller->setItemDisplayed($category, array(), array(
+            'title' => ':page_title - '.strtr($title, array('{{category}}' => ':title')),
+            'h1' => strtr($title, array('{{category}}' => ':h1')),
+        ));
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -360,9 +364,12 @@ class Controller_Front extends Controller_Front_Application
             'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
         );
 
-        $page = $this->main_controller->getPage();
-        $this->main_controller->setTitle($page->page_title.' - '.strtr(__('Author: {{author}}'), array('{{author}}' => $author->fullname())));
-        $page->page_title = strtr(__('Author: {{author}}'), array('{{author}}' => $author->fullname()));
+        $title = __('Author: {{author}}');
+        $this->main_controller->setItemDisplayed($author, array(), array(
+            'title_item' => $author->fullname(),
+            'title' => ':page_title - '.strtr($title, array('{{author}}' => ':title')),
+            'h1' => strtr($title, array('{{author}}' => ':h1')),
+        ));
 
         return View::forge('noviusos_blognews::front/post/list', array(
             'posts'       => $posts,
@@ -403,9 +410,23 @@ class Controller_Front extends Controller_Front_Application
             );
         }
 
-        $page = $this->main_controller->getPage();
-        $this->main_controller->setTitle($page->page_title.' - '.$post->post_title);
-        $page->page_title = $post->post_title;
+        $meta_keywords = array();
+        foreach ($post->tags as $tag) {
+            $meta_keywords[] = $tag->tag_label;
+        }
+        foreach ($post->categories as $category) {
+            $meta_keywords[] = $category->cat_title;
+        }
+        $this->main_controller->setItemDisplayed(
+            $post,
+            array(
+                'meta_description' => $post->post_summary,
+                'meta_keywords' => implode(',', $meta_keywords),
+            ),
+            array(
+                'title' => ':page_title - :title',
+            )
+        );
 
         if ($this->app_config['comments']['enabled'] && $this->app_config['comments']['can_post']) {
             if (\Input::post('action') == 'addComment') {
