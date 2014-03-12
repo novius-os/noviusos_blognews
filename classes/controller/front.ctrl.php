@@ -622,6 +622,14 @@ class Controller_Front extends Controller_Front_Application
 
             switch ($model) {
                 case static::$post_class:
+                    $enhancer_args = \Arr::get($params, 'enhancer_args', array());
+                    $cat_ids = (array) \Arr::get($enhancer_args, 'cat_id', array());
+                    if (!empty($cat_ids)) {
+                        $intersect = array_intersect($cat_ids, array_keys($item->categories));
+                        if (empty($intersect)) {
+                            return false;
+                        }
+                    }
                     $post_url = $item->post_virtual_name.'.html';
                     if (isset($params['unsubscribe']) && $params['unsubscribe']) {
                         return 'unsubscribe/'.$post_url;
