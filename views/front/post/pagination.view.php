@@ -8,9 +8,8 @@
  * @link http://www.novius-os.org
  */
 
-echo $pagination->create_links(
-    function ($page) use ($type, $item) {
-
+if (!isset($pagination_callback)) {
+    $pagination_callback = function ($page) use ($type, $item) {
         if ($type == 'main') {
             $main_controller = \Nos\Nos::main_controller();
             $url = parse_url($main_controller->getContextUrl(), PHP_URL_PATH).$main_controller->getPageUrl();
@@ -18,5 +17,10 @@ echo $pagination->create_links(
         } else {
             return $item->url(array('page' => $page));
         }
-    }
-);
+    };
+    \Log::deprecated(
+        'The view "noviusos_blognews::front/pagination" without a $pagination_callback parameter is deprecated.',
+        '4.2 (Dubrovka)'
+    );
+}
+echo $pagination->create_links($pagination_callback);

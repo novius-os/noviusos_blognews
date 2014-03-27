@@ -273,6 +273,7 @@ class Controller_Front extends Controller_Front_Application
     {
         $posts = $this->_get_post_list($args);
 
+        $self = $this;
         return View::forge(
             $this->config['views']['list'],
             array(
@@ -280,6 +281,15 @@ class Controller_Front extends Controller_Front_Application
                 'type' => 'main',
                 'item' => 'main',
                 'pagination' => $this->pagination,
+                'pagination_callback' => function ($page) use ($self) {
+                    $main_controller = \Nos\Nos::main_controller();
+                    $url = $main_controller->getContextUrl().$main_controller->getEnhancedUrlPath();
+                    $urlEnhanced = $self::getUrlEnhanced(array('page' => $page));
+                    if (empty($urlEnhanced)) {
+                        return substr($url, 0, -1).'.html';
+                    }
+                    return $url.$urlEnhanced;
+                }
             ),
             false
         );
@@ -312,6 +322,9 @@ class Controller_Front extends Controller_Front_Application
             'type'        => 'tag',
             'item'        => $tag,
             'pagination' => $this->pagination,
+            'pagination_callback' => function ($page) use ($tag) {
+                return $tag->url(array('page' => $page));
+            }
         ), false);
     }
 
@@ -342,6 +355,9 @@ class Controller_Front extends Controller_Front_Application
             'type'        => 'category',
             'item'        => $category,
             'pagination' => $this->pagination,
+            'pagination_callback' => function ($page) use ($category) {
+                return $category->url(array('page' => $page));
+            }
         ), false);
     }
 
@@ -376,6 +392,9 @@ class Controller_Front extends Controller_Front_Application
             'type'        => 'author',
             'item'        => $author,
             'pagination' => $this->pagination,
+            'pagination_callback' => function ($page) use ($author) {
+                return $author->url(array('page' => $page));
+            }
         ), false);
     }
 
@@ -616,10 +635,9 @@ class Controller_Front extends Controller_Front_Application
     public static function getUrlEnhanced($params = array())
     {
         $item = \Arr::get($params, 'item', false);
+        $page = \Arr::get($params, 'page', 1);
         if ($item) {
             $model = get_class($item);
-            $page = \Arr::get($params, 'page', 1);
-
             switch ($model) {
                 case static::$post_class:
                     $enhancer_args = \Arr::get($params, 'enhancer_args', array());
@@ -651,9 +669,12 @@ class Controller_Front extends Controller_Front_Application
                 case static::$author_class:
                     return 'author/'.urlencode($item->user_name.'_'.$item->user_firstname.'_'.$item->user_id).($page > 1 ? '/'.$page : '').'.html';
                     break;
+
+                default:
+                    return false;
             }
         }
 
-        return false;
+        return $page == 1 ? '' : 'page/'.$page.'.html';
     }
 }

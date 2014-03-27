@@ -19,7 +19,12 @@ foreach ($posts as $post) {
     </div>
 <?php
 if ($pagination) {
-    echo \View::forge('noviusos_blognews::front/post/pagination', array('type' => $type, 'item' => $item, 'pagination' => $pagination), false);
+    echo \View::forge('noviusos_blognews::front/post/pagination', array(
+        'type' => $type,
+        'item' => $item,
+        'pagination' => $pagination,
+        'pagination_callback' => $pagination_callback,
+    ), false);
 }
 ?>
 </div>
