@@ -641,8 +641,8 @@ class Controller_Front extends Controller_Front_Application
             switch ($model) {
                 case static::$post_class:
                     $enhancer_args = \Arr::get($params, 'enhancer_args', array());
-                    $cat_ids = (array) \Arr::get($enhancer_args, 'cat_id', array());
-                    if (count(array_filter($cat_ids)) > 0) {
+                    $cat_ids = array_filter((array) \Arr::get($enhancer_args, 'cat_id', array()));
+                    if (!empty($cat_ids)) {
                         $intersect = array_intersect($cat_ids, array_keys($item->categories));
                         if (empty($intersect)) {
                             return false;
