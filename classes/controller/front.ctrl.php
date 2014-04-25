@@ -663,6 +663,11 @@ class Controller_Front extends Controller_Front_Application
                     break;
 
                 case static::$category_class:
+                    $enhancer_args = \Arr::get($params, 'enhancer_args', array());
+                    $cat_ids = array_filter((array) \Arr::get($enhancer_args, 'cat_id', array()));
+                    if (!empty($cat_ids) && !in_array($item->cat_id, $cat_ids)) {
+                        return false;
+                    }
                     return 'category/'.$item->cat_virtual_name.($page > 1 ? '/'.$page : '').'.html';
                     break;
 
