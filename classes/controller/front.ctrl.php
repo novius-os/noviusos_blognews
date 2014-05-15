@@ -617,7 +617,7 @@ class Controller_Front extends Controller_Front_Application
         if (isset($config['rss']['description_template'])) {
             $item['description'] = \Config::placeholderReplace($config['rss']['description_template'], array(
                 'summary' => $post->post_summary,
-                'content' => Tools_Wysiwyg::parse_wysiwyg($post->wysiwygs->content),
+                'content' => Tools_Wysiwyg::parse($post->wysiwygs->content),
             ));
         } else {
             $item['description'] = isset($content[\Nos\DataCatcher::TYPE_TEXT]) ? $content[\Nos\DataCatcher::TYPE_TEXT] : $post->post_summary;
