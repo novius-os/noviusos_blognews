@@ -9,5 +9,5 @@
  */
 ?>
 <div class="blognews_content">
-    <?= \Nos\Nos::parse_wysiwyg($item->wysiwygs->content) ?>
+    <?= \Nos\Tools_Wysiwyg::parse_wysiwyg($item->wysiwygs->content) ?>
 </div>
