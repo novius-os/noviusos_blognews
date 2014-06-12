@@ -6,7 +6,7 @@ The ‘Blog’ and ‘News’ applications for Novius OS allow you to write and 
 
 ## Requirements
 
-* The ‘Blog’ and ‘News’ applications run on Novius OS Dubrovka.
+* The ‘Blog’ and ‘News’ applications run on Novius OS Elche.
 * Novius OS [‘Comments’ application](http://github.com/novius-os/noviusos_comments) is required.
 
 ## Installation
