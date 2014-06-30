@@ -1,66 +1,34 @@
 <?php
 
-// Generated on 03/12/2013 16:22:23
+// Generated on 30/06/2014 14:54:18
 
 // 58 out of 58 messages are translated (100%).
 // 230 out of 230 words are translated (100%).
 
 return array(
-    #: classes/model/post.model.php:158
-    'Use post title' => 'Reprendre le titre du billet',
+    #: config/controller/admin/category.config.php:19
+    'Add a category' => 'Ajouter une catégorie',
 
-    #: classes/model/post.model.php:190
-    'Use post summary' => 'Reprendre le chapeau du billet',
+    #: config/controller/admin/category.config.php:20
+    'Translate a category' => 'Traduire une catégorie',
 
-    #: classes/model/category.model.php:132
-    'Use category title' => 'Reprendre le titre de la catégorie',
+    #. user_fullname is not a real field in the database
+    #: config/controller/admin/category.config.php:30
+    #: config/controller/admin/post.config.php:58
+    #: config/controller/admin/post.config.php:212
+    'Properties' => 'Propriétés',
 
-    #: classes/model/tag.model.php:47
-    'Use tag label' => 'Reprendre le tag',
+    #: config/controller/admin/category.config.php:52
+    #: config/controller/admin/post.config.php:75
+    #: config/common/post.config.php:44
+    'Title' => 'Titre',
 
-    #: views/admin/permissions/post_and_category.php:7
-    'Can add, edit, delete and publish posts' => 'Peut ajouter, modifier et supprimer des billets',
+    #: config/controller/admin/category.config.php:62
+    #: config/controller/admin/post.config.php:100
+    'URL:' => 'URL&nbsp;:',
 
-    #: views/admin/permissions/post_and_category.php:14
-    'Can add, edit and delete unpublished posts only' => 'Peut ajouter, modifier et supprimer des billets non-publiés uniquement',
-
-    #: views/admin/permissions/post_and_category.php:21
-    'Can add, edit and delete categories' => 'Peut ajouter, modifier et supprimer des catégories',
-
-    #. Other authors' posts
-    #: views/admin/permissions/other_authors.php:9
-    'Can edit and delete' => 'Peut modifier et supprimer',
-
-    #. Other authors' posts
-    #: views/admin/permissions/other_authors.php:19
-    'Can visualise only' => 'Peut uniquement visualiser',
-
-    #. Other authors' posts
-    #: views/admin/permissions/other_authors.php:29
-    'Can access her/his own posts only' => 'Peut accéder uniquement à ses propres billets',
-
-    #: config/permissions.config.php:11
-    'Permissions for this application' => 'Droits d’accès pour cette application',
-
-    #: config/permissions.config.php:18
-    'Other authors’ posts' => 'Billets d’autres auteurs',
-
-    #: config/controller/admin/inspector/author.config.php:22
-    #: config/controller/admin/inspector/author.config.php:26
-    'Authors' => 'Auteurs',
-
-    #: config/controller/admin/inspector/tag.config.php:19
-    #: config/controller/admin/post.config.php:61
-    #: config/controller/admin/post.config.php:161
-    #: config/controller/admin/post.config.php:203
-    #: config/common/tag.config.php:16
-    'Tags' => 'Tags',
-
-    #: config/controller/admin/inspector/date.config.php:18
-    'Created on' => 'Créé le',
-
-    #: config/controller/admin/inspector/category.config.php:19
-    'Root' => 'Racine',
+    #: config/controller/admin/category.config.php:71
+    'Location:' => 'Emplacement&nbsp;:',
 
     #: config/controller/admin/enhancer.config.php:14
     'Posts per page:' => 'Billets par page&nbsp;:',
@@ -74,6 +42,23 @@ return array(
     #: config/controller/admin/enhancer.config.php:35
     'Clickable post titles' => 'Titres des billets cliquables',
 
+    #: config/controller/admin/inspector/author.config.php:22
+    #: config/controller/admin/inspector/author.config.php:26
+    'Authors' => 'Auteurs',
+
+    #: config/controller/admin/inspector/tag.config.php:19
+    #: config/controller/admin/post.config.php:61
+    #: config/controller/admin/post.config.php:161
+    #: config/controller/admin/post.config.php:203
+    #: config/common/tag.config.php:16
+    'Tags' => 'Tags',
+
+    #: config/controller/admin/inspector/category.config.php:19
+    'Root' => 'Racine',
+
+    #: config/controller/admin/inspector/date.config.php:18
+    'Created on' => 'Créé le',
+
     #: config/controller/admin/post.config.php:23
     'Add a post' => 'Ajouter un billet',
 
@@ -84,12 +69,6 @@ return array(
     #: config/controller/admin/post.config.php:115
     'Content' => 'Contenu',
 
-    #. user_fullname is not a real field in the database
-    #: config/controller/admin/post.config.php:58
-    #: config/controller/admin/post.config.php:212
-    #: config/controller/admin/category.config.php:30
-    'Properties' => 'Propriétés',
-
     #: config/controller/admin/post.config.php:59
     'URL (post address)' => 'URL (adresse du billet)',
 
@@ -98,20 +77,11 @@ return array(
     #: config/common/category.config.php:24
     'Categories' => 'Catégories',
 
-    #: config/controller/admin/post.config.php:75
-    #: config/controller/admin/category.config.php:52
-    #: config/common/post.config.php:44
-    'Title' => 'Titre',
-
     #: config/controller/admin/post.config.php:85
     'Summary' => 'Chapeau',
 
     #: config/controller/admin/post.config.php:94
     'Change the author’s name (alias):' => 'Changer le nom de l’auteur (alias)&nbsp;:',
-
-    #: config/controller/admin/post.config.php:100
-    #: config/controller/admin/category.config.php:62
-    'URL:' => 'URL&nbsp;:',
 
     #: config/controller/admin/post.config.php:108
     'Author:' => 'Auteur&nbsp;:',
@@ -130,18 +100,6 @@ return array(
         0 => 'Lu 1 fois',
         1 => 'Lu {{nb}} fois',
     ),
-
-    #: config/controller/admin/category.config.php:19
-    'Add a category' => 'Ajouter une catégorie',
-
-    #: config/controller/admin/category.config.php:20
-    'Translate a category' => 'Traduire une catégorie',
-
-    #: config/controller/admin/category.config.php:71
-    'Location:' => 'Emplacement&nbsp;:',
-
-    #: config/config.php:62
-    'Blog' => 'Blog',
 
     #. Crud
     #: config/common/tag.config.php:22
@@ -163,12 +121,6 @@ return array(
         0 => 'Oui, supprimer ce tag',
         1 => '',
     ),
-
-    #: config/common/post.config.php:48
-    'Author' => 'Auteur',
-
-    #: config/common/post.config.php:55
-    'Date' => 'Date',
 
     #. Crud
     #: config/common/category.config.php:29
@@ -224,5 +176,53 @@ return array(
         0 => 'Cette catégorie a <strong>une sous-catégorie</strong>.',
         1 => 'Cette catégorie a <strong>{{children_count}} sous-catégories</strong>.',
     ),
+
+    #: config/common/post.config.php:48
+    'Author' => 'Auteur',
+
+    #: config/common/post.config.php:55
+    'Date' => 'Date',
+
+    #: config/permissions.config.php:11
+    'Permissions for this application' => 'Droits d’accès pour cette application',
+
+    #: config/permissions.config.php:18
+    'Other authors’ posts' => 'Billets d’autres auteurs',
+
+    #: config/config.php:62
+    'Blog' => 'Blog',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:9
+    'Can edit and delete' => 'Peut modifier et supprimer',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:19
+    'Can visualise only' => 'Peut uniquement visualiser',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:29
+    'Can access her/his own posts only' => 'Peut accéder uniquement à ses propres billets',
+
+    #: views/admin/permissions/post_and_category.php:7
+    'Can add, edit, delete and publish posts' => 'Peut ajouter, modifier et supprimer des billets',
+
+    #: views/admin/permissions/post_and_category.php:14
+    'Can add, edit and delete unpublished posts only' => 'Peut ajouter, modifier et supprimer des billets non-publiés uniquement',
+
+    #: views/admin/permissions/post_and_category.php:21
+    'Can add, edit and delete categories' => 'Peut ajouter, modifier et supprimer des catégories',
+
+    #: classes/model/post.model.php:163
+    'Use post title' => 'Reprendre le titre du billet',
+
+    #: classes/model/post.model.php:195
+    'Use post summary' => 'Reprendre le chapeau du billet',
+
+    #: classes/model/tag.model.php:54
+    'Use tag label' => 'Reprendre le tag',
+
+    #: classes/model/category.model.php:137
+    'Use category title' => 'Reprendre le titre de la catégorie',
 
 );
