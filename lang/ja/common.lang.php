@@ -1,66 +1,34 @@
 <?php
 
-// Generated on 11/12/2013 17:57:29
+// Generated on 30/07/2014 09:57:01
 
 // 58 out of 58 messages are translated (100%).
 // 230 out of 230 words are translated (100%).
 
 return array(
-    #: classes/model/post.model.php:158
-    'Use post title' => '投稿タイトルを使用する',
+    #: config/controller/admin/category.config.php:19
+    'Add a category' => 'カテゴリーを追加',
 
-    #: classes/model/post.model.php:190
-    'Use post summary' => '投稿サマリを使用する',
+    #: config/controller/admin/category.config.php:20
+    'Translate a category' => 'カテゴリーを翻訳',
 
-    #: classes/model/category.model.php:132
-    'Use category title' => 'カテゴリータイトルを使用する',
+    #. user_fullname is not a real field in the database
+    #: config/controller/admin/category.config.php:30
+    #: config/controller/admin/post.config.php:58
+    #: config/controller/admin/post.config.php:212
+    'Properties' => 'プロパティ',
 
-    #: classes/model/tag.model.php:47
-    'Use tag label' => 'タグラベルを使用する',
+    #: config/controller/admin/category.config.php:52
+    #: config/controller/admin/post.config.php:75
+    #: config/common/post.config.php:44
+    'Title' => 'タイトル',
 
-    #: views/admin/permissions/post_and_category.php:7
-    'Can add, edit, delete and publish posts' => '投稿を追加／編集／削除／公開できます。',
+    #: config/controller/admin/category.config.php:62
+    #: config/controller/admin/post.config.php:100
+    'URL:' => 'URL:',
 
-    #: views/admin/permissions/post_and_category.php:14
-    'Can add, edit and delete unpublished posts only' => '公開されていない投稿を追加／編集／削除できます。',
-
-    #: views/admin/permissions/post_and_category.php:21
-    'Can add, edit and delete categories' => 'カテゴリを追加／編集／削除／公開できます。',
-
-    #. Other authors' posts
-    #: views/admin/permissions/other_authors.php:9
-    'Can edit and delete' => '編集／削除できます。',
-
-    #. Other authors' posts
-    #: views/admin/permissions/other_authors.php:19
-    'Can visualise only' => '閲覧できます。',
-
-    #. Other authors' posts
-    #: views/admin/permissions/other_authors.php:29
-    'Can access her/his own posts only' => '自分の投稿のみアクセスできます。',
-
-    #: config/permissions.config.php:11
-    'Permissions for this application' => 'このアプリケーションの権限',
-
-    #: config/permissions.config.php:18
-    'Other authors’ posts' => '他の著者の投稿',
-
-    #: config/controller/admin/inspector/author.config.php:22
-    #: config/controller/admin/inspector/author.config.php:26
-    'Authors' => '著者',
-
-    #: config/controller/admin/inspector/tag.config.php:19
-    #: config/controller/admin/post.config.php:61
-    #: config/controller/admin/post.config.php:161
-    #: config/controller/admin/post.config.php:203
-    #: config/common/tag.config.php:16
-    'Tags' => 'タグ',
-
-    #: config/controller/admin/inspector/date.config.php:18
-    'Created on' => '作成日',
-
-    #: config/controller/admin/inspector/category.config.php:19
-    'Root' => 'ルート',
+    #: config/controller/admin/category.config.php:71
+    'Location:' => '位置:',
 
     #: config/controller/admin/enhancer.config.php:14
     'Posts per page:' => '1ページの投稿数:',
@@ -74,6 +42,23 @@ return array(
     #: config/controller/admin/enhancer.config.php:35
     'Clickable post titles' => 'クリック可能な投稿タイトル',
 
+    #: config/controller/admin/inspector/author.config.php:22
+    #: config/controller/admin/inspector/author.config.php:26
+    'Authors' => '著者',
+
+    #: config/controller/admin/inspector/tag.config.php:19
+    #: config/controller/admin/post.config.php:61
+    #: config/controller/admin/post.config.php:161
+    #: config/controller/admin/post.config.php:203
+    #: config/common/tag.config.php:16
+    'Tags' => 'タグ',
+
+    #: config/controller/admin/inspector/category.config.php:19
+    'Root' => 'ルート',
+
+    #: config/controller/admin/inspector/date.config.php:18
+    'Created on' => '作成日',
+
     #: config/controller/admin/post.config.php:23
     'Add a post' => '投稿を追加',
 
@@ -84,12 +69,6 @@ return array(
     #: config/controller/admin/post.config.php:115
     'Content' => 'コンテンツ',
 
-    #. user_fullname is not a real field in the database
-    #: config/controller/admin/post.config.php:58
-    #: config/controller/admin/post.config.php:212
-    #: config/controller/admin/category.config.php:30
-    'Properties' => 'プロパティ',
-
     #: config/controller/admin/post.config.php:59
     'URL (post address)' => 'URL (投稿アドレス)',
 
@@ -98,20 +77,11 @@ return array(
     #: config/common/category.config.php:24
     'Categories' => 'カテゴリー',
 
-    #: config/controller/admin/post.config.php:75
-    #: config/controller/admin/category.config.php:52
-    #: config/common/post.config.php:44
-    'Title' => 'タイトル',
-
     #: config/controller/admin/post.config.php:85
     'Summary' => 'サマリ',
 
     #: config/controller/admin/post.config.php:94
     'Change the author’s name (alias):' => '著者名 (別名) を変更:',
-
-    #: config/controller/admin/post.config.php:100
-    #: config/controller/admin/category.config.php:62
-    'URL:' => 'URL:',
 
     #: config/controller/admin/post.config.php:108
     'Author:' => '著者:',
@@ -129,18 +99,6 @@ return array(
     'Read once' => array(
         0 => '一回読まれました',
     ),
-
-    #: config/controller/admin/category.config.php:19
-    'Add a category' => 'カテゴリーを追加',
-
-    #: config/controller/admin/category.config.php:20
-    'Translate a category' => 'カテゴリーを翻訳',
-
-    #: config/controller/admin/category.config.php:71
-    'Location:' => '位置:',
-
-    #: config/config.php:62
-    'Blog' => 'ブログ',
 
     #. Crud
     #: config/common/tag.config.php:22
@@ -161,12 +119,6 @@ return array(
     'Yes, delete this tag' => array(
         0 => 'はい、このタグを削除します',
     ),
-
-    #: config/common/post.config.php:48
-    'Author' => '著者',
-
-    #: config/common/post.config.php:55
-    'Date' => '日付',
 
     #. Crud
     #: config/common/category.config.php:29
@@ -217,5 +169,53 @@ return array(
     'This category has <strong>one sub-category</strong>.' => array(
         0 => 'このカテゴリーには<strong>{{children_count}}つの子カテゴリー</strong>があります。',
     ),
+
+    #: config/common/post.config.php:48
+    'Author' => '著者',
+
+    #: config/common/post.config.php:55
+    'Date' => '日付',
+
+    #: config/permissions.config.php:11
+    'Permissions for this application' => 'このアプリケーションの権限',
+
+    #: config/permissions.config.php:18
+    'Other authors’ posts' => '他の著者の投稿',
+
+    #: config/config.php:62
+    'Blog' => 'ブログ',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:9
+    'Can edit and delete' => '編集／削除できます。',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:19
+    'Can visualise only' => '閲覧できます。',
+
+    #. Other authors' posts
+    #: views/admin/permissions/other_authors.php:29
+    'Can access her/his own posts only' => '自分の投稿のみアクセスできます。',
+
+    #: views/admin/permissions/post_and_category.php:7
+    'Can add, edit, delete and publish posts' => '投稿を追加／編集／削除／公開できます。',
+
+    #: views/admin/permissions/post_and_category.php:14
+    'Can add, edit and delete unpublished posts only' => '公開されていない投稿を追加／編集／削除できます。',
+
+    #: views/admin/permissions/post_and_category.php:21
+    'Can add, edit and delete categories' => 'カテゴリを追加／編集／削除／公開できます。',
+
+    #: classes/model/post.model.php:163
+    'Use post title' => '投稿タイトルを使用する',
+
+    #: classes/model/post.model.php:195
+    'Use post summary' => '投稿サマリを使用する',
+
+    #: classes/model/tag.model.php:54
+    'Use tag label' => 'タグラベルを使用する',
+
+    #: classes/model/category.model.php:137
+    'Use category title' => 'カテゴリータイトルを使用する',
 
 );
