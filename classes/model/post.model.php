@@ -214,38 +214,44 @@ class Model_Post extends \Nos\Orm\Model
         $table_prefix_pos = strrpos(static::$_table_name, '_');
         $table_prefix = substr(static::$_table_name, 0, $table_prefix_pos);
 
-        static::$_many_many['categories'] = array(
-            'table_through' => $table_prefix.'_category_post',
-            'key_from' => static::$_primary_key[0],
-            'key_through_from' => static::$_primary_key[0],
-            'key_through_to' => $category_pk,
-            'key_to' => $category_pk,
-            'cascade_save' => true,
-            'cascade_delete' => false,
-            'model_to'       => $category_class,
-        );
-
-        static::$_many_many['tags'] = array(
-            'table_through' => $table_prefix.'_tag_post',
-            'key_from' => static::$_primary_key[0],
-            'key_through_from' => static::$_primary_key[0],
-            'key_through_to' => $tag_pk,
-            'key_to' => $tag_pk,
-            'cascade_save' => true,
-            'cascade_delete' => false,
-            'model_to'       => $tag_class,
-        );
-
-        static::$_belongs_to['author'] = array(
-            'key_from' => static::prefix().'author_id',
-            'model_to' => 'Nos\User\Model_User',
-            'key_to' => 'user_id',
-            'cascade_save' => false,
-            'cascade_delete' => false,
-        );
-
         list($app) = \Config::configFile($class);
-        \Config::load($app.'::config', true);
+        $config = \Config::load($app.'::config', true);
+
+        if (\Arr::get($config, 'categories.enabled')) {
+            static::$_many_many['categories'] = array(
+                'table_through' => $table_prefix.'_category_post',
+                'key_from' => static::$_primary_key[0],
+                'key_through_from' => static::$_primary_key[0],
+                'key_through_to' => $category_pk,
+                'key_to' => $category_pk,
+                'cascade_save' => true,
+                'cascade_delete' => false,
+                'model_to'       => $category_class,
+            );
+        }
+
+        if (\Arr::get($config, 'tags.enabled')) {
+            static::$_many_many['tags'] = array(
+                'table_through' => $table_prefix.'_tag_post',
+                'key_from' => static::$_primary_key[0],
+                'key_through_from' => static::$_primary_key[0],
+                'key_through_to' => $tag_pk,
+                'key_to' => $tag_pk,
+                'cascade_save' => true,
+                'cascade_delete' => false,
+                'model_to'       => $tag_class,
+            );
+        }
+
+        if (\Arr::get($config, 'authors.enabled')) {
+            static::$_belongs_to['author'] = array(
+                'key_from' => static::prefix().'author_id',
+                'model_to' => 'Nos\User\Model_User',
+                'key_to' => 'user_id',
+                'cascade_save' => false,
+                'cascade_delete' => false,
+            );
+        }
 
         return parent::relations($specific);
     }
