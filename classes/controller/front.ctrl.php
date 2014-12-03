@@ -431,11 +431,15 @@ class Controller_Front extends Controller_Front_Application
         }
 
         $meta_keywords = array();
-        foreach ($post->tags as $tag) {
-            $meta_keywords[] = $tag->tag_label;
+        if (\Arr::get($this->app_config, 'tags.enabled')) {
+            foreach ($post->tags as $tag) {
+                $meta_keywords[] = $tag->tag_label;
+            }
         }
-        foreach ($post->categories as $category) {
-            $meta_keywords[] = $category->cat_title;
+        if (\Arr::get($this->app_config, 'categories.enabled')) {
+            foreach ($post->categories as $category) {
+                $meta_keywords[] = $category->cat_title;
+            }
         }
         $this->main_controller->setItemDisplayed(
             $post,
