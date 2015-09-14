@@ -86,14 +86,16 @@ class Controller_Front extends Controller_Front_Application
 
     public function after($response)
     {
-        // Note to translator: The following texts are related to RSS feeds
-        $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(__('Posts list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
-        if ($this->app_config['comments']['enabled']) {
-            $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(__('Comments list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
+        if(method_exists($this->main_controller, 'addMeta')) {
+            // Note to translator: The following texts are related to RSS feeds
+            $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(__('Posts list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/posts.html">');
+            if ($this->app_config['comments']['enabled']) {
+                $this->main_controller->addMeta('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(\Security::html_entity_decode(__('Comments list'))).'" href="'.$this->main_controller->getContextUrl().$this->main_controller->getEnhancedUrlPath().'rss/comments.html">');
+            }
         }
-
-        $this->main_controller->addCss('static/apps/noviusos_blognews/css/blognews.css');
-
+        if(method_exists($this->main_controller, 'addCss')) {
+            $this->main_controller->addCss('static/apps/noviusos_blognews/css/blognews.css');
+        }
         return parent::after($response);
     }
 
