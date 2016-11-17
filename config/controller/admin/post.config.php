@@ -192,28 +192,6 @@ $config = array(
                     }
                 },
         ),
-        // SHARE PROPETIES
-        'medias->share_image->medil_media_id' => array(
-            'label' => __('Image to share'),
-            'renderer' => 'Nos\Media\Renderer_Media',
-            'renderer_options' => array(
-                'inputFileThumb' => array(
-                    'title' => __('Image to share'),
-                ),
-            ),
-        ),
-        'share_title' => array(
-            'label' => __('Title to share'),
-            'form' => array(
-                'type' => 'text',
-            ),
-        ),
-        'share_description' => array(
-            'label' => __('Description to share'),
-            'form' => array(
-                'type' => 'textarea',
-            ),
-        ),
     )
 );
 
@@ -236,14 +214,6 @@ if (!$app_config['authors']['enabled']) {
     });
     unset($config['fields']['author->user_fullname']);
     unset($config['fields']['post_author_alias']);
-}
-
-// SHARE CONFIGURATION
-if (!$app_config['share_properties']['enabled']) {
-    unset($config['layout']['menu'][__('Share properties')]);
-    unset($config['fields']['medias->share_image->medil_media_id']);
-    unset($config['fields']['share_title']);
-    unset($config['fields']['share_description']);
 }
 
 return $config;
