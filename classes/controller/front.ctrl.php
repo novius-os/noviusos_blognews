@@ -442,22 +442,22 @@ class Controller_Front extends Controller_Front_Application
             );
 
             $title = isset($sharableData['title']) ? $sharableData['title'] : $post->post_title;
-            $this->main_controller->addMeta('<meta property="og:title" content="' . $title . '" />');
+            $this->main_controller->addMeta('<meta property="og:title" content="'.$title.'" />');
 
             $description = isset($sharableData['text']) ? $sharableData['text'] : $post->post_summary;
-            $this->main_controller->addMeta('<meta property="og:description" content="' . $description . '" />');
+            $this->main_controller->addMeta('<meta property="og:description" content="'.$description.'" />');
 
-            $this->main_controller->addMeta('<meta property="og:url" content="' . $post->url() . '" />');
+            $this->main_controller->addMeta('<meta property="og:url" content="'.$post->url().'" />');
 
-            $img_id = isset($sharableData['image']) ? (int)$sharableData['image'] : isset($post->medias->thumbnail) ? $post->medias->thumbnail->url() : null;
-            $imgUrl = $img_id;
-            if (is_int($img_id)) {
-                $oImg = Model_Media::find($img_id);
+            $imgId = isset($sharableData['image']) ? (int) $sharableData['image'] : isset($post->medias->thumbnail) ? $post->medias->thumbnail->url() : null;
+            $imgUrl = $imgId;
+            if (is_int($imgId)) {
+                $oImg = Model_Media::find($imgId);
                 if ($oImg) {
                     $imgUrl = $oImg->url();
                 }
             }
-            $this->main_controller->addMeta('<meta property="og:image" content="' . $imgUrl . '" />');
+            $this->main_controller->addMeta('<meta property="og:image" content="'.$imgUrl.'" />');
         }
 
         $meta_keywords = array();
