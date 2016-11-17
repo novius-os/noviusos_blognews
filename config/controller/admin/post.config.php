@@ -59,6 +59,7 @@ $config = array(
             __('URL (post address)') => array('post_virtual_name'),
             __('Categories') => array('categories'),
             __('Tags') => array('tags'),
+            __('Share properties') => array('fields' => array('medias->share_image->medil_media_id', 'share_title', 'share_description')),
         ),
     ),
     'fields' => array(
@@ -137,25 +138,25 @@ $config = array(
             'renderer' => 'Nos\Renderer_Text',
             'template' => '<p>{field}</p>',
             'populate' =>
-            function ($item) {
-                if ($item->is_new()) {
-                    $item->post_read = 0;
-                }
-                if ($item->post_read === 0) {
-                    return __('Never read');
-                } else {
-                    return strtr(
-                        n__(
-                            'Read once',
-                            'Read {{nb}} times',
-                            $item->post_read
-                        ),
-                        array(
-                            '{{nb}}' => $item->post_read
-                        )
-                    );
-                }
-            },
+                function ($item) {
+                    if ($item->is_new()) {
+                        $item->post_read = 0;
+                    }
+                    if ($item->post_read === 0) {
+                        return __('Never read');
+                    } else {
+                        return strtr(
+                            n__(
+                                'Read once',
+                                'Read {{nb}} times',
+                                $item->post_read
+                            ),
+                            array(
+                                '{{nb}}' => $item->post_read
+                            )
+                        );
+                    }
+                },
         ),
         'tags' => array(
             'label' => __('Tags'),
@@ -192,6 +193,28 @@ $config = array(
                     }
                 },
         ),
+        // SHARE PROPETIES
+        'medias->share_image->medil_media_id' => array(
+            'label' => __('Image to share'),
+            'renderer' => 'Nos\Media\Renderer_Media',
+            'renderer_options' => array(
+                'inputFileThumb' => array(
+                    'title' => __('Image to share'),
+                ),
+            ),
+        ),
+        'share_title' => array(
+            'label' => __('Title to share'),
+            'form' => array(
+                'type' => 'text',
+            ),
+        ),
+        'share_description' => array(
+            'label' => __('Description to share'),
+            'form' => array(
+                'type' => 'textarea',
+            ),
+        ),
     )
 );
 
@@ -216,5 +239,12 @@ if (!$app_config['authors']['enabled']) {
     unset($config['fields']['post_author_alias']);
 }
 
+// SHARE CONFIGURATION
+if (!$app_config['share_properties']['enabled']) {
+    unset($config['layout']['menu'][__('Share properties')]);
+    unset($config['fields']['medias->share_image->medil_media_id']);
+    unset($config['fields']['share_title']);
+    unset($config['fields']['share_description']);
+}
 
 return $config;

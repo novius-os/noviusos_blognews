@@ -39,6 +39,9 @@ $ret = array(
         'enabled' => true,
         'show'    => true,
     ),
+    'share_properties' => array(
+        'enabled' => true,
+    ),
     // Sample of config to display sumarry + content in RSS
     /*'rss' => array(
         'description_template' => '<p>{{summary}}</p>{{content}}',
