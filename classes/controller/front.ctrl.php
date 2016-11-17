@@ -12,6 +12,8 @@ namespace Nos\BlogNews;
 
 use Nos\Controller_Front_Application;
 use Nos\Media\Model_Media;
+use Nos\Model_Content_Nuggets;
+use Nos\Nos;
 use Nos\Tools_Wysiwyg;
 use View;
 
@@ -434,20 +436,28 @@ class Controller_Front extends Controller_Front_Application
         }
 
         if (\Arr::get($this->app_config, 'share_properties.enabled')) {
+            $sharableData = $post->get_catcher_nuggets(Model_Content_Nuggets::DEFAULT_CATCHER)->content_data;
             $this->main_controller->addMeta(
                 '<meta property="og:type" content="article" />'
             );
 
-            if (!empty($post->post_share_title)) {
-                $this->main_controller->addMeta('<meta property="og:title" content="' . $post->post_share_title . '" />');
-            }
+            $title = isset($sharableData['title']) ? $sharableData['title'] : $post->post_title;
+            $this->main_controller->addMeta('<meta property="og:title" content="' . $title . '" />');
 
-            if (!empty($post->post_share_description)) {
-                $this->main_controller->addMeta('<meta property="og:description" content="' . $post->post_share_description . '" />');
+            $description = isset($sharableData['text']) ? $sharableData['text'] : $post->post_summary;
+            $this->main_controller->addMeta('<meta property="og:description" content="' . $description . '" />');
+
+            $this->main_controller->addMeta('<meta property="og:url" content="' . $post->url() . '" />');
+
+            $img_id = isset($sharableData['image']) ? (int)$sharableData['image'] : isset($post->medias->thumbnail) ? $post->medias->thumbnail->url() : null;
+            $imgUrl = $img_id;
+            if (is_int($img_id)) {
+                $oImg = Model_Media::find($img_id);
+                if ($oImg) {
+                    $imgUrl = $oImg->url();
+                }
             }
-            if (!empty($post->medias->share_image)) {
-                $this->main_controller->addMeta('<meta property="og:image" content="' . $post->medias->share_image->url() . '" />');
-            }
+            $this->main_controller->addMeta('<meta property="og:image" content="' . $imgUrl . '" />');
         }
 
         $meta_keywords = array();
