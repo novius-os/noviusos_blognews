@@ -59,7 +59,6 @@ $config = array(
             __('URL (post address)') => array('post_virtual_name'),
             __('Categories') => array('categories'),
             __('Tags') => array('tags'),
-            __('Share properties') => array('fields' => array('medias->share_image->medil_media_id', 'share_title', 'share_description')),
         ),
     ),
     'fields' => array(
