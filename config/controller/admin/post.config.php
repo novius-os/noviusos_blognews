@@ -185,9 +185,9 @@ $config = array(
                     if (!empty($data['categories'])) {
                         $class = get_class($item);
                         $namespace = substr($class, 0, strrpos($class, '\\'));
-                        $category_class = $namespace . '\\Model_Category';
+                        $category_class = $namespace.'\\Model_Category';
 
-                        $item->categories = $category_class::find('all', array('where' => array(array('cat_id', 'IN', (array)$data['categories']))));
+                        $item->categories = $category_class::find('all', array('where' => array(array('cat_id', 'IN', (array) $data['categories']))));
                     }
                 },
         ),
