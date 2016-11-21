@@ -11,6 +11,9 @@
 namespace Nos\BlogNews;
 
 use Nos\Controller_Front_Application;
+use Nos\Media\Model_Media;
+use Nos\Model_Content_Nuggets;
+use Nos\Nos;
 use Nos\Tools_Wysiwyg;
 use View;
 
@@ -182,23 +185,23 @@ class Controller_Front extends Controller_Front_Application
                     if (empty($segments[2])) {
                         $posts = $this->_get_post_list();
                         $rss->set(array(
-                                'title' => \Security::html_entity_decode(__('Posts list')),
-                                'description' => \Security::html_entity_decode(__('The full list of blog posts.')),
-                            ));
+                            'title' => \Security::html_entity_decode(__('Posts list')),
+                            'description' => \Security::html_entity_decode(__('The full list of blog posts.')),
+                        ));
                     } elseif ($segments[2] === 'category' && !empty($segments[3])) {
                         $category = $this->_get_category($segments[3]);
                         $posts = $this->_get_post_list(array('category' => $category));
                         $rss->set(array(
-                                'title' => \Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
-                                'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
-                            ));
+                            'title' => \Security::html_entity_decode(strtr(__('{{category}}: Posts list'), array('{{category}}' => $category->cat_title))),
+                            'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{category}}’ category.'), array('{{category}}' => $category->cat_title))),
+                        ));
                     } elseif ($segments[2] === 'tag' && !empty($segments[3])) {
                         $tag = $this->_get_tag($segments[3]);
                         $posts = $this->_get_post_list(array('tag' => $tag));
                         $rss->set(array(
-                                'title' => \Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
-                                'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
-                            ));
+                            'title' => \Security::html_entity_decode(strtr(__('{{tag}}: Posts list'), array('{{tag}}' => $tag->tag_label))),
+                            'description' => \Security::html_entity_decode(strtr(__('Blog posts listed under the ‘{{tag}}’ tag.'), array('{{tag}}' => $tag->tag_label))),
+                        ));
                     } elseif ($segments[2] === 'author' && !empty($segments[3])) {
                         $author = $this->_get_author($segments[3]);
                         $posts = $this->_get_post_list(array('author' => $author));
@@ -430,6 +433,31 @@ class Controller_Front extends Controller_Front_Application
                 'title="'.htmlspecialchars(\Security::html_entity_decode($rss_title)).'" '.
                 'href="'.\Nos\Tools_Url::encodePath($rss_url).'">'
             );
+        }
+
+        if (\Arr::get($this->app_config, 'share_properties.enabled')) {
+            $sharableData = $post->get_catcher_nuggets(Model_Content_Nuggets::DEFAULT_CATCHER)->content_data;
+            $this->main_controller->addMeta(
+                '<meta property="og:type" content="article" />'
+            );
+
+            $title = isset($sharableData['title']) ? $sharableData['title'] : $post->post_title;
+            $this->main_controller->addMeta('<meta property="og:title" content="'.$title.'" />');
+
+            $description = isset($sharableData['text']) ? $sharableData['text'] : $post->post_summary;
+            $this->main_controller->addMeta('<meta property="og:description" content="'.$description.'" />');
+
+            $this->main_controller->addMeta('<meta property="og:url" content="'.$post->url().'" />');
+
+            $imgId = isset($sharableData['image']) ? (int) $sharableData['image'] : isset($post->medias->thumbnail) ? $post->medias->thumbnail->url() : null;
+            $imgUrl = $imgId;
+            if (is_int($imgId)) {
+                $oImg = Model_Media::find($imgId);
+                if ($oImg) {
+                    $imgUrl = $oImg->url();
+                }
+            }
+            $this->main_controller->addMeta('<meta property="og:image" content="'.$imgUrl.'" />');
         }
 
         $meta_keywords = array();

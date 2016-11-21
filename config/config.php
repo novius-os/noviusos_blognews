@@ -15,29 +15,32 @@ $ret = array(
     'application_name' => '{{application_name}}',
     'categories' => array(
         'enabled' => true,
-        'show'    => true,
+        'show' => true,
     ),
     'tags' => array(
         'enabled' => true,
-        'show'    => true,
+        'show' => true,
     ),
     'authors' => array(
         'enabled' => true,
-        'show'    => true,
+        'show' => true,
     ),
     'summary' => array(
         'enabled' => true,
-        'show'    => true,
+        'show' => true,
     ),
     'comments' => array(
-        'enabled'       => true,
-        'show'          => true,
-        'show_nb'       => true,
-        'can_post'      => true,
+        'enabled' => true,
+        'show' => true,
+        'show_nb' => true,
+        'can_post' => true,
     ),
     'publication_date' => array(
         'enabled' => true,
-        'show'    => true,
+        'show' => true,
+    ),
+    'share_properties' => array(
+        'enabled' => true,
     ),
     // Sample of config to display sumarry + content in RSS
     /*'rss' => array(

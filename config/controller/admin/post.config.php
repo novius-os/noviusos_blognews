@@ -14,7 +14,7 @@ $app_config = \Config::application($current_application);
 \Nos\I18n::current_dictionary('noviusos_blognews::common');
 
 $config = array(
-    'controller_url'  => 'admin/{{application_name}}/post',
+    'controller_url' => 'admin/{{application_name}}/post',
     'model' => '{{namespace}}\Model_Post',
     'i18n_file' => 'noviusos_blognews::post',
     'tab' => array(
@@ -36,7 +36,7 @@ $config = array(
             'expander' => array(
                 'view' => 'nos::form/expander',
                 'params' => array(
-                    'title'   => __('Content'),
+                    'title' => __('Content'),
                     'nomargin' => true,
                     'options' => array(
                         'allowExpand' => false,
@@ -62,7 +62,7 @@ $config = array(
         ),
     ),
     'fields' => array(
-        'post_id' => array (
+        'post_id' => array(
             'label' => 'ID: ',
             'form' => array(
                 'type' => 'hidden',
@@ -81,7 +81,7 @@ $config = array(
                 'min_length' => array(2),
             ),
         ),
-        'post_summary' => array (
+        'post_summary' => array(
             'label' => __('Summary'),
             'template' => '<td class="row-field">{field}</td>',
             'form' => array(
@@ -137,47 +137,46 @@ $config = array(
             'renderer' => 'Nos\Renderer_Text',
             'template' => '<p>{field}</p>',
             'populate' =>
-            function ($item) {
-                if ($item->is_new()) {
-                    $item->post_read = 0;
-                }
-                if ($item->post_read === 0) {
-                    return __('Never read');
-                } else {
-                    return strtr(
-                        n__(
-                            'Read once',
-                            'Read {{nb}} times',
-                            $item->post_read
-                        ),
-                        array(
-                            '{{nb}}' => $item->post_read
-                        )
-                    );
-                }
-            },
+                function ($item) {
+                    if ($item->is_new()) {
+                        $item->post_read = 0;
+                    }
+                    if ($item->post_read === 0) {
+                        return __('Never read');
+                    } else {
+                        return strtr(
+                            n__(
+                                'Read once',
+                                'Read {{nb}} times',
+                                $item->post_read
+                            ),
+                            array(
+                                '{{nb}}' => $item->post_read
+                            )
+                        );
+                    }
+                },
         ),
         'tags' => array(
             'label' => __('Tags'),
             'renderer' => 'Nos\Renderer_Tag',
             'renderer_options' => array(
-                'model'         => '{{namespace}}\\Model_Tag',
-                'label_column'  => 'tag_label',
+                'model' => '{{namespace}}\\Model_Tag',
+                'label_column' => 'tag_label',
                 'relation_name' => 'tags'
             ),
         ),
         'categories' => array(
             'renderer' => 'Nos\BlogNews\Renderer_Selector',
             'renderer_options' => array(
-                'height'                => '250px',
-                'inspector'             => 'admin/{{application_name}}/inspector/category',
-                'model'                 => '{{namespace}}\\Model_Category',
-                'multiple'              => '1',
-                'main_column'           => 'cat_title',
+                'height' => '250px',
+                'inspector' => 'admin/{{application_name}}/inspector/category',
+                'model' => '{{namespace}}\\Model_Category',
+                'multiple' => '1',
+                'main_column' => 'cat_title',
             ),
             'label' => __(''),
-            'form' => array(
-            ),
+            'form' => array(),
             //'dont_populate' => true,
             'before_save' =>
                 function ($item, $data) {
@@ -215,6 +214,5 @@ if (!$app_config['authors']['enabled']) {
     unset($config['fields']['author->user_fullname']);
     unset($config['fields']['post_author_alias']);
 }
-
 
 return $config;
