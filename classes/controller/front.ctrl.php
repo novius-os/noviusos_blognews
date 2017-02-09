@@ -450,9 +450,9 @@ class Controller_Front extends Controller_Front_Application
             $this->main_controller->addMeta('<meta property="og:url" content="'.$post->url().'" />');
 
             $imgId = null;
-            if(isset($sharableData['image'])) {
+            if (isset($sharableData['image'])) {
                 $imgId = (int)$sharableData['image'];
-            } else if (isset($post->medias->thumbnail)) {
+            } elseif (isset($post->medias->thumbnail)) {
                 $imgId = $post->medias->thumbnail->url();
             }
 
