@@ -9,7 +9,7 @@
  */
 
 return array(
-    'name'    => 'BlogNews (required for both Blog and News stories)',
+    'name'    => 'BlogNews',
     'version' => '0.2',
     'provider' => array(
         'name' => 'Novius Dev',
