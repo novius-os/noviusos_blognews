@@ -123,7 +123,7 @@ $config = array(
         ),
         'medias->thumbnail->medil_media_id' => array(
             'label' => '',
-            'renderer' => 'Nos\Renderer_Media',
+            'renderer' => 'Nos\Media\Renderer_Media',
             'form' => array(
                 'title' => 'Thumbnail',
             ),

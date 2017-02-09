@@ -17,5 +17,5 @@ return array(
         'list' => 'noviusos_blognews::front/post/list',
         'item' => 'noviusos_blognews::front/post/show'
     ),
-
+    'rss_cache_duration' => 60 * 30,
 );

@@ -31,6 +31,7 @@ class Controller_Front extends Controller_Front_Application
     public static $tag_class;
     public static $post_class;
     public static $category_class;
+    public static $author_class;
 
     public static function _init()
     {
@@ -43,8 +44,11 @@ class Controller_Front extends Controller_Front_Application
         }
 
         static::$tag_class = $namespace.'Model_Tag';
-        static::$post_class = $namespace.'Model_Post';
         static::$category_class = $namespace.'Model_Category';
+        $class = $namespace.'Model_Post';
+        static::$post_class = $class;
+        $relation = $class::relations('author');
+        static::$author_class = $relation->model_to;
     }
 
     public function before()
@@ -67,7 +71,7 @@ class Controller_Front extends Controller_Front_Application
         // paths are merged. Extend application tweek and add some functionnality to the existing application.
         // This is not what we want here since this is an headless application used by other application.
         // We do not want configuration files from different applications merged.
-        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::extendable_load($application_name, 'controller/front'));
+        $this->config = \Arr::merge(\Config::get('noviusos_blognews::controller/front'), \Config::loadConfiguration($application_name, 'controller/front'));
         $this->config['classes'] = array(
             'post' => static::$post_class,
             'tag' => static::$tag_class,
@@ -155,7 +159,6 @@ class Controller_Front extends Controller_Front_Application
                         'language' => \Nos\Tools_Context::locale($this->page_from->page_context),
                     ));
 
-                $content = false;
                 if ($segments[1] === 'posts') {
                     if (empty($segments[2])) {
                         $posts = $this->_get_post_list();
@@ -185,7 +188,6 @@ class Controller_Front extends Controller_Front_Application
                         $items[] = static::_get_rss_post($post);
                     }
                     $rss->set_items($items);
-                    $content = $rss->build();
 
                 } elseif ($segments[1] === 'comments') {
                     if (empty($segments[2])) {
@@ -225,18 +227,12 @@ class Controller_Front extends Controller_Front_Application
                         }
                     }
                     $rss->set_items($items);
-                    $content = $rss->build();
-                }
-                \Response::forge(
-                    $content,
-                    200,
-                    array(
-                        'Content-Type' => 'application/xml',
-                    )
-                )->send(true);
-                \Event::shutdown();
-                exit();
 
+                }
+
+                $this->main_controller->setHeader('Content-Type', 'application/xml');
+                $this->main_controller->setCacheDuration($this->config['rss_cache_duration']);
+                return $this->main_controller->sendContent($rss->build());
             }
 
             throw new \Nos\NotFoundException();
@@ -312,6 +308,25 @@ class Controller_Front extends Controller_Front_Application
         ), false);
     }
 
+    public function display_list_author()
+    {
+        list(, $parts_author) = $this->enhancerUrl_segments;
+        //id_author is made with 3 parts, only the last one is the id (the others are used for SEO)
+        $array_author = explode('_', $parts_author);
+        $id_author = array_pop($array_author);
+        $author = $this->_get_author($id_author);
+        $posts = $this->_get_post_list(array('author' => $author));
+
+        //TODO add Meta (see method above)
+
+        return View::forge('noviusos_blognews::front/post/list', array(
+            'posts'       => $posts,
+            'type'        => 'author',
+            'item'        => $author,
+            'pagination' => $this->pagination,
+        ), false);
+    }
+
     /**
      * Display a single item (outside a list context)
      *
@@ -379,6 +394,25 @@ class Controller_Front extends Controller_Front_Application
         }
 
         return $category;
+    }
+
+    protected function _get_author($id)
+    {
+        $author_class = static::$author_class;
+
+        $author = $author_class::find(
+            'first',
+            array(
+                'where' => array(
+                    array('user_id', '=', $id,),
+                )
+            )
+        );
+        if (empty($author)) {
+            throw new \Nos\NotFoundException();
+        }
+
+        return $author;
     }
 
     protected function _get_tag($tag)
@@ -527,6 +561,10 @@ class Controller_Front extends Controller_Front_Application
 
             case static::$category_class:
                 return 'category/'.urlencode($item->cat_virtual_name).($page > 1 ? '/'.$page : '').'.html';
+                break;
+
+            case static::$author_class:
+                return 'author/'.urlencode($item->user_name.'_'.$item->user_firstname.'_'.$item->user_id).($page > 1 ? '/'.$page : '').'.html';
                 break;
         }
 
