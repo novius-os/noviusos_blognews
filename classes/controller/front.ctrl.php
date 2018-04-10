@@ -172,6 +172,11 @@ class Controller_Front extends Controller_Front_Application
 
                 return $this->display_list_tag($args);
             } elseif ($segments[0] === 'category') {
+                if (!empty($args['cat_id'])) {
+                    // Redirects to the main listing if a category is selected to prevent duplicate content
+                    \Response::redirect($this->main_controller->getContextUrl().$this->main_controller->getPageUrl(), 'location', 301);
+                    exit;
+                }
                 $this->init_pagination(!empty($segments[2]) ? $segments[2] : 1);
 
                 return $this->display_list_category($args);
