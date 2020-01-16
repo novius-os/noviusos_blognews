@@ -164,7 +164,7 @@ class Controller_Front extends Controller_Front_Application
             } elseif ($segments[0] === 'page') {
                 $this->isListingPage = true;
 
-                if (!preg_match('#^[0-9]+$#', $segments[1])) {
+                if (!preg_match('#^[1-9]+[0-9]?$#', $segments[1])) {
                     throw new \Nos\NotFoundException();
                 }
 
