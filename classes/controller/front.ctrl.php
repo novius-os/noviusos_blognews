@@ -36,6 +36,8 @@ class Controller_Front extends Controller_Front_Application
     public static $category_class;
     public static $author_class;
 
+    protected $isListingPage = false;
+
     public static function _init()
     {
         if (is_subclass_of(get_called_class(), 'Nos\\BlogNews\\Blog\\Controller_Front')) {
@@ -160,6 +162,18 @@ class Controller_Front extends Controller_Front_Application
                     return render('noviusos_comments::front/subscriptions/'.$segments[0], array('item' => $post, 'email' => $_GET['email']), false);
                 }
             } elseif ($segments[0] === 'page') {
+                $this->isListingPage = true;
+
+                if (!preg_match('#^[1-9]+[0-9]?$#', $segments[1])) {
+                    throw new \Nos\NotFoundException();
+                }
+
+                if ((int) $segments[1] === 1) {
+                    // Prevent duplicate content with news/page/1.html => redirect to /news.html
+                    \Response::redirect($this->main_controller->getContextUrl().$this->main_controller->getPageUrl(), 'location', 301);
+                    exit;
+                }
+
                 $this->init_pagination(empty($segments[1]) ? 1 : $segments[1]);
 
                 return $this->display_list_main($args);
@@ -258,9 +272,10 @@ class Controller_Front extends Controller_Front_Application
             throw new \Nos\NotFoundException();
         }
 
+        $this->isListingPage = true;
         $this->init_pagination(1);
-
         \View::set_global('blognews_action', $this->action);
+
         return $this->display_list_main($args);
     }
 
@@ -283,6 +298,11 @@ class Controller_Front extends Controller_Front_Application
     public function display_list_main($args)
     {
         $posts = $this->_get_post_list($args);
+
+        if ($this->isListingPage && (int) $this->current_page !== (int) $this->pagination->current_page) {
+            // Current page (from URL) > total_pages => 404
+            throw new \Nos\NotFoundException();
+        }
 
         $self = $this;
         return View::forge(
