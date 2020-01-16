@@ -262,6 +262,8 @@ class Controller_Front extends Controller_Front_Application
                             'description' => \Security::html_entity_decode(__('The full list of comments.')),
                         ));
                     }
+                } else {
+                    throw new \Nos\NotFoundException();
                 }
 
                 $this->main_controller->setHeader('Content-Type', 'application/xml');
