@@ -301,7 +301,7 @@ class Controller_Front extends Controller_Front_Application
     {
         $posts = $this->_get_post_list($args);
 
-        if ($this->isListingPage && (int) $this->current_page !== (int) $this->pagination->current_page) {
+        if (!empty($this->pagination) && $this->isListingPage && (int) $this->current_page !== (int) $this->pagination->current_page) {
             // Current page (from URL) > total_pages => 404
             throw new \Nos\NotFoundException();
         }
